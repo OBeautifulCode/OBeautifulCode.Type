@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/OBeautifulCode/OBeautifulCode.TypeRepresentation</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.TypeRepresentation/master/OBeautifulCode.TypeRepresentation/nuget-icon.png</iconUrl>
+    <licenseUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.TypeRepresentation/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <summary>Model object containing a description of a type that can be serialized without knowledge of the type.</summary>
+    <copyright>Copyright 2017 OBeautifulCode</copyright>
+    <tags>typedescription types type</tags>
+  </metadata>
+</package>
