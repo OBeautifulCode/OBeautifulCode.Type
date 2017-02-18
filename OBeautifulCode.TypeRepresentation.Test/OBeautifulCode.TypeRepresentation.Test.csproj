@@ -107,6 +107,8 @@
       <Link>stylecop.json</Link>
       <InProject>false</InProject>
     </AdditionalFiles>
+    <None Include="TestingAssemblies\Newtonsoft.Json.8.0.3.testDll" />
+    <None Include="TestingAssemblies\Newtonsoft.Json.9.0.1.testDll" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\common\codeanalysis-dictionary.xml">

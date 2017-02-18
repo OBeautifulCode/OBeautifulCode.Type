@@ -13,6 +13,7 @@
     <Rule Id="SA1305" Action="Warning" />
     <Rule Id="SA1512" Action="None" />
     <Rule Id="SA1515" Action="None" />
+    <Rule Id="SA1600" Action="None" />
     <Rule Id="SA1625" Action="Warning" />
     <Rule Id="SA1627" Action="Warning" />
     <Rule Id="SA1629" Action="Warning" />
