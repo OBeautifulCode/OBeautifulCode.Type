@@ -17,7 +17,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("OBeautifulCode")]
 [assembly: AssemblyProduct("OBeautifulCode.TypeRepresentation")]
-[assembly: AssemblyCopyright("Copyright ©  2017 OBeautifulCode")]
+[assembly: AssemblyCopyright("Copyright (c) 2017 OBeautifulCode")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -42,4 +42,3 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: CLSCompliant(true)]
-[assembly: InternalsVisibleTo("OBeautifulCode.TypeRepresentation.Test")]
