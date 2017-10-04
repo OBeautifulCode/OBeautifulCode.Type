@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TypeDescriptionTest.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode. All rights reserved.
+//   Copyright (c) OBeautifulCode 2017. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -14,7 +14,6 @@ namespace OBeautifulCode.TypeRepresentation.Test
 
     public static class TypeDescriptionTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
         {
@@ -23,12 +22,10 @@ namespace OBeautifulCode.TypeRepresentation.Test
             TypeDescription typeDescription2 = null;
 
             // Act
-            // ReSharper disable ConditionIsAlwaysTrueOrFalse
             var result = typeDescription1 == typeDescription2;
 
             // Assert
             result.Should().BeTrue();
-            // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
         [Fact]
@@ -39,14 +36,12 @@ namespace OBeautifulCode.TypeRepresentation.Test
             var typeDescription2 = A.Dummy<TypeDescription>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result1 = typeDescription1 == typeDescription2;
             var result2 = typeDescription2 == typeDescription1;
 
             // Assert
             result1.Should().BeFalse();
             result2.Should().BeFalse();
-            // ReSharper restore ExpressionIsAlwaysNull
         }
 
         [Fact]
@@ -56,14 +51,12 @@ namespace OBeautifulCode.TypeRepresentation.Test
             var typeDescription = A.Dummy<TypeDescription>();
 
             // Act
-            // ReSharper disable EqualExpressionComparison
 #pragma warning disable CS1718 // Comparison made to same variable
             var result = typeDescription == typeDescription;
 #pragma warning restore CS1718 // Comparison made to same variable
 
             // Assert
             result.Should().BeTrue();
-            // ReSharper restore EqualExpressionComparison
         }
 
         [Fact]
@@ -132,12 +125,10 @@ namespace OBeautifulCode.TypeRepresentation.Test
             TypeDescription typeDescription2 = null;
 
             // Act
-            // ReSharper disable ConditionIsAlwaysTrueOrFalse
             var result = typeDescription1 != typeDescription2;
 
             // Assert
             result.Should().BeFalse();
-            // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
         [Fact]
@@ -148,14 +139,12 @@ namespace OBeautifulCode.TypeRepresentation.Test
             var typeDescription2 = A.Dummy<TypeDescription>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result1 = typeDescription1 != typeDescription2;
             var result2 = typeDescription2 != typeDescription1;
 
             // Assert
             result1.Should().BeTrue();
             result2.Should().BeTrue();
-            // ReSharper restore ExpressionIsAlwaysNull
         }
 
         [Fact]
@@ -165,14 +154,12 @@ namespace OBeautifulCode.TypeRepresentation.Test
             var typeDescription = A.Dummy<TypeDescription>();
 
             // Act
-            // ReSharper disable EqualExpressionComparison
 #pragma warning disable CS1718 // Comparison made to same variable
             var result = typeDescription != typeDescription;
 #pragma warning restore CS1718 // Comparison made to same variable
 
             // Assert
             result.Should().BeFalse();
-            // ReSharper restore EqualExpressionComparison
         }
 
         [Fact]
@@ -317,6 +304,7 @@ namespace OBeautifulCode.TypeRepresentation.Test
             result2.Should().BeTrue();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "untyped", Justification = "Spelling/name is correct.")]
         [Fact]
         public static void Equals___Should_return_false___When_calling_untyped_overload_and_parameter_other_is_null()
         {
@@ -330,6 +318,7 @@ namespace OBeautifulCode.TypeRepresentation.Test
             result1.Should().BeFalse();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "untyped", Justification = "Spelling/name is correct.")]
         [Fact]
         public static void Equals___Should_return_false___When_calling_untyped_overload_and_parameter_other_is_not_of_the_same_type()
         {
@@ -338,16 +327,13 @@ namespace OBeautifulCode.TypeRepresentation.Test
             var typeDescription2 = A.Dummy<string>();
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
-            // ReSharper disable RedundantCast
             var result1 = typeDescription1.Equals((object)typeDescription2);
-            // ReSharper restore RedundantCast
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result1.Should().BeFalse();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "untyped", Justification = "Spelling/name is correct.")]
         [Fact]
         public static void Equals___Should_return_true___When_calling_untyped_overload_and_parameter_other_is_same_object()
         {
@@ -361,6 +347,7 @@ namespace OBeautifulCode.TypeRepresentation.Test
             result.Should().BeTrue();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "untyped", Justification = "Spelling/name is correct.")]
         [Fact]
         public static void Equals___Should_return_false___When_calling_untyped_overload_and_objects_being_compared_have_different_property_values()
         {
@@ -400,6 +387,7 @@ namespace OBeautifulCode.TypeRepresentation.Test
             result6.Should().BeFalse();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "untyped", Justification = "Spelling/name is correct.")]
         [Fact]
         public static void Equals___Should_return_true___When_calling_untyped_overload_and_objects_being_compared_have_same_property_values()
         {

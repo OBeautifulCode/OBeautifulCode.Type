@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TypeDescriptionExtensions.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode. All rights reserved.
+//   Copyright (c) OBeautifulCode 2017. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -41,6 +41,7 @@ namespace OBeautifulCode.TypeRepresentation
         public static Type ResolveFromLoadedTypes(this TypeDescription typeDescription, TypeMatchStrategy typeMatchStrategy = TypeMatchStrategy.NamespaceAndName, MultipleMatchStrategy multipleMatchStrategy = MultipleMatchStrategy.ThrowOnMultiple)
         {
             var allTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(_ => _.GetTypes()).ToList();
+
             var typeComparer = new TypeComparer(typeMatchStrategy);
             var allMatchingTypes = allTypes.Where(_ => typeComparer.Equals(_.ToTypeDescription(), typeDescription)).ToList();
 
@@ -50,7 +51,7 @@ namespace OBeautifulCode.TypeRepresentation
                     if (allMatchingTypes.Count > 1)
                     {
                         var message = "Found multiple versions and multiple match strategy was: " + multipleMatchStrategy;
-                        var types = string.Join(",", allMatchingTypes.Select(_ => _.AssemblyQualifiedName));
+                        var types = string.Join(",", allMatchingTypes.Select(_ => _.AssemblyQualifiedName + " at " + _.Assembly.CodeBase));
                         throw new InvalidOperationException(message + "; types found: " + types);
                     }
                     else

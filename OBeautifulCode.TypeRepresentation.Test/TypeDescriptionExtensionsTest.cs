@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TypeDescriptionExtensionsTest.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode. All rights reserved.
+//   Copyright (c) OBeautifulCode 2017. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -92,6 +92,32 @@ namespace OBeautifulCode.TypeRepresentation.Test
 
             // Act & Assert
             action.ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFile", Justification = "Used on purpose.")]
+        public static void Resolve_ThrowOnMultiple___Should_return_valid_type___When_multiple_same_types_found()
+        {
+            // Arrange
+            var testAssemblyRootPath =
+                Path.Combine(
+                    new Uri(typeof(TypeDescriptionExtensionsTest).Assembly.CodeBase).LocalPath.Replace(
+                        "\\OBeautifulCode.TypeRepresentation.Test.DLL",
+                        string.Empty),
+                    "..",
+                    "..",
+                    "TestingAssemblies");
+
+            Assembly.LoadFile(Path.Combine(testAssemblyRootPath, "Newtonsoft.Json.8.0.3.testDll"));
+            Assembly.LoadFile(Path.Combine(testAssemblyRootPath, "Newtonsoft.Json.8.0.3.testDll"));
+            var toFind = new TypeDescription("Newtonsoft.Json", "JsonConvert", "FullNameShouldNotBeUsed");
+
+            // Act
+            var result = toFind.ResolveFromLoadedTypes(TypeMatchStrategy.NamespaceAndName, MultipleMatchStrategy.OldestVersion);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Assembly.GetName().Version.ToString(4).Should().Be("8.0.0.0");
         }
 
         [Fact]

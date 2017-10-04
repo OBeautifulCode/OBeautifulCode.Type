@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MultipleMatchStrategy.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode. All rights reserved.
+//   Copyright (c) OBeautifulCode 2017. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -24,6 +24,6 @@ namespace OBeautifulCode.TypeRepresentation
         /// <summary>
         /// Return the oldest version found.
         /// </summary>
-        OldestVersion
+        OldestVersion,
     }
 }

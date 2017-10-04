@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TypeMatchStrategy.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode. All rights reserved.
+//   Copyright (c) OBeautifulCode 2017. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -19,6 +19,6 @@ namespace OBeautifulCode.TypeRepresentation
         /// <summary>
         /// Match the assembly qualified name of the type (this will include the version).
         /// </summary>
-        AssemblyQualifiedName
+        AssemblyQualifiedName,
     }
 }

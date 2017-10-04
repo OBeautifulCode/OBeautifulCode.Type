@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TypeComparer.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode. All rights reserved.
+//   Copyright (c) OBeautifulCode 2017. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -8,6 +8,8 @@ namespace OBeautifulCode.TypeRepresentation
 {
     using System;
     using System.Collections.Generic;
+
+    using Spritely.Recipes;
 
     /// <summary>
     /// Type comparer using the provided strategy.
@@ -102,6 +104,8 @@ namespace OBeautifulCode.TypeRepresentation
         /// <inheritdoc />
         public int GetHashCode(TypeDescription obj)
         {
+            new { obj }.Must().NotBeNull().OrThrowFirstFailure();
+
             switch (this.typeMatchStrategy)
             {
                 case TypeMatchStrategy.NamespaceAndName:
