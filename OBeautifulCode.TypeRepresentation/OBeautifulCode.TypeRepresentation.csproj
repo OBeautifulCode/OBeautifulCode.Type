@@ -62,7 +62,7 @@
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\release.ruleset" />
     <None Include="packages.config" />
-    <None Include="OBeautifulCode.TypeRepresentation.nuspec">
+    <None Include="OBeautifulCode.TypeRepresentation.override-nuspec">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
