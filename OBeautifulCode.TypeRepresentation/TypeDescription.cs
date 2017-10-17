@@ -8,7 +8,7 @@ namespace OBeautifulCode.TypeRepresentation
 {
     using System;
 
-    using OBeautifulCode.Math;
+    using OBeautifulCode.Math.Recipes;
 
     /// <summary>
     /// Model object containing a description of a type that can be serialized without knowledge of the type.
