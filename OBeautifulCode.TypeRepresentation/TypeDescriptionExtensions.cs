@@ -9,6 +9,8 @@ namespace OBeautifulCode.TypeRepresentation
     using System;
     using System.Linq;
 
+    using Spritely.Recipes;
+
     /// <summary>
     /// Class to hold extension method on the type object.
     /// </summary>
@@ -40,6 +42,8 @@ namespace OBeautifulCode.TypeRepresentation
         /// <returns>Type if found, null otherwise.</returns>
         public static Type ResolveFromLoadedTypes(this TypeDescription typeDescription, TypeMatchStrategy typeMatchStrategy = TypeMatchStrategy.NamespaceAndName, MultipleMatchStrategy multipleMatchStrategy = MultipleMatchStrategy.ThrowOnMultiple)
         {
+            new { typeDescription }.Must().NotBeNull().OrThrowFirstFailure();
+
             // first deal with special hack implementation of array types...
             if (typeDescription.Name.Contains("[]") || typeDescription.AssemblyQualifiedName.Contains("[]"))
             {
