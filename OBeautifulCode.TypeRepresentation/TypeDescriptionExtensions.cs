@@ -40,6 +40,21 @@ namespace OBeautifulCode.TypeRepresentation
         /// <returns>Type if found, null otherwise.</returns>
         public static Type ResolveFromLoadedTypes(this TypeDescription typeDescription, TypeMatchStrategy typeMatchStrategy = TypeMatchStrategy.NamespaceAndName, MultipleMatchStrategy multipleMatchStrategy = MultipleMatchStrategy.ThrowOnMultiple)
         {
+            // first deal with special hack implementation of array types...
+            if (typeDescription.Name.Contains("[]") || typeDescription.AssemblyQualifiedName.Contains("[]"))
+            {
+                var arrayItemTypeDescription = new TypeDescription
+                                               {
+                                                   AssemblyQualifiedName = typeDescription.AssemblyQualifiedName.Replace("[]", string.Empty),
+                                                   Namespace = typeDescription.Namespace,
+                                                   Name = typeDescription.Name.Replace("[]", string.Empty),
+                                               };
+
+                var arrayItemType = arrayItemTypeDescription.ResolveFromLoadedTypes(typeMatchStrategy, multipleMatchStrategy);
+                return arrayItemType?.MakeArrayType();
+            }
+
+            // if it's not an array type then run normal logic
             var allTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(_ => _.GetTypes()).ToList();
 
             var typeComparer = new TypeComparer(typeMatchStrategy);
@@ -60,9 +75,9 @@ namespace OBeautifulCode.TypeRepresentation
                     }
 
                 case MultipleMatchStrategy.NewestVersion:
-                    return allMatchingTypes.OrderByDescending(_ => (_.Assembly.GetName().Version ?? new Version(1, 0, 0, 0)).ToString()).FirstOrDefault();
+                    return allMatchingTypes.OrderByDescending(_ => (_.Assembly.GetName().Version ?? new Version(0, 0, 0, 1)).ToString()).FirstOrDefault();
                 case MultipleMatchStrategy.OldestVersion:
-                    return allMatchingTypes.OrderBy(_ => (_.Assembly.GetName().Version ?? new Version(1, 0, 0, 0)).ToString()).FirstOrDefault();
+                    return allMatchingTypes.OrderBy(_ => (_.Assembly.GetName().Version ?? new Version(0, 0, 0, 1)).ToString()).FirstOrDefault();
                 default:
                     throw new NotSupportedException("Multiple match strategy not supported: " + multipleMatchStrategy);
             }

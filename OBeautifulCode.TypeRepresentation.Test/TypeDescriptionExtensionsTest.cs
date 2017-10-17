@@ -44,6 +44,21 @@ namespace OBeautifulCode.TypeRepresentation.Test
         }
 
         [Fact]
+        public static void Resolve___Should_work___For_array_type()
+        {
+            // Arrange
+            var expectedType = typeof(int[]);
+            var toFind = expectedType.ToTypeDescription();
+
+            // Act
+            var result = toFind.ResolveFromLoadedTypes();
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().Be(expectedType);
+        }
+
+        [Fact]
         public static void Resolve___Should_return_null___For_missing_type()
         {
             // Arrange
