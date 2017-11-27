@@ -9,6 +9,8 @@ namespace OBeautifulCode.TypeRepresentation
     using System;
     using System.Linq;
 
+    using OBeautifulCode.Reflection.Recipes;
+
     using Spritely.Recipes;
 
     /// <summary>
@@ -59,7 +61,8 @@ namespace OBeautifulCode.TypeRepresentation
             }
 
             // if it's not an array type then run normal logic
-            var allTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(_ => _.GetTypes()).ToList();
+            var loadedAssemblies = AssemblyLoader.GetLoadedAssemblies();
+            var allTypes = loadedAssemblies.Distinct().ToList().GetTypesFromAssemblies().Distinct().ToList();
 
             var typeComparer = new TypeComparer(typeMatchStrategy);
             var allMatchingTypes = allTypes.Where(_ => typeComparer.Equals(_.ToTypeDescription(), typeDescription)).ToList();

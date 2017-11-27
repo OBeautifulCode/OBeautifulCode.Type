@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OBeautifulCode.TypeRepresentation</RootNamespace>
     <AssemblyName>OBeautifulCode.TypeRepresentation</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,7 +46,12 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include=".recipes\OBeautifulCode.Collection\EnumerableExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Math\HashCodeHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\AssemblyHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\AssemblyLoader.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\CompressionMethod.cs" />
+    <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
     <Compile Include=".recipes\Spritely.MustValidation\MakeRule.cs" />
     <Compile Include=".recipes\Spritely.MustValidation\MustExtensions.cs" />
     <Compile Include=".recipes\Spritely.MustValidation\RuleExtensions.cs" />
