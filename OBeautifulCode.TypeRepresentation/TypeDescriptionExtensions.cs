@@ -46,6 +46,7 @@ namespace OBeautifulCode.TypeRepresentation
         /// <param name="typeMatchStrategy">Optional matching strategy (default is loose - namespace and name match).</param>
         /// <param name="multipleMatchStrategy">Optional logic on how to deal with multiples found (default is strict - throw on multiple).</param>
         /// <returns>Type if found, null otherwise.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This is not excessively complex.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is not excessively coupled.")]
         public static Type ResolveFromLoadedTypes(
             this TypeDescription typeDescription,
@@ -90,7 +91,7 @@ namespace OBeautifulCode.TypeRepresentation
                 ? new AggregateException(Invariant($"Getting types from assemblies threw one or more {nameof(ReflectionTypeLoadException)}.  See inner exceptions."), reflectionTypeLoadExceptions)
                 : null;
 
-            allTypes = allTypes.Distinct().ToList();
+            allTypes = allTypes.Where(_ => _ != null).Distinct().ToList();
             var typeComparer = new TypeComparer(typeMatchStrategy);
             var allMatchingTypes = allTypes.Where(_ => typeComparer.Equals(_.ToTypeDescription(), typeDescription)).ToList();
 
