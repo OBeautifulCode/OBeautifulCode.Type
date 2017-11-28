@@ -7,11 +7,15 @@
 namespace OBeautifulCode.TypeRepresentation
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
     using OBeautifulCode.Reflection.Recipes;
 
     using Spritely.Recipes;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// Class to hold extension method on the type object.
@@ -42,7 +46,11 @@ namespace OBeautifulCode.TypeRepresentation
         /// <param name="typeMatchStrategy">Optional matching strategy (default is loose - namespace and name match).</param>
         /// <param name="multipleMatchStrategy">Optional logic on how to deal with multiples found (default is strict - throw on multiple).</param>
         /// <returns>Type if found, null otherwise.</returns>
-        public static Type ResolveFromLoadedTypes(this TypeDescription typeDescription, TypeMatchStrategy typeMatchStrategy = TypeMatchStrategy.NamespaceAndName, MultipleMatchStrategy multipleMatchStrategy = MultipleMatchStrategy.ThrowOnMultiple)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is not excessively coupled.")]
+        public static Type ResolveFromLoadedTypes(
+            this TypeDescription typeDescription,
+            TypeMatchStrategy typeMatchStrategy = TypeMatchStrategy.NamespaceAndName,
+            MultipleMatchStrategy multipleMatchStrategy = MultipleMatchStrategy.ThrowOnMultiple)
         {
             new { typeDescription }.Must().NotBeNull().OrThrowFirstFailure();
 
@@ -61,12 +69,32 @@ namespace OBeautifulCode.TypeRepresentation
             }
 
             // if it's not an array type then run normal logic
-            var loadedAssemblies = AssemblyLoader.GetLoadedAssemblies();
-            var allTypes = loadedAssemblies.Distinct().ToList().GetTypesFromAssemblies().Distinct().ToList();
+            var loadedAssemblies = AssemblyLoader.GetLoadedAssemblies().Distinct().ToList();
+            var allTypes = new List<Type>();
+            var reflectionTypeLoadExceptions = new List<ReflectionTypeLoadException>();
+            foreach (var assembly in loadedAssemblies)
+            {
+                try
+                {
+                    allTypes.AddRange(new[] { assembly }.GetTypesFromAssemblies());
+                }
+                catch (TypeLoadException ex) when (ex.InnerException?.GetType() == typeof(ReflectionTypeLoadException))
+                {
+                    var reflectionTypeLoadException = (ReflectionTypeLoadException)ex.InnerException;
+                    allTypes.AddRange(reflectionTypeLoadException.Types);
+                    reflectionTypeLoadExceptions.Add(reflectionTypeLoadException);
+                }
+            }
 
+            AggregateException accumulatedReflectionTypeLoadExceptions = reflectionTypeLoadExceptions.Any()
+                ? new AggregateException(Invariant($"Getting types from assemblies threw one or more {nameof(ReflectionTypeLoadException)}.  See inner exceptions."), reflectionTypeLoadExceptions)
+                : null;
+
+            allTypes = allTypes.Distinct().ToList();
             var typeComparer = new TypeComparer(typeMatchStrategy);
             var allMatchingTypes = allTypes.Where(_ => typeComparer.Equals(_.ToTypeDescription(), typeDescription)).ToList();
 
+            Type result;
             switch (multipleMatchStrategy)
             {
                 case MultipleMatchStrategy.ThrowOnMultiple:
@@ -74,20 +102,30 @@ namespace OBeautifulCode.TypeRepresentation
                     {
                         var message = "Found multiple versions and multiple match strategy was: " + multipleMatchStrategy;
                         var types = string.Join(",", allMatchingTypes.Select(_ => _.AssemblyQualifiedName + " at " + _.Assembly.CodeBase));
-                        throw new InvalidOperationException(message + "; types found: " + types);
+                        throw new InvalidOperationException(message + "; types found: " + types, accumulatedReflectionTypeLoadExceptions);
                     }
                     else
                     {
-                        return allMatchingTypes.SingleOrDefault();
+                        result = allMatchingTypes.SingleOrDefault();
                     }
 
+                    break;
                 case MultipleMatchStrategy.NewestVersion:
-                    return allMatchingTypes.OrderByDescending(_ => (_.Assembly.GetName().Version ?? new Version(0, 0, 0, 1)).ToString()).FirstOrDefault();
+                    result = allMatchingTypes.OrderByDescending(_ => (_.Assembly.GetName().Version ?? new Version(0, 0, 0, 1)).ToString()).FirstOrDefault();
+                    break;
                 case MultipleMatchStrategy.OldestVersion:
-                    return allMatchingTypes.OrderBy(_ => (_.Assembly.GetName().Version ?? new Version(0, 0, 0, 1)).ToString()).FirstOrDefault();
+                    result = allMatchingTypes.OrderBy(_ => (_.Assembly.GetName().Version ?? new Version(0, 0, 0, 1)).ToString()).FirstOrDefault();
+                    break;
                 default:
                     throw new NotSupportedException("Multiple match strategy not supported: " + multipleMatchStrategy);
             }
+
+            if ((accumulatedReflectionTypeLoadExceptions != null) && (result == null))
+            {
+                throw accumulatedReflectionTypeLoadExceptions;
+            }
+
+            return result;
         }
     }
 }
