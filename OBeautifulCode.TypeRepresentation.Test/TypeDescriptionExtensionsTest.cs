@@ -105,7 +105,7 @@ namespace OBeautifulCode.TypeRepresentation.Test
             Action action = () => toFind.ResolveFromLoadedTypes(TypeMatchStrategy.NamespaceAndName, MultipleMatchStrategy.ThrowOnMultiple);
 
             // Act & Assert
-            action.ShouldThrow<InvalidOperationException>();
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Fact]
