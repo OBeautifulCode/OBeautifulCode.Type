@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <projectUrl>https://github.com/OBeautifulCode/OBeautifulCode.TypeRepresentation</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.TypeRepresentation/master/OBeautifulCode.TypeRepresentation/nuget-icon.png</iconUrl>
     <description>Model object containing a description of a type that can be serialized without knowledge of the type.</description>
     <tags>typedescription types type</tags>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.TypeRepresentation/master/OBeautifulCode.TypeRepresentation/nuget-icon.png</iconUrl>
   </metadata>
 </package>

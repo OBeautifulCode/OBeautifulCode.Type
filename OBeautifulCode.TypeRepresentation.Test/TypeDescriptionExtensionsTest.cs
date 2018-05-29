@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TypeDescriptionExtensionsTest.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -8,7 +8,6 @@ namespace OBeautifulCode.TypeRepresentation.Test
 {
     using System;
     using System.IO;
-    using System.Linq;
     using System.Reflection;
 
     using FluentAssertions;

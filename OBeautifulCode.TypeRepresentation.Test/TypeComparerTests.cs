@@ -1,19 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TypeComparerTests.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace OBeautifulCode.TypeRepresentation.Test
 {
     using System;
+
     using OBeautifulCode.TypeRepresentation;
 
     using Xunit;
 
-    /// <summary>
-    /// Tests for <see cref="TypeComparer"/>
-    /// </summary>
     public static class TypeComparerTests
     {
         [Fact]
