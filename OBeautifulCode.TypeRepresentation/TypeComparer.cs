@@ -9,7 +9,7 @@ namespace OBeautifulCode.TypeRepresentation
     using System;
     using System.Collections.Generic;
 
-    using Spritely.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
     /// Type comparer using the provided strategy.
@@ -104,7 +104,7 @@ namespace OBeautifulCode.TypeRepresentation
         /// <inheritdoc />
         public int GetHashCode(TypeDescription obj)
         {
-            new { obj }.Must().NotBeNull().OrThrowFirstFailure();
+            new { obj }.Must().NotBeNull();
 
             switch (this.typeMatchStrategy)
             {

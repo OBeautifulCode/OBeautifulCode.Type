@@ -12,8 +12,7 @@ namespace OBeautifulCode.TypeRepresentation
     using System.Reflection;
 
     using OBeautifulCode.Reflection.Recipes;
-
-    using Spritely.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     using static System.FormattableString;
 
@@ -53,7 +52,7 @@ namespace OBeautifulCode.TypeRepresentation
             TypeMatchStrategy typeMatchStrategy = TypeMatchStrategy.NamespaceAndName,
             MultipleMatchStrategy multipleMatchStrategy = MultipleMatchStrategy.ThrowOnMultiple)
         {
-            new { typeDescription }.Must().NotBeNull().OrThrowFirstFailure();
+            new { typeDescription }.Must().NotBeNull();
 
             // first deal with special hack implementation of array types...
             if (typeDescription.Name.Contains("[]") || typeDescription.AssemblyQualifiedName.Contains("[]"))
