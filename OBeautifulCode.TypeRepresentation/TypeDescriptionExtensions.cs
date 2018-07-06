@@ -92,7 +92,31 @@ namespace OBeautifulCode.TypeRepresentation
 
             allTypes = allTypes.Where(_ => _ != null).Distinct().ToList();
             var typeComparer = new TypeComparer(typeMatchStrategy);
-            var allMatchingTypes = allTypes.Where(_ => typeComparer.Equals(_.ToTypeDescription(), typeDescription)).ToList();
+            var allMatchingTypes = allTypes.Where(_ =>
+                {
+                    TypeDescription description = null;
+
+                    try
+                    {
+                        /* For types that have dependent assemblies that are not found on disk this will fail when it tries to get properties from the type.
+                         * Added because we encountered a FileNotFoundException for an assembly that was not on disk when taking a loaded type and calling
+                         * ToTypeDescription on it (specifically it threw on the type.Namespace getter call).
+                         */
+
+                        description = _.ToTypeDescription();
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+
+                    if (description == null)
+                    {
+                        return false;
+                    }
+
+                    return typeComparer.Equals(description, typeDescription);
+                }).ToList();
 
             Type result;
             switch (multipleMatchStrategy)
