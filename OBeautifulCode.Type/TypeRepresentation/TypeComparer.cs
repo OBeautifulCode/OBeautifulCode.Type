@@ -9,6 +9,7 @@ namespace OBeautifulCode.Type
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+
     using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
