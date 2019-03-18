@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <description>Model object containing a description of a type that can be serialized without knowledge of the type.</description>
-    <tags>typedescription types type</tags>
+    <description>Shared types related to Types.</description>
+    <tags>typedescription types type IDeepCloneable IShallowCloneable</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Type/master/OBeautifulCode.Type/nuget-icon.png</iconUrl>
   </metadata>
 </package>
