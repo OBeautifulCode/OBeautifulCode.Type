@@ -28,7 +28,10 @@ namespace OBeautifulCode.Type
         /// <param name="namespace">Namespace of type.</param>
         /// <param name="name">Name of type.</param>
         /// <param name="assemblyQualifiedName">Assembly qualified name of type.</param>
-        public TypeDescription(string @namespace, string name, string assemblyQualifiedName)
+        public TypeDescription(
+            string @namespace,
+            string name,
+            string assemblyQualifiedName)
         {
             this.Namespace = @namespace;
             this.Name = name;
@@ -51,33 +54,43 @@ namespace OBeautifulCode.Type
         public string AssemblyQualifiedName { get; set; }
 
         /// <summary>
-        /// Compares equality of two <see cref="TypeDescription"/>'s.
+        /// Determines whether two objects of type <see cref="TypeDescription"/> are equal.
         /// </summary>
-        /// <param name="first">First to check.</param>
-        /// <param name="second">Second to check.</param>
-        /// <returns>A value indicating they are equal.</returns>
-        public static bool operator ==(TypeDescription first, TypeDescription second)
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
+        /// <returns>True if the two object are equal; false otherwise.</returns>
+        public static bool operator ==(
+            TypeDescription left,
+            TypeDescription right)
         {
-            if (ReferenceEquals(first, second))
+            if (ReferenceEquals(left, right))
             {
                 return true;
             }
 
-            if (ReferenceEquals(first, null) || ReferenceEquals(second, null))
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
             {
                 return false;
             }
 
-            return (first.AssemblyQualifiedName == second.AssemblyQualifiedName) && (first.Namespace == second.Namespace) && (first.Name == second.Name);
+            var result =
+                (left.AssemblyQualifiedName == right.AssemblyQualifiedName) &&
+                (left.Namespace == right.Namespace) &&
+                (left.Name == right.Name);
+
+            return result;
         }
 
         /// <summary>
-        /// Compares inequality of two <see cref="TypeDescription"/>'s.
+        /// Determines whether two objects of type <see cref="TypeDescription"/> are not equal.
         /// </summary>
-        /// <param name="first">First to check.</param>
-        /// <param name="second">Second to check.</param>
-        /// <returns>A value indicating they are not equal.</returns>
-        public static bool operator !=(TypeDescription first, TypeDescription second) => !(first == second);
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
+        /// <returns>True if the two object are not equal; false otherwise.</returns>
+        public static bool operator !=(
+            TypeDescription left,
+            TypeDescription right)
+            => !(left == right);
 
         /// <inheritdoc />
         public bool Equals(TypeDescription other) => this == other;
@@ -86,6 +99,11 @@ namespace OBeautifulCode.Type
         public override bool Equals(object obj) => this == (obj as TypeDescription);
 
         /// <inheritdoc />
-        public override int GetHashCode() => HashCodeHelper.Initialize().Hash(this.AssemblyQualifiedName).Hash(this.Namespace).Hash(this.Name).Value;
+        public override int GetHashCode() =>
+            HashCodeHelper.Initialize()
+                .Hash(this.AssemblyQualifiedName)
+                .Hash(this.Namespace)
+                .Hash(this.Name)
+                .Value;
     }
 }

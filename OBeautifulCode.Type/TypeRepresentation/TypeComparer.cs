@@ -8,7 +8,7 @@ namespace OBeautifulCode.Type
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Diagnostics.CodeAnalysis;
     using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
@@ -25,84 +25,94 @@ namespace OBeautifulCode.Type
         /// Initializes a new instance of the <see cref="TypeComparer"/> class.
         /// </summary>
         /// <param name="typeMatchStrategy">Strategy for use when matching the type.</param>
-        public TypeComparer(TypeMatchStrategy typeMatchStrategy)
+        public TypeComparer(
+            TypeMatchStrategy typeMatchStrategy)
         {
             this.typeMatchStrategy = typeMatchStrategy;
         }
 
         /// <inheritdoc />
-        public bool Equals(Type x, Type y)
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#", Justification = "These parameter names are better.")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#", Justification = "These parameter names are better.")]
+        public bool Equals(
+            Type first,
+            Type second)
         {
-            if (x == null || y == null)
+            if (first == null || second == null)
             {
                 return false;
             }
 
-            var ret = this.Equals(
-                x.Namespace,
-                x.Name,
-                x.AssemblyQualifiedName,
-                y.Namespace,
-                y.Name,
-                y.AssemblyQualifiedName);
+            var result = first.ToTypeDescription().Equals(second.ToTypeDescription());
 
-            return ret;
+            return result;
         }
 
         /// <inheritdoc />
-        public bool Equals(TypeDescription x, TypeDescription y)
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "1#", Justification = "These parameter names are better.")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#", Justification = "These parameter names are better.")]
+        public bool Equals(
+            TypeDescription first,
+            TypeDescription second)
         {
-            if (x == null || y == null)
+            if (first == null || second == null)
             {
                 return false;
             }
 
-            var ret = this.Equals(
-                x.Namespace,
-                x.Name,
-                x.AssemblyQualifiedName,
-                y.Namespace,
-                y.Name,
-                y.AssemblyQualifiedName);
-            return ret;
+            var result = this.Equals(
+                first.Namespace,
+                first.Name,
+                first.AssemblyQualifiedName,
+                second.Namespace,
+                second.Name,
+                second.AssemblyQualifiedName);
+            return result;
         }
 
         /// <summary>
         /// Equals compare that takes raw strings instead of types.
         /// </summary>
-        /// <param name="namespaceX">Namespace of type X.</param>
-        /// <param name="nameX">Name of type X.</param>
-        /// <param name="assemblyQualifiedNameX">AssemblyQualifiedName of type X.</param>
-        /// <param name="namespaceY">Namespace of type Y.</param>
-        /// <param name="nameY">Name of type Y.</param>
-        /// <param name="assemblyQualifiedNameY">AssemblyQualifiedName of type Y.</param>
+        /// <param name="firstNamespace">Namespace of the first type.</param>
+        /// <param name="firstName">Name of the first type.</param>
+        /// <param name="firstAssemblyQualifiedName">AssemblyQualifiedName of the first type.</param>
+        /// <param name="secondNamespace">Namespace of the second type.</param>
+        /// <param name="secondName">Name of the second type.</param>
+        /// <param name="secondAssemblyQualifiedName">AssemblyQualifiedName of the second type.</param>
         /// <returns>True for equality and false otherwise.</returns>
-        public bool Equals(string namespaceX, string nameX, string assemblyQualifiedNameX, string namespaceY, string nameY, string assemblyQualifiedNameY)
+        public bool Equals(
+            string firstNamespace,
+            string firstName,
+            string firstAssemblyQualifiedName,
+            string secondNamespace,
+            string secondName,
+            string secondAssemblyQualifiedName)
         {
-            bool ret;
+            bool result;
             switch (this.typeMatchStrategy)
             {
                 case TypeMatchStrategy.NamespaceAndName:
-                    ret = namespaceX == namespaceY && nameX == nameY;
+                    result = firstNamespace == secondNamespace && firstName == secondName;
                     break;
                 case TypeMatchStrategy.AssemblyQualifiedName:
-                    if (assemblyQualifiedNameX == null || assemblyQualifiedNameY == null)
+                    if (firstAssemblyQualifiedName == null || secondAssemblyQualifiedName == null)
                     {
                         throw new ArgumentException(
                             "Type(s) AssemblyQualifiedName property was null so catch use matching strategy: AssemblyQualifiedName");
                     }
 
-                    ret = assemblyQualifiedNameX == assemblyQualifiedNameY;
+                    result = firstAssemblyQualifiedName == secondAssemblyQualifiedName;
                     break;
                 default:
                     throw new ArgumentException("Unsupported matching strategy: " + this.typeMatchStrategy);
             }
 
-            return ret;
+            return result;
         }
 
         /// <inheritdoc />
-        public int GetHashCode(TypeDescription obj)
+        public int GetHashCode(
+            TypeDescription obj)
         {
             new { obj }.Must().NotBeNull();
 
@@ -124,7 +134,8 @@ namespace OBeautifulCode.Type
         }
 
         /// <inheritdoc />
-        public int GetHashCode(Type obj)
+        public int GetHashCode(
+            Type obj)
         {
             return this.GetHashCode(obj.ToTypeDescription());
         }
