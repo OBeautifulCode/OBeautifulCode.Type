@@ -8,8 +8,8 @@
     <ProjectGuid>{10890EAE-8FA9-47F9-A86C-F64E63414DBB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OBeautifulCode.TypeRepresentation.Test</RootNamespace>
-    <AssemblyName>OBeautifulCode.TypeRepresentation.Test</AssemblyName>
+    <RootNamespace>OBeautifulCode.Type.Test</RootNamespace>
+    <AssemblyName>OBeautifulCode.Type.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -88,9 +88,9 @@
     <Compile Include="TypeDescriptionTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OBeautifulCode.TypeRepresentation\OBeautifulCode.TypeRepresentation.csproj">
+    <ProjectReference Include="..\OBeautifulCode.Type\OBeautifulCode.Type.csproj">
       <Project>{E651BF26-9AA6-449C-B581-0EC675C9F306}</Project>
-      <Name>OBeautifulCode.TypeRepresentation</Name>
+      <Name>OBeautifulCode.Type</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

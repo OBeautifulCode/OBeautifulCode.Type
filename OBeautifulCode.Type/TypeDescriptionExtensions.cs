@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.TypeRepresentation
+namespace OBeautifulCode.Type
 {
     using System;
     using System.Collections.Generic;

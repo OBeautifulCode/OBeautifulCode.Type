@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.TypeRepresentation.Test
+namespace OBeautifulCode.Type.Test
 {
     using FakeItEasy;
 

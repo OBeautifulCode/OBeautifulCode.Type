@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.TypeRepresentation", "OBeautifulCode.TypeRepresentation\OBeautifulCode.TypeRepresentation.csproj", "{E651BF26-9AA6-449C-B581-0EC675C9F306}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.Type", "OBeautifulCode.Type\OBeautifulCode.Type.csproj", "{E651BF26-9AA6-449C-B581-0EC675C9F306}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.TypeRepresentation.Test", "OBeautifulCode.TypeRepresentation.Test\OBeautifulCode.TypeRepresentation.Test.csproj", "{10890EAE-8FA9-47F9-A86C-F64E63414DBB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.Type.Test", "OBeautifulCode.Type.Test\OBeautifulCode.Type.Test.csproj", "{10890EAE-8FA9-47F9-A86C-F64E63414DBB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{363F1A17-DA8A-40F6-9B78-C0AD9CD3588D}"
 	ProjectSection(SolutionItems) = preProject

@@ -3,6 +3,6 @@
   <metadata>
     <description>Model object containing a description of a type that can be serialized without knowledge of the type.</description>
     <tags>typedescription types type</tags>
-    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.TypeRepresentation/master/OBeautifulCode.TypeRepresentation/nuget-icon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Type/master/OBeautifulCode.Type/nuget-icon.png</iconUrl>
   </metadata>
 </package>

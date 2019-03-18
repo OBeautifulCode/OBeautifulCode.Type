@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.TypeRepresentation.Test
+namespace OBeautifulCode.Type.Test
 {
     using System;
     using System.IO;
@@ -93,7 +93,7 @@ namespace OBeautifulCode.TypeRepresentation.Test
             var testAssemblyRootPath =
                 Path.Combine(
                     new Uri(typeof(TypeDescriptionExtensionsTest).Assembly.CodeBase).LocalPath.Replace(
-                        "\\OBeautifulCode.TypeRepresentation.Test.DLL",
+                        "\\OBeautifulCode.Type.Test.DLL",
                         string.Empty),
                     "..",
                     "..",
@@ -116,7 +116,7 @@ namespace OBeautifulCode.TypeRepresentation.Test
             var testAssemblyRootPath =
                 Path.Combine(
                     new Uri(typeof(TypeDescriptionExtensionsTest).Assembly.CodeBase).LocalPath.Replace(
-                        "\\OBeautifulCode.TypeRepresentation.Test.DLL",
+                        "\\OBeautifulCode.Type.Test.DLL",
                         string.Empty),
                     "..",
                     "..",
@@ -142,7 +142,7 @@ namespace OBeautifulCode.TypeRepresentation.Test
             var testAssemblyRootPath =
                 Path.Combine(
                     new Uri(typeof(TypeDescriptionExtensionsTest).Assembly.CodeBase).LocalPath.Replace(
-                        "\\OBeautifulCode.TypeRepresentation.Test.DLL",
+                        "\\OBeautifulCode.Type.Test.DLL",
                         string.Empty),
                     "..",
                     "..",
@@ -168,7 +168,7 @@ namespace OBeautifulCode.TypeRepresentation.Test
             var testAssemblyRootPath =
                 Path.Combine(
                     new Uri(typeof(TypeDescriptionExtensionsTest).Assembly.CodeBase).LocalPath.Replace(
-                        "\\OBeautifulCode.TypeRepresentation.Test.DLL",
+                        "\\OBeautifulCode.Type.Test.DLL",
                         string.Empty),
                     "..",
                     "..",

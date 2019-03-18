@@ -1,24 +1,29 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TypeMatchStrategy.cs" company="OBeautifulCode">
+// <copyright file="MultipleMatchStrategy.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.TypeRepresentation
+namespace OBeautifulCode.Type
 {
     /// <summary>
-    /// Matching strategies on a type (allows for mismatch version to be compared or not).
+    /// Instructions on how to handle multiple matches found during resolution.
     /// </summary>
-    public enum TypeMatchStrategy
+    public enum MultipleMatchStrategy
     {
         /// <summary>
         /// Match the name and namespace of the type.
         /// </summary>
-        NamespaceAndName,
+        ThrowOnMultiple,
 
         /// <summary>
-        /// Match the assembly qualified name of the type (this will include the version).
+        /// Return the newest version found.
         /// </summary>
-        AssemblyQualifiedName,
+        NewestVersion,
+
+        /// <summary>
+        /// Return the oldest version found.
+        /// </summary>
+        OldestVersion,
     }
 }
