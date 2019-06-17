@@ -45,7 +45,12 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include=".recipes\OBeautifulCode.Collection\EnumerableExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Math\HashCodeHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\AssemblyHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\AssemblyLoader.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\CompressionMethod.cs" />
+    <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\ApplyBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\DictionaryExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\Parameter.cs" />
@@ -63,6 +68,7 @@
     <Compile Include="TypeRepresentation\MultipleMatchStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeRepresentation\TypeDescription.cs" />
+    <Compile Include="TypeRepresentation\TypeDescriptionCacheKey.cs" />
     <Compile Include="TypeRepresentation\TypeDescriptionExtensions.cs" />
     <Compile Include="TypeRepresentation\TypeMatchStrategy.cs" />
     <Compile Include="TypeRepresentation\TypeComparer.cs" />
