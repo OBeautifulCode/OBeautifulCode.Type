@@ -8,8 +8,6 @@ namespace OBeautifulCode.Type.Test
 {
     using System;
 
-    using OBeautifulCode.Type;
-
     using Xunit;
 
     public static class TypeComparerTests
@@ -25,8 +23,8 @@ namespace OBeautifulCode.Type.Test
             Assert.False(comparer.Equals(typeof(string), (Type)null));
             Assert.False(comparer.Equals((Type)null, typeof(string)));
 
-            Assert.False(comparer.Equals(typeof(string).ToTypeDescription(), (TypeDescription)null));
-            Assert.False(comparer.Equals((TypeDescription)null, typeof(string).ToTypeDescription()));
+            Assert.False(comparer.Equals(typeof(string).ToDescription(), (TypeDescription)null));
+            Assert.False(comparer.Equals((TypeDescription)null, typeof(string).ToDescription()));
         }
 
         [Fact]
@@ -115,7 +113,7 @@ namespace OBeautifulCode.Type.Test
             var comparer = new TypeComparer(TypeMatchStrategy.NamespaceAndName);
             var x = typeof(string);
             var y = typeof(string);
-            var actual = comparer.Equals(x.ToTypeDescription(), y.ToTypeDescription());
+            var actual = comparer.Equals(x.ToDescription(), y.ToDescription());
             Assert.True(actual);
         }
 
@@ -125,7 +123,7 @@ namespace OBeautifulCode.Type.Test
             var comparer = new TypeComparer(TypeMatchStrategy.AssemblyQualifiedName);
             var x = typeof(string);
             var y = typeof(string);
-            var actual = comparer.Equals(x.ToTypeDescription(), y.ToTypeDescription());
+            var actual = comparer.Equals(x.ToDescription(), y.ToDescription());
             Assert.True(actual);
         }
 
@@ -135,7 +133,7 @@ namespace OBeautifulCode.Type.Test
             var comparer = new TypeComparer(TypeMatchStrategy.NamespaceAndName);
             var x = typeof(string);
             var y = typeof(Type);
-            var actual = comparer.Equals(x.ToTypeDescription(), y.ToTypeDescription());
+            var actual = comparer.Equals(x.ToDescription(), y.ToDescription());
             Assert.False(actual);
         }
 
@@ -145,7 +143,7 @@ namespace OBeautifulCode.Type.Test
             var comparer = new TypeComparer(TypeMatchStrategy.AssemblyQualifiedName);
             var x = typeof(string);
             var y = typeof(Type);
-            var actual = comparer.Equals(x.ToTypeDescription(), y.ToTypeDescription());
+            var actual = comparer.Equals(x.ToDescription(), y.ToDescription());
             Assert.False(actual);
         }
     }

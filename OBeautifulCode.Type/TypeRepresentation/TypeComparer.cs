@@ -44,7 +44,7 @@ namespace OBeautifulCode.Type
                 return false;
             }
 
-            var result = first.ToTypeDescription().Equals(second.ToTypeDescription());
+            var result = first.ToDescription().Equals(second.ToDescription());
 
             return result;
         }
@@ -138,7 +138,7 @@ namespace OBeautifulCode.Type
         public int GetHashCode(
             Type obj)
         {
-            return this.GetHashCode(obj.ToTypeDescription());
+            return this.GetHashCode(obj.ToDescription());
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TypeDescription.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode 2018. All rights reserved.
+//     Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,14 +16,20 @@ namespace OBeautifulCode.Type
     public class TypeDescription : IEquatable<TypeDescription>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TypeDescription"/> class.
+        /// The unknown type description to use.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Is in fact immutable.")]
+        public static readonly TypeDescription UnknownTypeDescription = typeof(UnknownTypePlaceholder).ToDescription();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeDescription" /> class.
         /// </summary>
         public TypeDescription()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TypeDescription"/> class.
+        /// Initializes a new instance of the <see cref="TypeDescription" /> class.
         /// </summary>
         /// <param name="namespace">Namespace of type.</param>
         /// <param name="name">Name of type.</param>
@@ -41,20 +47,23 @@ namespace OBeautifulCode.Type
         /// <summary>
         /// Gets or sets the namespace of the type.
         /// </summary>
+        /// <value>The namespace.</value>
         public string Namespace { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the type.
         /// </summary>
+        /// <value>The name.</value>
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the qualified name of the assembly of the type.
         /// </summary>
+        /// <value>The name of the assembly qualified.</value>
         public string AssemblyQualifiedName { get; set; }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="TypeDescription"/> are equal.
+        /// Determines whether two objects of type <see cref="TypeDescription" /> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the operator.</param>
         /// <param name="right">The object to the right of the operator.</param>
@@ -82,7 +91,7 @@ namespace OBeautifulCode.Type
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="TypeDescription"/> are not equal.
+        /// Determines whether two objects of type <see cref="TypeDescription" /> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the operator.</param>
         /// <param name="right">The object to the right of the operator.</param>

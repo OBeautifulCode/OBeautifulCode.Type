@@ -18,7 +18,7 @@ namespace OBeautifulCode.Type.Test
         public static void ToTypeDescription___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => TypeDescriptionExtensions.ToTypeDescription(null));
+            var ex = Record.Exception(() => TypeDescriptionExtensions.ToDescription(null));
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
@@ -31,7 +31,7 @@ namespace OBeautifulCode.Type.Test
             var type = typeof(string);
 
             // Act
-            var description = type.ToTypeDescription();
+            var description = type.ToDescription();
 
             // Assert
             description.AssemblyQualifiedName.Should().Be(type.AssemblyQualifiedName);
@@ -44,7 +44,7 @@ namespace OBeautifulCode.Type.Test
         {
             // Arrange
             var expectedType = typeof(string);
-            var typeDescriptionBase = expectedType.ToTypeDescription();
+            var typeDescriptionBase = expectedType.ToDescription();
             var typeDescription = new TypeDescription(typeDescriptionBase.Namespace, typeDescriptionBase.Name, typeDescriptionBase.AssemblyQualifiedName);
             var stopwatch = new Stopwatch();
 

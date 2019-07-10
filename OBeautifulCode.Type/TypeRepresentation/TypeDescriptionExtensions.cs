@@ -16,7 +16,7 @@ namespace OBeautifulCode.Type
     using static System.FormattableString;
 
     /// <summary>
-    /// Extensions on type <see cref="TypeDescription"/>.
+    /// Extensions to <see cref="TypeDescription"/>.
     /// </summary>
     public static class TypeDescriptionExtensions
     {
@@ -27,7 +27,7 @@ namespace OBeautifulCode.Type
         /// </summary>
         /// <param name="type">Input type to use.</param>
         /// <returns>Type description describing input type.</returns>
-        public static TypeDescription ToTypeDescription(
+        public static TypeDescription ToDescription(
             this Type type)
         {
             if (type == null)
@@ -112,10 +112,10 @@ namespace OBeautifulCode.Type
                     {
                         /* For types that have dependent assemblies that are not found on disk this will fail when it tries to get properties from the type.
                          * Added because we encountered a FileNotFoundException for an assembly that was not on disk when taking a loaded type and calling
-                         * ToTypeDescription on it (specifically it threw on the type.Namespace getter call).
+                         * ToDescription on it (specifically it threw on the type.Namespace getter call).
                          */
 
-                        description = _.ToTypeDescription();
+                        description = _.ToDescription();
                     }
                     catch (Exception)
                     {
