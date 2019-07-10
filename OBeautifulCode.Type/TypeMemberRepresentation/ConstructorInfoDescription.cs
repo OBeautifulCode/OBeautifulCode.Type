@@ -7,7 +7,6 @@
 namespace OBeautifulCode.Type
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using OBeautifulCode.Collection.Recipes;
@@ -24,19 +23,11 @@ namespace OBeautifulCode.Type
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="constructorHash">The method hash.</param>
-        /// <param name="genericArguments">The generic arguments.</param>
-        public ConstructorInfoDescription(TypeDescription type, string constructorHash, IReadOnlyList<TypeDescription> genericArguments)
+        public ConstructorInfoDescription(TypeDescription type, string constructorHash)
         {
             this.Type = type;
             this.ConstructorHash = constructorHash;
-            this.GenericArguments = genericArguments;
         }
-
-        /// <summary>
-        /// Gets the generic arguments.
-        /// </summary>
-        /// <value>The generic arguments.</value>
-        public IReadOnlyList<TypeDescription> GenericArguments { get; private set; }
 
         /// <summary>
         /// Gets the constructor hash.
@@ -72,8 +63,7 @@ namespace OBeautifulCode.Type
             }
 
             var result = (left.Type == right.Type)
-                      && (left.ConstructorHash == right.ConstructorHash)
-                      && left.GenericArguments.SequenceEqualHandlingNulls(right.GenericArguments);
+                      && (left.ConstructorHash == right.ConstructorHash);
 
             return result;
         }
@@ -104,7 +94,6 @@ namespace OBeautifulCode.Type
             HashCodeHelper.Initialize()
                           .Hash(this.Type)
                           .Hash(this.ConstructorHash)
-                          .HashElements(this.GenericArguments)
                           .Value;
     }
 
@@ -148,8 +137,7 @@ namespace OBeautifulCode.Type
 
             var type = constructorInfo.DeclaringType.ToDescription();
             var constructorHash = constructorInfo.GetSignatureHash();
-            var genericArguments = constructorInfo.GetGenericArguments().Select(_ => _.ToDescription()).ToList();
-            var result = new ConstructorInfoDescription(type, constructorHash, genericArguments);
+            var result = new ConstructorInfoDescription(type, constructorHash);
             return result;
         }
 

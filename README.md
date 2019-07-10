@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/fdd34fwf3vf6beiy?svg=true)](https://ci.appveyor.com/project/SurajGupta/obeautifulcode-typerepresentation)
+[![Build status](https://ci.appveyor.com/api/projects/status/fdd34fwf3vf6beiy?svg=true)](https://ci.appveyor.com/project/SurajGupta/obeautifulcode-type)
 
 [![Nuget status](https://img.shields.io/nuget/v/OBeautifulCode.Type.svg)](https://www.nuget.org/packages/OBeautifulCode.Type)  OBeautifulCode.Type
 
