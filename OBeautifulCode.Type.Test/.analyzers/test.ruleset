@@ -21,6 +21,29 @@
     <Rule Id="CA1024" Action="None" />
 
     <!--
+      ** Code should not contain multiple whitespace characters in a row. **
+      This becomes a problem with alignment of variables like below,
+      because there are multiple spaces between the name and the '=' symbol:
+      
+        public ProcessDescription(
+            string name,
+            string filePath,
+            string fileVersion,
+            string productVersion,
+            bool   runningAsAdmin)
+        {
+            new { name }.Must().NotBeNullNorWhiteSpace();
+
+            this.Name           = name;
+            this.FilePath       = filePath;
+            this.FileVersion    = fileVersion;
+            this.ProductVersion = productVersion;
+            this.RunningAsAdmin = runningAsAdmin;
+        }
+    -->
+    <Rule Id="SA1025" Action="None" />
+
+    <!--
       ** Use events where appropriate **
       This rule is triggered by methods that start with certain terms (e.g. Fire). There's is no examination
       of what the method is actually doing.  As such, it produces false positives in test projects where
