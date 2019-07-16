@@ -72,6 +72,7 @@
     <Compile Include=".recipes\OBeautifulCode.Validation\ParameterValidator.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\Range.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\ValidatedNotNullAttribute.cs" />
+    <Compile Include="ModelDefinitions\IModel.cs" />
     <Compile Include="Cloneable\IDeepCloneable.cs" />
     <Compile Include="Cloneable\IShallowCloneable.cs" />
     <Compile Include="GlobalSuppressions.cs" />
