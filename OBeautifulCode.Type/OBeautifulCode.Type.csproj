@@ -45,6 +45,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Identifyable\ICanBeIdentifiedByGuid.cs" />
+    <Compile Include="Identifyable\ICanBeIdentifiedByString.cs" />
+    <Compile Include="Identifyable\ICanBeIdentified.cs" />
     <Compile Include="ModelDefinitions\IModel.cs" />
     <Compile Include="Cloneable\IDeepCloneable.cs" />
     <Compile Include="Cloneable\IShallowCloneable.cs" />
