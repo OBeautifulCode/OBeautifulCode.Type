@@ -22,6 +22,7 @@ namespace OBeautifulCode.Type
         /// <returns>
         /// A new object that is a deep clone of this instance.
         /// </returns>
+        // ReSharper disable once UnusedMember.Global
         T DeepClone();
     }
 }

@@ -14,6 +14,7 @@ namespace OBeautifulCode.Type
     /// object graphs.
     /// </summary>
     /// <typeparam name="T">The type of object to clone.</typeparam>
+    // ReSharper disable once UnusedMember.Global
     public interface IShallowCloneable<T> : ICloneable
     {
         /// <summary>
@@ -22,6 +23,7 @@ namespace OBeautifulCode.Type
         /// <returns>
         /// A new object that is a shallow clone of this instance.
         /// </returns>
+        // ReSharper disable once UnusedMember.Global
         T DeepClone();
     }
 }

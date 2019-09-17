@@ -11,11 +11,13 @@ namespace OBeautifulCode.Type
     /// <summary>
     /// Represents an object that has a GUID unique identifier.
     /// </summary>
+    // ReSharper disable once UnusedMember.Global
     public interface ICanBeIdentifiedByGuid : ICanBeIdentified
     {
         /// <summary>
         /// Gets or sets the unique identifier.
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         Guid Id { get; set; }
     }
 }
