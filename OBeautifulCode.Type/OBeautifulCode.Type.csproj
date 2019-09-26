@@ -49,7 +49,9 @@
     <Compile Include="Identifyable\ICanBeIdentifiedByGuid.cs" />
     <Compile Include="Identifyable\ICanBeIdentifiedByString.cs" />
     <Compile Include="Identifyable\ICanBeIdentified.cs" />
+    <Compile Include="ModelDefinitions\IModelViaCodeGen.cs" />
     <Compile Include="ModelDefinitions\IModel.cs" />
+    <Compile Include="ModelDefinitions\IModel{T}.cs" />
     <Compile Include="Cloneable\IDeepCloneable.cs" />
     <Compile Include="Cloneable\IShallowCloneable.cs" />
     <Compile Include="GlobalSuppressions.cs" />
