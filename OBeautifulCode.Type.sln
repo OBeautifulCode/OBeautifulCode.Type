@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.Type.Recipe", "OBeautifulCode.Type.Recipe\OBeautifulCode.Type.Recipe.csproj", "{704CC23A-1465-4599-A759-B32E629A23C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.Type.Recipes", "OBeautifulCode.Type.Recipes\OBeautifulCode.Type.Recipes.csproj", "{704CC23A-1465-4599-A759-B32E629A23C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.Type.Recipe.Test", "OBeautifulCode.Type.Recipe.Test\OBeautifulCode.Type.Recipe.Test.csproj", "{EC3DD549-5419-4B45-8000-73C4E84408DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.Type.Recipes.Test", "OBeautifulCode.Type.Recipes.Test\OBeautifulCode.Type.Recipes.Test.csproj", "{EC3DD549-5419-4B45-8000-73C4E84408DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

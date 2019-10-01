@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>OBeautifulCode.Type.Recipes.TypeExtensions</id>
+    <description>Extension methods on Type.</description>
+    <tags>type extensions</tags>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Type/master/OBeautifulCode.Type.Recipes/nuget-icon.png</iconUrl>
+  </metadata>
+  <files>
+    <file src="TypeExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Type.Recipes\TypeExtensions.cs" />
+  </files>
+</package>
