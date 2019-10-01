@@ -8,5 +8,6 @@
   </metadata>
   <files>
     <file src="TypeExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <file src="ToStringReadableOptions.cs" target="content\net462\.recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
   </files>
 </package>

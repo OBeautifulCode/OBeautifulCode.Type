@@ -15,6 +15,7 @@ namespace OBeautifulCode.Type
     /// </summary>
     /// <typeparam name="T">The type of object to clone.</typeparam>
     // ReSharper disable once UnusedMember.Global
+    // ReSharper disable once TypeParameterCanBeVariant
     public interface IShallowCloneable<T> : ICloneable
     {
         /// <summary>
