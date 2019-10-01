@@ -7,6 +7,6 @@
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Type/master/OBeautifulCode.Type.Recipes/nuget-icon.png</iconUrl>
   </metadata>
   <files>
-    <file src="TypeExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Type.Recipes\TypeExtensions.cs" />
+    <file src="TypeExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Type\TypeExtensions.cs" />
   </files>
 </package>
