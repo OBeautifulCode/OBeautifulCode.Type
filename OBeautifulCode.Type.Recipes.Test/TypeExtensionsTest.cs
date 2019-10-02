@@ -515,10 +515,10 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsSystemOrderedEnumerableType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void IsSystemOrderedCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsSystemOrderedEnumerableType(null));
+            var actual = Record.Exception(() => TypeExtensions.IsSystemOrderedCollectionType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -526,7 +526,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsSystemOrderedEnumerableType___Should_return_false___When_parameter_type_is_not_a_System_collection_type()
+        public static void IsSystemOrderedCollectionType___Should_return_false___When_parameter_type_is_not_a_System_collection_type()
         {
             // Arrange
             var types = new[]
@@ -547,14 +547,14 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsSystemOrderedEnumerableType()).ToList();
+            var actuals = types.Select(_ => _.IsSystemOrderedCollectionType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsSystemOrderedEnumerableType___Should_return_true___When_parameter_type_is_a_System_collection_type()
+        public static void IsSystemOrderedCollectionType___Should_return_true___When_parameter_type_is_a_System_collection_type()
         {
             // Arrange
             var types = new[]
@@ -574,7 +574,7 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsSystemOrderedEnumerableType()).ToList();
+            var actuals = types.Select(_ => _.IsSystemOrderedCollectionType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);

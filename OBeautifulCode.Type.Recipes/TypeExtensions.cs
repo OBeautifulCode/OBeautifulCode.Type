@@ -320,7 +320,7 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is a <see cref="System"/> ordered <see cref="IEnumerable{T}"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        public static bool IsSystemOrderedEnumerableType(
+        public static bool IsSystemOrderedCollectionType(
             this Type type)
         {
             if (type == null)
