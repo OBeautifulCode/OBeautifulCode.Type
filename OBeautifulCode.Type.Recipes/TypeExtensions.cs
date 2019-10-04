@@ -35,34 +35,37 @@ namespace OBeautifulCode.Type.Recipes
 #endif
     static class TypeExtensions
     {
-        private static readonly Type[] CollectionTypes =
-        {
-            typeof(Collection<>),
-            typeof(ICollection<>),
-            typeof(ReadOnlyCollection<>),
-            typeof(IReadOnlyCollection<>),
-            typeof(List<>),
-            typeof(IList<>),
-            typeof(IReadOnlyList<>)
-        };
+        private static readonly HashSet<Type> CollectionTypes =
+            new HashSet<Type>(new[]
+            {
+                typeof(Collection<>),
+                typeof(ICollection<>),
+                typeof(ReadOnlyCollection<>),
+                typeof(IReadOnlyCollection<>),
+                typeof(List<>),
+                typeof(IList<>),
+                typeof(IReadOnlyList<>)
+            });
 
-        private static readonly Type[] OrderedCollectionTypes =
-        {
-            typeof(Collection<>),
-            typeof(ReadOnlyCollection<>),
-            typeof(List<>),
-            typeof(IList<>),
-            typeof(IReadOnlyList<>)
-        };
+        private static readonly HashSet<Type> OrderedCollectionTypes =
+            new HashSet<Type>(new[]
+            {
+                typeof(Collection<>),
+                typeof(ReadOnlyCollection<>),
+                typeof(List<>),
+                typeof(IList<>),
+                typeof(IReadOnlyList<>)
+            });
 
-        private static readonly Type[] DictionaryTypes =
-        {
-            typeof(Dictionary<,>),
-            typeof(IDictionary<,>),
-            typeof(ReadOnlyDictionary<,>),
-            typeof(IReadOnlyDictionary<,>),
-            typeof(ConcurrentDictionary<,>),
-        };
+        private static readonly HashSet<Type> DictionaryTypes =
+            new HashSet<Type>(new[]
+            {
+                typeof(Dictionary<,>),
+                typeof(IDictionary<,>),
+                typeof(ReadOnlyDictionary<,>),
+                typeof(IReadOnlyDictionary<,>),
+                typeof(ConcurrentDictionary<,>),
+            });
 
         private static readonly Regex GenericBracketsRegex = new Regex("<.*>", RegexOptions.Compiled);
 
@@ -348,7 +351,8 @@ namespace OBeautifulCode.Type.Recipes
 
             var genericType = type.GetGenericTypeDefinition();
 
-            var result = CollectionTypes.Any(_ => genericType == _);
+            var result = CollectionTypes.Contains(genericType);
+
             return result;
         }
 
@@ -375,7 +379,7 @@ namespace OBeautifulCode.Type.Recipes
 
             var genericType = type.GetGenericTypeDefinition();
 
-            var result = DictionaryTypes.Any(_ => genericType == _);
+            var result = DictionaryTypes.Contains(genericType);
 
             return result;
         }
@@ -409,7 +413,7 @@ namespace OBeautifulCode.Type.Recipes
 
             var genericType = type.GetGenericTypeDefinition();
 
-            var result = OrderedCollectionTypes.Any(_ => genericType == _);
+            var result = OrderedCollectionTypes.Contains(genericType);
 
             return result;
         }
