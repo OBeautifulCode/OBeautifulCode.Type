@@ -33,6 +33,92 @@ namespace OBeautifulCode.Type.Recipes.Test
         private static readonly string ThisAssemblyNameAndVersion = "OBeautifulCode.Type.Recipes.Test" + " (" + Assembly.GetExecutingAssembly().GetName().Version + ")";
 
         [Fact]
+        public static void GetEnumerableElementType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.GetEnumerableElementType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void GetEnumerableElementType___Should_throw_ArgumentException___When_parameter_type_is_not_assignable_to_IEnumerable()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => typeof(MyNonNestedClass).GetEnumerableElementType());
+
+            // Assert
+            actual.Should().BeOfType<ArgumentException>();
+            actual.Message.Should().Contain("Specified type is not assignable to IEnumerable: MyNonNestedClass.");
+        }
+
+        [Fact]
+        public static void GetEnumerableElementType___Should_return_element_type___When_called()
+        {
+            // Arrange
+            var typesAndExpected = new[]
+            {
+                new { Type = typeof(IEnumerable), Expected = typeof(object) },
+                new { Type = typeof(IEnumerable<string>), Expected = typeof(string) },
+                new { Type = typeof(List<Guid>), Expected = typeof(Guid) },
+                new { Type = typeof(IReadOnlyList<int?>), Expected = typeof(int?) },
+                new { Type = typeof(IDictionary<int, Guid>), Expected = typeof(KeyValuePair<int, Guid>) },
+                new { Type = typeof(IReadOnlyDictionary<int, Guid>), Expected = typeof(KeyValuePair<int, Guid>) },
+                new { Type = typeof(Dictionary<int, Guid>), Expected = typeof(KeyValuePair<int, Guid>) },
+                new { Type = typeof(ReadOnlyDictionary<int, Guid>), Expected = typeof(KeyValuePair<int, Guid>) },
+            };
+
+            // Act
+            var actuals = typesAndExpected.Select(_ => _.Type.GetEnumerableElementType()).ToList();
+
+            // Assert
+            actuals.Should().Equal(typesAndExpected.Select(_ => _.Expected));
+        }
+
+        [Fact]
+        public static void GetDictionaryValueType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.GetDictionaryValueType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void GetDictionaryValueType___Should_throw_ArgumentException___When_parameter_type_is_not_assignable_to_a_dictionary_type()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => typeof(MyNonNestedClass).GetDictionaryValueType());
+
+            // Assert
+            actual.Should().BeOfType<ArgumentException>();
+            actual.Message.Should().Contain("Specified type is cannot be assigned to either IReadOnlyDictionary<T,K>, IDictionary<T,K>, or IDictionary: MyNonNestedClass.");
+        }
+
+        [Fact]
+        public static void GetDictionaryValueType___Should_return_value_type___When_called()
+        {
+            // Arrange
+            var typesAndExpected = new[]
+            {
+                new { Type = typeof(IDictionary<int, Guid>), Expected = typeof(Guid) },
+                new { Type = typeof(IReadOnlyDictionary<int, int?>), Expected = typeof(int?) },
+                new { Type = typeof(Dictionary<int, string>), Expected = typeof(string) },
+                new { Type = typeof(ReadOnlyDictionary<int, MyNonNestedClass>), Expected = typeof(MyNonNestedClass) },
+            };
+
+            // Act
+            var actuals = typesAndExpected.Select(_ => _.Type.GetDictionaryValueType()).ToList();
+
+            // Assert
+            actuals.Should().Equal(typesAndExpected.Select(_ => _.Expected));
+        }
+
+        [Fact]
         public static void IsAnonymous___Should_return_true_for_anonymous_type()
         {
             // Arrange, Act, Assert
