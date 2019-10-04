@@ -8,13 +8,13 @@ namespace OBeautifulCode.Type
 {
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Build.Analyzers;
+    using OBeautifulCode.Type.Internal;
 
     /// <summary>
     /// Represents the contract of a model object.
     /// </summary>
     // ReSharper disable once UnusedMember.Global
-    [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = SuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
+    [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
     public interface IModel
     {
     }

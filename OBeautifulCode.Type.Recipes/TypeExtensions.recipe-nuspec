@@ -7,6 +7,7 @@
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Type/master/OBeautifulCode.Type.Recipes/nuget-icon.png</iconUrl>
   </metadata>
   <files>
+    <file src=".analyzers\SuppressBecause.cs" target="content\net462\.recipes\OBeautifulCode.Type\SuppressBecause.cs" />
     <file src="TypeExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <file src="ToStringReadableOptions.cs" target="content\net462\.recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
   </files>

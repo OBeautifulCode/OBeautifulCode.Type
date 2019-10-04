@@ -8,12 +8,12 @@ namespace OBeautifulCode.Type
 {
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Build.Analyzers;
+    using OBeautifulCode.Type.Internal;
 
     /// <summary>
     /// Represents an object that has a unique identifier.
     /// </summary>
-    [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = SuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
+    [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
     public interface ICanBeIdentified
     {
     }
