@@ -7,7 +7,7 @@
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.Type.Test
+namespace OBeautifulCode.Type.Recipes
 {
     using System;
 
