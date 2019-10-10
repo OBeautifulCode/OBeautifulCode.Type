@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".analyzers\SuppressBecause.cs" />
+    <Compile Include="Containers\DateTimeRangeInclusive.cs" />
     <Compile Include="Identifyable\ICanBeIdentifiedByGuid.cs" />
     <Compile Include="Identifyable\ICanBeIdentifiedByString.cs" />
     <Compile Include="Identifyable\ICanBeIdentified.cs" />
@@ -75,6 +76,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.36\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.36\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
