@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DateTimeRangeInclusive.cs" company="OBeautifulCode">
+// <copyright file="UtcDateTimeRangeInclusive.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -13,17 +13,17 @@ namespace OBeautifulCode.Type
     /// <summary>
     /// Represents a range of <see cref="DateTime"/>, inclusive of the endpoints.
     /// </summary>
-    public class DateTimeRangeInclusive : IModel<DateTimeRangeInclusive>
+    public class UtcDateTimeRangeInclusive : IModel<UtcDateTimeRangeInclusive>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DateTimeRangeInclusive"/> class.
+        /// Initializes a new instance of the <see cref="UtcDateTimeRangeInclusive"/> class.
         /// </summary>
         /// <param name="startDateTimeInUtc">The start of the range in UTC.</param>
         /// <param name="endDateTimeInUtc">The end of the range in UTC.</param>
         /// <exception cref="ArgumentException"><paramref name="startDateTimeInUtc"/> is not <see cref="DateTimeKind.Utc"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="endDateTimeInUtc"/> is not <see cref="DateTimeKind.Utc"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="startDateTimeInUtc"/> is greater than <paramref name="endDateTimeInUtc"/>.</exception>
-        public DateTimeRangeInclusive(
+        public UtcDateTimeRangeInclusive(
             DateTime startDateTimeInUtc,
             DateTime endDateTimeInUtc)
         {
@@ -59,14 +59,14 @@ namespace OBeautifulCode.Type
         public DateTime EndDateTimeInUtc { get; private set; }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="DateTimeRangeInclusive"/> are equal.
+        /// Determines whether two objects of type <see cref="UtcDateTimeRangeInclusive"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the operator.</param>
         /// <param name="right">The object to the right of the operator.</param>
         /// <returns>True if the two items are equal; false otherwise.</returns>
         public static bool operator ==(
-            DateTimeRangeInclusive left,
-            DateTimeRangeInclusive right)
+            UtcDateTimeRangeInclusive left,
+            UtcDateTimeRangeInclusive right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -86,21 +86,21 @@ namespace OBeautifulCode.Type
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="DateTimeRangeInclusive"/> are not equal.
+        /// Determines whether two objects of type <see cref="UtcDateTimeRangeInclusive"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the operator.</param>
         /// <param name="right">The item to compare.</param>
         /// <returns>True if the two items not equal; false otherwise.</returns>
         public static bool operator !=(
-            DateTimeRangeInclusive left,
-            DateTimeRangeInclusive right)
+            UtcDateTimeRangeInclusive left,
+            UtcDateTimeRangeInclusive right)
             => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(DateTimeRangeInclusive other) => this == other;
+        public bool Equals(UtcDateTimeRangeInclusive other) => this == other;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as DateTimeRangeInclusive);
+        public override bool Equals(object obj) => this == (obj as UtcDateTimeRangeInclusive);
 
         /// <inheritdoc cref="IModel{T}" />
         public override int GetHashCode()
@@ -119,9 +119,9 @@ namespace OBeautifulCode.Type
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public DateTimeRangeInclusive DeepClone()
+        public UtcDateTimeRangeInclusive DeepClone()
         {
-            var result = new DateTimeRangeInclusive(this.StartDateTimeInUtc, this.EndDateTimeInUtc);
+            var result = new UtcDateTimeRangeInclusive(this.StartDateTimeInUtc, this.EndDateTimeInUtc);
 
             return result;
         }

@@ -81,7 +81,7 @@
   <ItemGroup>
     <Compile Include=".analyzers\SuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
-    <Compile Include="Containers\DateTimeRangeInclusiveTest.cs" />
+    <Compile Include="Containers\UtcDateTimeRangeInclusiveTest.cs" />
     <Compile Include="TypeDummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

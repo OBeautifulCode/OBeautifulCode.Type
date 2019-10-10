@@ -32,7 +32,7 @@ namespace OBeautifulCode.Type.Test
 
                 var endDateTime = A.Dummy<DateTime>().ThatIs(_ => _ >= startDateTime);
 
-                var result = new DateTimeRangeInclusive(startDateTime.ToUniversalTime(), endDateTime.ToUniversalTime());
+                var result = new UtcDateTimeRangeInclusive(startDateTime.ToUniversalTime(), endDateTime.ToUniversalTime());
 
                 return result;
             });

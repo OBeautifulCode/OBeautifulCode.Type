@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".analyzers\SuppressBecause.cs" />
-    <Compile Include="Containers\DateTimeRangeInclusive.cs" />
+    <Compile Include="Containers\UtcDateTimeRangeInclusive.cs" />
     <Compile Include="Identifyable\ICanBeIdentifiedByGuid.cs" />
     <Compile Include="Identifyable\ICanBeIdentifiedByString.cs" />
     <Compile Include="Identifyable\ICanBeIdentified.cs" />

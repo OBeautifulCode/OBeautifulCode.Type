@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DateTimeRangeInclusiveTest.cs" company="OBeautifulCode">
+// <copyright file="UtcDateTimeRangeInclusiveTest.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -18,18 +18,18 @@ namespace OBeautifulCode.Type.Test
 
     using Xunit;
 
-    public static class DateTimeRangeInclusiveTest
+    public static class UtcDateTimeRangeInclusiveTest
     {
-        private static readonly DateTimeRangeInclusive ObjectForEquatableTests = A.Dummy<DateTimeRangeInclusive>();
+        private static readonly UtcDateTimeRangeInclusive ObjectForEquatableTests = A.Dummy<UtcDateTimeRangeInclusive>();
 
-        private static readonly DateTimeRangeInclusive ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests =
-            new DateTimeRangeInclusive(ObjectForEquatableTests.StartDateTimeInUtc, ObjectForEquatableTests.EndDateTimeInUtc);
+        private static readonly UtcDateTimeRangeInclusive ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests =
+            new UtcDateTimeRangeInclusive(ObjectForEquatableTests.StartDateTimeInUtc, ObjectForEquatableTests.EndDateTimeInUtc);
 
-        private static readonly DateTimeRangeInclusive[] ObjectsThatAreNotEqualToObjectForEquatableTests =
+        private static readonly UtcDateTimeRangeInclusive[] ObjectsThatAreNotEqualToObjectForEquatableTests =
         {
-            A.Dummy<DateTimeRangeInclusive>(),
-            new DateTimeRangeInclusive(A.Dummy<DateTime>().ThatIs(_ => _.ToUniversalTime() <= ObjectForEquatableTests.EndDateTimeInUtc).ToUniversalTime(), ObjectForEquatableTests.EndDateTimeInUtc),
-            new DateTimeRangeInclusive(ObjectForEquatableTests.StartDateTimeInUtc, A.Dummy<DateTime>().ThatIs(_ => _.ToUniversalTime() >= ObjectForEquatableTests.StartDateTimeInUtc).ToUniversalTime()),
+            A.Dummy<UtcDateTimeRangeInclusive>(),
+            new UtcDateTimeRangeInclusive(A.Dummy<DateTime>().ThatIs(_ => _.ToUniversalTime() <= ObjectForEquatableTests.EndDateTimeInUtc).ToUniversalTime(), ObjectForEquatableTests.EndDateTimeInUtc),
+            new UtcDateTimeRangeInclusive(ObjectForEquatableTests.StartDateTimeInUtc, A.Dummy<DateTime>().ThatIs(_ => _.ToUniversalTime() >= ObjectForEquatableTests.StartDateTimeInUtc).ToUniversalTime()),
         };
 
         private static readonly string ObjectThatIsNotTheSameTypeAsObjectForEquatableTests = A.Dummy<string>();
@@ -42,8 +42,8 @@ namespace OBeautifulCode.Type.Test
             var startDateTime2 = new DateTime(1, DateTimeKind.Unspecified);
 
             // Act
-            var ex1 = Record.Exception(() => new DateTimeRangeInclusive(startDateTime1, DateTime.UtcNow));
-            var ex2 = Record.Exception(() => new DateTimeRangeInclusive(startDateTime2, DateTime.UtcNow));
+            var ex1 = Record.Exception(() => new UtcDateTimeRangeInclusive(startDateTime1, DateTime.UtcNow));
+            var ex2 = Record.Exception(() => new UtcDateTimeRangeInclusive(startDateTime2, DateTime.UtcNow));
 
             // Assert
             ex1.Should().BeOfType<ArgumentException>();
@@ -61,8 +61,8 @@ namespace OBeautifulCode.Type.Test
             var endDateTime2 = new DateTime(1, DateTimeKind.Unspecified);
 
             // Act
-            var ex1 = Record.Exception(() => new DateTimeRangeInclusive(DateTime.UtcNow, endDateTime1));
-            var ex2 = Record.Exception(() => new DateTimeRangeInclusive(DateTime.UtcNow, endDateTime2));
+            var ex1 = Record.Exception(() => new UtcDateTimeRangeInclusive(DateTime.UtcNow, endDateTime1));
+            var ex2 = Record.Exception(() => new UtcDateTimeRangeInclusive(DateTime.UtcNow, endDateTime2));
 
             // Assert
             ex1.Should().BeOfType<ArgumentException>();
@@ -80,7 +80,7 @@ namespace OBeautifulCode.Type.Test
             var endDateTimeInUtc = startDateTimeInUtc.AddMilliseconds(-1);
 
             // Act
-            var ex = Record.Exception(() => new DateTimeRangeInclusive(startDateTimeInUtc, endDateTimeInUtc));
+            var ex = Record.Exception(() => new UtcDateTimeRangeInclusive(startDateTimeInUtc, endDateTimeInUtc));
 
             // Assert
             ex.Should().BeOfType<ArgumentOutOfRangeException>();
@@ -95,7 +95,7 @@ namespace OBeautifulCode.Type.Test
             var endDateTimeInUtc = startDateTimeInUtc;
 
             // Act
-            var ex = Record.Exception(() => new DateTimeRangeInclusive(startDateTimeInUtc, endDateTimeInUtc));
+            var ex = Record.Exception(() => new UtcDateTimeRangeInclusive(startDateTimeInUtc, endDateTimeInUtc));
 
             // Assert
             ex.Should().BeNull();
@@ -108,7 +108,7 @@ namespace OBeautifulCode.Type.Test
             var expected = DateTime.UtcNow;
             Thread.Sleep(100);
             var endDateTimeInUtc = DateTime.UtcNow;
-            var systemUnderTest = new DateTimeRangeInclusive(expected, endDateTimeInUtc);
+            var systemUnderTest = new UtcDateTimeRangeInclusive(expected, endDateTimeInUtc);
 
             // Act
             var actual = systemUnderTest.StartDateTimeInUtc;
@@ -124,7 +124,7 @@ namespace OBeautifulCode.Type.Test
             var startDateTimeInUtc = DateTime.UtcNow;
             Thread.Sleep(100);
             var expected = DateTime.UtcNow;
-            var systemUnderTest = new DateTimeRangeInclusive(startDateTimeInUtc, expected);
+            var systemUnderTest = new UtcDateTimeRangeInclusive(startDateTimeInUtc, expected);
 
             // Act
             var actual = systemUnderTest.EndDateTimeInUtc;
@@ -137,8 +137,8 @@ namespace OBeautifulCode.Type.Test
         public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
         {
             // Arrange
-            DateTimeRangeInclusive systemUnderTest1 = null;
-            DateTimeRangeInclusive systemUnderTest2 = null;
+            UtcDateTimeRangeInclusive systemUnderTest1 = null;
+            UtcDateTimeRangeInclusive systemUnderTest2 = null;
 
             // Act
             var result = systemUnderTest1 == systemUnderTest2;
@@ -151,7 +151,7 @@ namespace OBeautifulCode.Type.Test
         public static void EqualsOperator___Should_return_false___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
         {
             // Arrange
-            DateTimeRangeInclusive systemUnderTest = null;
+            UtcDateTimeRangeInclusive systemUnderTest = null;
 
             // Act
             var result1 = systemUnderTest == ObjectForEquatableTests;
@@ -198,8 +198,8 @@ namespace OBeautifulCode.Type.Test
         public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
         {
             // Arrange
-            DateTimeRangeInclusive systemUnderTest1 = null;
-            DateTimeRangeInclusive systemUnderTest2 = null;
+            UtcDateTimeRangeInclusive systemUnderTest1 = null;
+            UtcDateTimeRangeInclusive systemUnderTest2 = null;
 
             // Act
             var result = systemUnderTest1 != systemUnderTest2;
@@ -212,7 +212,7 @@ namespace OBeautifulCode.Type.Test
         public static void NotEqualsOperator___Should_return_true___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
         {
             // Arrange
-            DateTimeRangeInclusive systemUnderTest = null;
+            UtcDateTimeRangeInclusive systemUnderTest = null;
 
             // Act
             var result1 = systemUnderTest != ObjectForEquatableTests;
@@ -256,10 +256,10 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void Equals_with_DateTimeRangeInclusive___Should_return_false___When_parameter_other_is_null()
+        public static void Equals_with_UtcDateTimeRangeInclusive___Should_return_false___When_parameter_other_is_null()
         {
             // Arrange
-            DateTimeRangeInclusive systemUnderTest = null;
+            UtcDateTimeRangeInclusive systemUnderTest = null;
 
             // Act
             var result = ObjectForEquatableTests.Equals(systemUnderTest);
@@ -269,7 +269,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void Equals_with_DateTimeRangeInclusive___Should_return_true___When_parameter_other_is_same_object()
+        public static void Equals_with_UtcDateTimeRangeInclusive___Should_return_true___When_parameter_other_is_same_object()
         {
             // Arrange, Act
             var result = ObjectForEquatableTests.Equals(ObjectForEquatableTests);
@@ -279,7 +279,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void Equals_with_DateTimeRangeInclusive___Should_return_false___When_objects_being_compared_have_different_property_values()
+        public static void Equals_with_UtcDateTimeRangeInclusive___Should_return_false___When_objects_being_compared_have_different_property_values()
         {
             // Arrange, Act
             var results = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => ObjectForEquatableTests.Equals(_)).ToList();
@@ -289,7 +289,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void Equals_with_DateTimeRangeInclusive___Should_return_true___When_objects_being_compared_have_same_property_values()
+        public static void Equals_with_UtcDateTimeRangeInclusive___Should_return_true___When_objects_being_compared_have_same_property_values()
         {
             // Arrange, Act
             var result = ObjectForEquatableTests.Equals(ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests);
@@ -374,7 +374,7 @@ namespace OBeautifulCode.Type.Test
         public static void DeepClone___Should_clone_item___When_called()
         {
             // Arrange
-            var systemUnderTest = A.Dummy<DateTimeRangeInclusive>();
+            var systemUnderTest = A.Dummy<UtcDateTimeRangeInclusive>();
 
             // Act
             var actual = systemUnderTest.DeepClone();
@@ -391,7 +391,7 @@ namespace OBeautifulCode.Type.Test
             var startDateTime = new DateTime(2019, 3, 10, 14, 4, 59, DateTimeKind.Utc);
             var endDateTime = new DateTime(2020, 11, 22, 9, 43, 4, DateTimeKind.Utc);
 
-            var systemUnderTest = new DateTimeRangeInclusive(startDateTime, endDateTime);
+            var systemUnderTest = new UtcDateTimeRangeInclusive(startDateTime, endDateTime);
 
             // Act
             var actual = systemUnderTest.ToString();
