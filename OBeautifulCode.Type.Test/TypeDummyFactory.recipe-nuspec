@@ -6,7 +6,7 @@
     <tags>obc type dummy factory dummyfactory</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Type/master/OBeautifulCode.Type.Test/nuget-icon.png</iconUrl>
     <dependencies>
-        <dependency id="OBeautifulCode.Type" version="1.0.22" />
+        <dependency id="OBeautifulCode.Type" version="1.0.23" />
         <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.116" />
     </dependencies>
   </metadata>

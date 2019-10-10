@@ -383,5 +383,21 @@ namespace OBeautifulCode.Type.Test
             actual.Should().Be(systemUnderTest);
             actual.Should().NotBeSameAs(systemUnderTest);
         }
+
+        [Fact]
+        public static void ToString___Should_return_string_representation_of_date_time_range___When_called()
+        {
+            // Arrange
+            var startDateTime = new DateTime(2019, 3, 10, 14, 4, 59, DateTimeKind.Utc);
+            var endDateTime = new DateTime(2020, 11, 22, 9, 43, 4, DateTimeKind.Utc);
+
+            var systemUnderTest = new DateTimeRangeInclusive(startDateTime, endDateTime);
+
+            // Act
+            var actual = systemUnderTest.ToString();
+
+            // Assert
+            actual.Should().Be("03/10/2019 14:04:59 to 11/22/2020 09:43:04");
+        }
     }
 }
