@@ -350,6 +350,57 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void IsAssignableToNull___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsAssignableToNull(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsAssignableToNull___Should_return_false___When_parameter_type_is_not_assignable_to_null()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(int),
+                typeof(Guid),
+                typeof(bool),
+                typeof(DateTime),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsAssignableToNull()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsAssignableToNull___Should_return_true___When_parameter_type_is_assignable_to_null()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(int?),
+                typeof(Guid?),
+                typeof(bool?),
+                typeof(DateTime?),
+                typeof(string),
+                typeof(List<string>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsAssignableToNull()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
         public static void IsNonAnonymousClosedClassType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
