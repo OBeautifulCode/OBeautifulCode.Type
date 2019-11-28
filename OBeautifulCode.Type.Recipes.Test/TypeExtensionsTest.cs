@@ -119,6 +119,17 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void IsAnonymous___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsAnonymous(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
         public static void IsAnonymous___Should_return_true_for_anonymous_type()
         {
             // Arrange, Act, Assert
@@ -130,6 +141,17 @@ namespace OBeautifulCode.Type.Recipes.Test
         {
             // Arrange, Act, Assert
             "string type".GetType().IsAnonymous().Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsAnonymousFastCheck___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsAnonymousFastCheck(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
         }
 
         [Fact]
