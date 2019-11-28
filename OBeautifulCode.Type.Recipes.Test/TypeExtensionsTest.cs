@@ -423,6 +423,97 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void IsComparableType_type___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsComparableType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsComparableType_T___Should_return_false___When_parameter_type_is_not_comparable()
+        {
+            // Arrange, Act
+            var actuals = new[]
+            {
+                TypeExtensions.IsComparableType<NonComparableClass>(),
+            };
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsComparableType_T___Should_return_true___When_parameter_type_is_comparable()
+        {
+            // Arrange, Act
+            var actuals = new[]
+            {
+                TypeExtensions.IsComparableType<int>(),
+                TypeExtensions.IsComparableType<Guid>(),
+                TypeExtensions.IsComparableType<bool>(),
+                TypeExtensions.IsComparableType<DateTime>(),
+                TypeExtensions.IsComparableType<int?>(),
+                TypeExtensions.IsComparableType<Guid?>(),
+                TypeExtensions.IsComparableType<bool?>(),
+                TypeExtensions.IsComparableType<DateTime?>(),
+                TypeExtensions.IsComparableType<string>(),
+                TypeExtensions.IsComparableType<DayOfWeek>(),
+                TypeExtensions.IsComparableType<DayOfWeek?>(),
+                TypeExtensions.IsComparableType<ComparableClass>(),
+            };
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public static void IsComparableType_type___Should_return_false___When_parameter_type_is_not_comparable()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(NonComparableClass),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsComparableType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsComparableType_type___Should_return_true___When_parameter_type_is_comparable()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(int),
+                typeof(Guid),
+                typeof(bool),
+                typeof(DateTime),
+                typeof(int?),
+                typeof(Guid?),
+                typeof(bool?),
+                typeof(DateTime?),
+                typeof(string),
+                typeof(DayOfWeek),
+                typeof(DayOfWeek?),
+                typeof(ComparableClass),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsComparableType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
         public static void IsNonAnonymousClosedClassType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
@@ -1250,6 +1341,18 @@ namespace OBeautifulCode.Type.Recipes.Test
             }
 
             public void RemoveAt(int index)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private class NonComparableClass
+        {
+        }
+
+        private class ComparableClass : IComparable<ComparableClass>
+        {
+            public int CompareTo(ComparableClass other)
             {
                 throw new NotImplementedException();
             }
