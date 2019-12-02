@@ -205,6 +205,7 @@ namespace OBeautifulCode.Type.Recipes
                 {
                     // we don't have to check BaseType, because you cannot derive from an array
                     // and all of the inherited interfaces are returned by GetInterfaces()
+                    // at this point we know that this type is an IEnumerable
                     result = ObjectType;
                 }
             }
