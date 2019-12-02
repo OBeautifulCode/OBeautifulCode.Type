@@ -84,6 +84,71 @@ namespace OBeautifulCode.Type.Recipes.Test
             // Assert
             actual.Should().AllBeEquivalentTo(true);
         }
+
+        [Fact]
+        public static void GetInheritancePath___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.GetInheritancePath(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void GetInheritancePath___Should_return_the_inheritance_path_of_the_specified_type___When_called()
+        {
+            // Arrange
+            var typesAndExpected = new[]
+            {
+                // object
+                new { Type = typeof(object), Expected = new Type[0] },
+
+                // value types
+                new { Type = typeof(int), Expected = new[] { typeof(ValueType), typeof(object) } },
+                new { Type = typeof(Guid), Expected = new[] { typeof(ValueType), typeof(object) } },
+
+                // nullable types
+                new { Type = typeof(int?), Expected = new[] { typeof(ValueType), typeof(object) } },
+                new { Type = typeof(Guid?), Expected = new[] { typeof(ValueType), typeof(object) } },
+
+                // arrays
+                new { Type = typeof(int[]), Expected = new[] { typeof(Array), typeof(object) } },
+                new { Type = typeof(object[]), Expected = new[] { typeof(Array), typeof(object) } },
+                new { Type = typeof(Guid?[]), Expected = new[] { typeof(Array), typeof(object) } },
+
+                // open and closed interfaces
+                new { Type = typeof(IEnumerable), Expected = new Type[0] },
+                new { Type = typeof(IReadOnlyList<string>), Expected = new Type[0] },
+                new { Type = typeof(IReadOnlyList<>), Expected = new Type[0] },
+
+                // open and closed classes
+                new { Type = typeof(TestClass), Expected = new[] { typeof(object) } },
+                new { Type = typeof(BaseClassIList<>), Expected = new[] { typeof(object) } },
+                new { Type = typeof(BaseClassIList<string>), Expected = new[] { typeof(object) } },
+
+                // the first BaseType is NOT the generic type definition:
+                // https://stackoverflow.com/questions/59141721/why-is-the-basetype-of-a-generic-type-definition-not-itself-a-generic-type-defin
+                new { Type = typeof(DerivedClassIList<>), Expected = new[] { typeof(DerivedClassIList<>).BaseType, typeof(object) } },
+
+                // closed generic
+                new { Type = typeof(DerivedClassIList<string>), Expected = new[] { typeof(BaseClassIList<string>), typeof(object) } },
+
+                // generic type parameter
+                new { Type = typeof(BaseGenericClass<,>).GetGenericArguments()[0], Expected = new[] { typeof(object) } },
+            };
+
+            // Act
+            var actuals = typesAndExpected.Select(_ => _.Type.GetInheritancePath()).ToList();
+
+            // Assert
+            for (var x = 0; x < actuals.Count; x++)
+            {
+                actuals[x].Should().Equal(typesAndExpected[x].Expected);
+            }
+        }
+
         [Fact]
         public static void GetEnumerableElementType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {

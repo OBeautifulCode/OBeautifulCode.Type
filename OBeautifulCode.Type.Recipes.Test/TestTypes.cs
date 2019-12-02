@@ -92,6 +92,7 @@ namespace OBeautifulCode.Type.Recipes.Test
             typeof(DerivedGenericClass<>).BaseType,
             typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType,
             typeof(List<>).MakeGenericType(typeof(List<>)),
+            typeof(GenericClassList<>).BaseType, // https://stackoverflow.com/questions/59141721/why-is-the-basetype-of-a-generic-type-definition-not-itself-a-generic-type-defin
         };
 
         public static Type[] OpenInterfaceTypesWithoutGenericTypeDefinitionTypes => new[]

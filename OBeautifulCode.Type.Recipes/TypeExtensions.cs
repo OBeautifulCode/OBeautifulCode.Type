@@ -29,12 +29,14 @@ namespace OBeautifulCode.Type.Recipes
     /// </summary>
     /// <remarks>
     /// These resources helped:
-    /// <a href="https://stackoverflow.com/questions/13012733/difference-between-type-isgenerictypedefinition-and-type-containsgenericparamete" />
-    /// <a href="https://stackoverflow.com/questions/2173107/what-exactly-is-an-open-generic-type-in-net" />
-    /// <a href="https://stackoverflow.com/questions/1735035/generics-open-and-closed-constructed-types" />
-    /// <a href="https://stackoverflow.com/questions/25811514/detect-if-a-generic-type-is-open" />
+    /// <a href="https://stackoverflow.com/questions/13012733/difference-between-type-isgenerictypedefinition-and-type-containsgenericparamete" />.
+    /// <a href="https://stackoverflow.com/questions/2173107/what-exactly-is-an-open-generic-type-in-net" />.
+    /// <a href="https://stackoverflow.com/questions/1735035/generics-open-and-closed-constructed-types" />.
+    /// <a href="https://stackoverflow.com/questions/25811514/detect-if-a-generic-type-is-open" />.
     /// <a href="https://docs.microsoft.com/en-us/dotnet/api/system.type.isgenerictype" />.
-    /// <a href="https://stackoverflow.com/questions/31772922/difference-between-isgenerictype-and-isgenerictypedefinition" />
+    /// <a href="https://stackoverflow.com/questions/31772922/difference-between-isgenerictype-and-isgenerictypedefinition" />.
+    /// <a href="https://stackoverflow.com/questions/59144791/if-type-isgenericparameter-true-will-type-containsgenericparameters-true?noredirect=1#comment104515860_59144791" />.
+    /// <a href="https://stackoverflow.com/questions/59141721/why-is-the-basetype-of-a-generic-type-definition-not-itself-a-generic-type-defin?noredirect=1#comment104515814_59141721" />.
     /// </remarks>
 #if !OBeautifulCodeTypeRecipesProject
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
@@ -125,10 +127,34 @@ namespace OBeautifulCode.Type.Recipes
                 { typeof(void), "void" },
         };
 
+        /// <summary>
+        /// Gets the types in the inheritance path starting from the specified type's
+        /// <see cref="Type.BaseType"/> and ending in a type with no <see cref="Type.BaseType"/>.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// The <see cref="Type.BaseType"/> of <paramref name="type"/>, followed by that type's
+        /// <see cref="Type.BaseType"/>, and so on until a type has no <see cref="Type.BaseType"/>
+        /// (that property returns null).
+        /// If <paramref name="type"/> has no <see cref="Type.BaseType"/>, then this method returns
+        /// an empty list.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not assignable to <see cref="EnumerableInterfaceType"/>.</exception>
+        public static IReadOnlyList<Type> GetInheritancePath(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
 
-        private static readonly Type UnboundGenericDictionaryType = typeof(IDictionary<,>);
+            var result = new List<Type>();
+                
+            type.BuildInheritancePath(result);
 
-        private static readonly Type UnboundGenericReadOnlyDictionaryType = typeof(IReadOnlyDictionary<,>);
+            return result;
+        }
 
         /// <summary>
         /// Gets the type of the elements of a specified enumerable type.
@@ -693,6 +719,18 @@ namespace OBeautifulCode.Type.Recipes
             }
 
             return result;
+        }
+
+        private static void BuildInheritancePath(
+            this Type type,
+            List<Type> traversedPath)
+        {
+            if (type.BaseType != null)
+            {
+                traversedPath.Add(type.BaseType);
+
+                type.BaseType.BuildInheritancePath(traversedPath);
+            }
         }
 
         private static Type GetEnumerableElementTypeInternal(
