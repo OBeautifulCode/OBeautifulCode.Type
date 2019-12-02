@@ -164,6 +164,7 @@ namespace OBeautifulCode.Type.Recipes
         /// The type of the elements of the specified enumerable type.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
         /// <exception cref="ArgumentException"><paramref name="type"/> is not assignable to <see cref="EnumerableInterfaceType"/>.</exception>
         public static Type GetEnumerableElementType(
             this Type type)
@@ -178,7 +179,35 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentException(Invariant($"Specified type is not assignable to IEnumerable: {type.Name}."));
             }
 
-            var result = type.GetEnumerableElementTypeInternal();
+            Type result;
+            if (type.IsArray)
+            {
+                // type is array, shortcut
+                result = type.GetElementType();
+            }
+            else if (type.IsGenericType && (type.GetGenericTypeDefinition() == EnumerableInterfaceGenericTypeDefinition))
+            {
+                // type is IEnumerable<T>
+                result = type.GetGenericArguments()[0];
+            }
+            else
+            {
+                // type implements IEnumerable<T> or inherits it
+                // note that we are grabbing the first implementation
+                // it is possible, but highly unlikely, for a type to have multiple implementations of IEnumerable<T>
+                result = type
+                    .GetInterfaces()
+                    .Where(_ => _.IsGenericType && (_.GetGenericTypeDefinition() == EnumerableInterfaceGenericTypeDefinition))
+                    .Select(_ => _.GenericTypeArguments[0])
+                    .FirstOrDefault();
+
+                if (result == null)
+                {
+                    // we don't have to check BaseType, because you cannot derive from an array
+                    // and all of the inherited interfaces are returned by GetInterfaces()
+                    result = ObjectType;
+                }
+            }
 
             return result;
         }
@@ -272,7 +301,8 @@ namespace OBeautifulCode.Type.Recipes
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="otherType"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/>.<see cref="Type.IsGenericTypeDefinition"/> is true.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="otherType"/> is an open type, but not a generic type definition.</exception>
         public static bool IsAssignableTo(
             this Type type,
             Type otherType,
@@ -288,9 +318,14 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(otherType));
             }
 
-            if (type.IsGenericTypeDefinition)
+            if (type.ContainsGenericParameters)
             {
-                throw new ArgumentException(Invariant($"{nameof(type)}.{nameof(Type.IsGenericTypeDefinition)} is {true}"));
+                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+            }
+
+            if ((!otherType.IsGenericTypeDefinition) && otherType.ContainsGenericParameters)
+            {
+                throw new NotSupportedException(Invariant($"Parameter '{nameof(otherType)}' is an open type, but not a generic type definition; the only open types that are supported are generic type definitions for that parameter."));
             }
 
             // type is equal to the other type
@@ -305,29 +340,32 @@ namespace OBeautifulCode.Type.Recipes
                 return true;
             }
 
-            // type is generic and other type is an unbounded generic type
+            // other type is a generic type definition and we are treating the specified closed type as if it can be assigned to a generic type definition
             if (treatUnboundGenericAsAssignableTo && otherType.IsGenericTypeDefinition)
             {
-                // type's unbounded generic version is the other type
+                // type's generic type definition is the other type
                 if (type.IsGenericType && type.GetGenericTypeDefinition() == otherType)
                 {
                     return true;
                 }
 
-                // type implements an interface who's unbounded generic version is the other type
+                // type implements an interface who's generic type definition is the other type
                 if (type.GetInterfaces().Any(_ => _.IsGenericType && (_.GetGenericTypeDefinition() == otherType)))
                 {
                     return true;
                 }
 
+                // the type has a base type?
                 var baseType = type.BaseType;
                 if (baseType == null)
                 {
                     return false;
                 }
 
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                var result = baseType.IsAssignableTo(otherType, treatUnboundGenericAsAssignableTo);
+                // check if the base type is assignable to the other type
+                // note that we don't need to check the interfaces that the base type 
+                // implements because the GetInterfaces() call above returns all the interfaces implemented or inherited
+                var result = baseType.IsAssignableToInternal(otherType);
 
                 return result;
             }
@@ -733,39 +771,23 @@ namespace OBeautifulCode.Type.Recipes
             }
         }
 
-        private static Type GetEnumerableElementTypeInternal(
-            this Type type)
+        private static bool IsAssignableToInternal(
+            this Type type,
+            Type otherType)
         {
-            Type result;
-            if (type.IsArray)
+            // type's generic type definition version is the other type
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == otherType)
             {
-                // type is array, shortcut
-                result = type.GetElementType();
+                return true;
             }
-            else if (type.IsGenericType && (type.GetGenericTypeDefinition() == EnumerableInterfaceGenericTypeDefinition))
-            {
-                // type is IEnumerable<T>
-                result = type.GetGenericArguments()[0];
-            }
-            else
-            {
-                // type implements IEnumerable<T> or is a subclass (sub-sub-class, ...)
-                // of a type that implements IEnumerable<T>
-                // note that we are grabbing the first implementation.  it is possible, but
-                // highly unlikely, for a type to have multiple implementations of IEnumerable<T>
-                result = type
-                    .GetInterfaces()
-                    .Where(_ => _.IsGenericType && (_.GetGenericTypeDefinition() == EnumerableInterfaceGenericTypeDefinition))
-                    .Select(_ => _.GenericTypeArguments[0])
-                    .FirstOrDefault();
 
-                if (result == null)
-                {
-                    var baseType = type.BaseType;
-
-                    result = baseType == null ? ObjectType : GetEnumerableElementTypeInternal(baseType);
-                }
+            var baseType = type.BaseType;
+            if (baseType == null)
+            {
+                return false;
             }
+
+            var result = baseType.IsAssignableToInternal(otherType);
 
             return result;
         }
