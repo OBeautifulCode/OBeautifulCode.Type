@@ -87,14 +87,14 @@ namespace OBeautifulCode.Type.Recipes.Test
             typeof(List<>).MakeArrayType(),
         };
 
-        public static Type[] OpenClassTypes => new[]
+        public static Type[] OpenClassTypesWithoutGenericTypeDefinitionTypes => new[]
         {
             typeof(DerivedGenericClass<>).BaseType,
             typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType,
             typeof(List<>).MakeGenericType(typeof(List<>)),
         };
 
-        public static Type[] OpenInterfaceTypes => new[]
+        public static Type[] OpenInterfaceTypesWithoutGenericTypeDefinitionTypes => new[]
         {
             typeof(IReadOnlyCollection<>).MakeGenericType(typeof(IReadOnlyCollection<>)),
         };
@@ -106,8 +106,8 @@ namespace OBeautifulCode.Type.Recipes.Test
 
         public static Type[] OpenTypesWithoutGenericTypeDefinitionTypes => new Type[0]
             .Concat(OpenArrayTypes)
-            .Concat(OpenClassTypes)
-            .Concat(OpenInterfaceTypes)
+            .Concat(OpenClassTypesWithoutGenericTypeDefinitionTypes)
+            .Concat(OpenInterfaceTypesWithoutGenericTypeDefinitionTypes)
             .Concat(GenericParameterTypes)
             .ToArray();
 
