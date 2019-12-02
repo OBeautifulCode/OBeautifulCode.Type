@@ -27,6 +27,15 @@ namespace OBeautifulCode.Type.Recipes
     /// <summary>
     /// Extension methods on type <see cref="Type"/>.
     /// </summary>
+    /// <remarks>
+    /// These resources helped:
+    /// <a href="https://stackoverflow.com/questions/13012733/difference-between-type-isgenerictypedefinition-and-type-containsgenericparamete" />
+    /// <a href="https://stackoverflow.com/questions/2173107/what-exactly-is-an-open-generic-type-in-net" />
+    /// <a href="https://stackoverflow.com/questions/1735035/generics-open-and-closed-constructed-types" />
+    /// <a href="https://stackoverflow.com/questions/25811514/detect-if-a-generic-type-is-open" />
+    /// <a href="https://docs.microsoft.com/en-us/dotnet/api/system.type.isgenerictype" />.
+    /// <a href="https://stackoverflow.com/questions/31772922/difference-between-isgenerictype-and-isgenerictypedefinition" />
+    /// </remarks>
 #if !OBeautifulCodeTypeRecipesProject
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Type.Recipes", "See package version number")]
@@ -36,6 +45,26 @@ namespace OBeautifulCode.Type.Recipes
 #endif
     static class TypeExtensions
     {
+        private static readonly Type ObjectType = typeof(object);
+
+        private static readonly Type EnumerableInterfaceType = typeof(IEnumerable);
+
+        private static readonly Type DictionaryInterfaceType = typeof(IDictionary);
+
+        private static readonly Type EnumerableInterfaceGenericTypeDefinition = typeof(IEnumerable<>);
+
+        private static readonly Type DictionaryInterfaceGenericTypeDefinition = typeof(IDictionary<,>);
+
+        private static readonly Type ReadOnlyDictionaryInterfaceGenericTypeDefinition = typeof(IReadOnlyDictionary<,>);
+
+        private static readonly Type ComparableInterfaceType = typeof(IComparable);
+
+        private static readonly Type ComparableInterfaceGenericTypeDefinition = typeof(IComparable<>);
+
+        private static readonly Regex GenericBracketsRegex = new Regex("<.*>", RegexOptions.Compiled);
+
+        private static readonly CodeDomProvider CodeDomProvider = CodeDomProvider.CreateProvider("CSharp");
+
         private static readonly HashSet<Type> CollectionTypes =
             new HashSet<Type>(new[]
             {
@@ -75,41 +104,27 @@ namespace OBeautifulCode.Type.Recipes
                 typeof(ConcurrentDictionary<,>),
             });
 
-        private static readonly Type ComparableType = typeof(IComparable);
-
-        private static readonly Type UnboundGenericComparableType = typeof(IComparable<>);
-
-        private static readonly Regex GenericBracketsRegex = new Regex("<.*>", RegexOptions.Compiled);
-
-        private static readonly CodeDomProvider CodeDomProvider = CodeDomProvider.CreateProvider("CSharp");
-
-        private static readonly Dictionary<Type, string> Aliases = new Dictionary<Type, string>
-        {
-            { typeof(byte), "byte" },
-            { typeof(sbyte), "sbyte" },
-            { typeof(short), "short" },
-            { typeof(ushort), "ushort" },
-            { typeof(int), "int" },
-            { typeof(uint), "uint" },
-            { typeof(long), "long" },
-            { typeof(ulong), "ulong" },
-            { typeof(float), "float" },
-            { typeof(double), "double" },
-            { typeof(decimal), "decimal" },
-            { typeof(object), "object" },
-            { typeof(bool), "bool" },
-            { typeof(char), "char" },
-            { typeof(string), "string" },
-            { typeof(void), "void" },
+        private static readonly IReadOnlyDictionary<Type, string> TypeToAliasMap =
+            new Dictionary<Type, string>
+            {
+                { typeof(byte), "byte" },
+                { typeof(sbyte), "sbyte" },
+                { typeof(short), "short" },
+                { typeof(ushort), "ushort" },
+                { typeof(int), "int" },
+                { typeof(uint), "uint" },
+                { typeof(long), "long" },
+                { typeof(ulong), "ulong" },
+                { typeof(float), "float" },
+                { typeof(double), "double" },
+                { typeof(decimal), "decimal" },
+                { typeof(object), "object" },
+                { typeof(bool), "bool" },
+                { typeof(char), "char" },
+                { typeof(string), "string" },
+                { typeof(void), "void" },
         };
 
-        private static readonly Type ObjectType = typeof(object);
-
-        private static readonly Type EnumerableType = typeof(IEnumerable);
-
-        private static readonly Type DictionaryType = typeof(IDictionary);
-
-        private static readonly Type UnboundGenericEnumerableType = typeof(IEnumerable<>);
 
         private static readonly Type UnboundGenericDictionaryType = typeof(IDictionary<,>);
 
@@ -123,7 +138,7 @@ namespace OBeautifulCode.Type.Recipes
         /// The type of the elements of the specified enumerable type.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is not assignable to <see cref="EnumerableType"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not assignable to <see cref="EnumerableInterfaceType"/>.</exception>
         public static Type GetEnumerableElementType(
             this Type type)
         {
@@ -132,7 +147,7 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
-            if (!type.IsAssignableTo(EnumerableType))
+            if (!type.IsAssignableTo(EnumerableInterfaceType))
             {
                 throw new ArgumentException(Invariant($"Specified type is not assignable to IEnumerable: {type.Name}."));
             }
@@ -150,7 +165,7 @@ namespace OBeautifulCode.Type.Recipes
         /// The type of the values of the specified dictionary type.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> cannot be assigned to <see cref="UnboundGenericReadOnlyDictionaryType"/>, <see cref="UnboundGenericDictionaryType"/>, or <see cref="DictionaryType"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="type"/> cannot be assigned to <see cref="ReadOnlyDictionaryInterfaceGenericTypeDefinition"/>, <see cref="DictionaryInterfaceGenericTypeDefinition"/>, or <see cref="DictionaryInterfaceType"/>.</exception>
         public static Type GetDictionaryValueType(
             this Type type)
         {
@@ -159,9 +174,11 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
-            if ((!type.IsAssignableTo(UnboundGenericReadOnlyDictionaryType, treatUnboundGenericAsAssignableTo: true)) &&
-                (!type.IsAssignableTo(UnboundGenericDictionaryType, treatUnboundGenericAsAssignableTo: true)) &&
-                (!type.IsAssignableTo(DictionaryType, treatUnboundGenericAsAssignableTo: true)))
+            // IReadOnlyDictionary<T,K> and IDictionary<T,K> don't implement IDictionary
+            // hence the need for the additional IsAssignableTo checks.
+            if ((!type.IsAssignableTo(ReadOnlyDictionaryInterfaceGenericTypeDefinition, treatUnboundGenericAsAssignableTo: true)) &&
+                (!type.IsAssignableTo(DictionaryInterfaceGenericTypeDefinition, treatUnboundGenericAsAssignableTo: true)) &&
+                (!type.IsAssignableTo(DictionaryInterfaceType)))
             {
                 throw new ArgumentException(Invariant($"Specified type is cannot be assigned to either IReadOnlyDictionary<T,K>, IDictionary<T,K>, or IDictionary: {type.Name}."));
             }
@@ -285,6 +302,7 @@ namespace OBeautifulCode.Type.Recipes
 
                 // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                 var result = baseType.IsAssignableTo(otherType, treatUnboundGenericAsAssignableTo);
+
                 return result;
             }
 
@@ -353,13 +371,13 @@ namespace OBeautifulCode.Type.Recipes
             // into the follow...
             bool result;
 
-            var genericComparableType = UnboundGenericComparableType.MakeGenericType(type);
+            var genericComparableType = ComparableInterfaceGenericTypeDefinition.MakeGenericType(type);
 
             if (type.IsAssignableTo(genericComparableType))
             {
                 result = true;
             }
-            else if (type.IsAssignableTo(ComparableType))
+            else if (type.IsAssignableTo(ComparableInterfaceType))
             {
                 result = true;
             }
@@ -546,7 +564,6 @@ namespace OBeautifulCode.Type.Recipes
         /// <remarks>
         /// Adapted from: <a href="https://stackoverflow.com/a/6402967/356790" />.
         /// Adapted from: <a href="https://stackoverflow.com/questions/1362884/is-there-a-way-to-get-a-types-alias-through-reflection" />.
-        /// Helpful breakdown of generics: <a href="https://docs.microsoft.com/en-us/dotnet/api/system.type.isgenerictype" />.
         /// </remarks>
         /// <param name="type">The type.</param>
         /// <param name="throwIfNoCompilableStringExists">Optional value indicating whether to throw a <see cref="NotSupportedException"/> if there's no compilable representation of the specified type.</param>
@@ -595,9 +612,9 @@ namespace OBeautifulCode.Type.Recipes
             }
             else
             {
-                if (Aliases.ContainsKey(type))
+                if (TypeToAliasMap.ContainsKey(type))
                 {
-                    result = Aliases[type];
+                    result = TypeToAliasMap[type];
                 }
                 else if (type.IsNullableType())
                 {
@@ -687,7 +704,7 @@ namespace OBeautifulCode.Type.Recipes
                 // type is array, shortcut
                 result = type.GetElementType();
             }
-            else if (type.IsGenericType && (type.GetGenericTypeDefinition() == UnboundGenericEnumerableType))
+            else if (type.IsGenericType && (type.GetGenericTypeDefinition() == EnumerableInterfaceGenericTypeDefinition))
             {
                 // type is IEnumerable<T>
                 result = type.GetGenericArguments()[0];
@@ -700,13 +717,14 @@ namespace OBeautifulCode.Type.Recipes
                 // highly unlikely, for a type to have multiple implementations of IEnumerable<T>
                 result = type
                     .GetInterfaces()
-                    .Where(_ => _.IsGenericType && (_.GetGenericTypeDefinition() == UnboundGenericEnumerableType))
+                    .Where(_ => _.IsGenericType && (_.GetGenericTypeDefinition() == EnumerableInterfaceGenericTypeDefinition))
                     .Select(_ => _.GenericTypeArguments[0])
                     .FirstOrDefault();
 
                 if (result == null)
                 {
                     var baseType = type.BaseType;
+
                     result = baseType == null ? ObjectType : GetEnumerableElementTypeInternal(baseType);
                 }
             }
@@ -719,12 +737,12 @@ namespace OBeautifulCode.Type.Recipes
         {
             Type result;
 
-            if (type.IsGenericType && (type.GetGenericTypeDefinition() == UnboundGenericDictionaryType))
+            if (type.IsGenericType && (type.GetGenericTypeDefinition() == DictionaryInterfaceGenericTypeDefinition))
             {
                 // type is IDictionary<T,K>
                 result = type.GetGenericArguments()[1];
             }
-            else if (type.IsGenericType && (type.GetGenericTypeDefinition() == UnboundGenericReadOnlyDictionaryType))
+            else if (type.IsGenericType && (type.GetGenericTypeDefinition() == ReadOnlyDictionaryInterfaceGenericTypeDefinition))
             {
                 // type is IReadOnlyDictionary<T,K>
                 result = type.GetGenericArguments()[1];
@@ -737,7 +755,7 @@ namespace OBeautifulCode.Type.Recipes
                 // highly unlikely, for a type to have multiple implementations of IDictionary<T,K>
                 result = type
                     .GetInterfaces()
-                    .Where(_ => _.IsGenericType && ((_.GetGenericTypeDefinition() == UnboundGenericDictionaryType) || (_.GetGenericTypeDefinition() == UnboundGenericReadOnlyDictionaryType)))
+                    .Where(_ => _.IsGenericType && ((_.GetGenericTypeDefinition() == DictionaryInterfaceGenericTypeDefinition) || (_.GetGenericTypeDefinition() == ReadOnlyDictionaryInterfaceGenericTypeDefinition)))
                     .Select(_ => _.GenericTypeArguments[1])
                     .FirstOrDefault();
 
@@ -762,11 +780,11 @@ namespace OBeautifulCode.Type.Recipes
             {
                 result = type.Name;
             }
-            else if (Aliases.ContainsKey(type))
+            else if (TypeToAliasMap.ContainsKey(type))
             {
                 assemblyDetailsTypes?.Add(type);
 
-                result = Aliases[type];
+                result = TypeToAliasMap[type];
             }
             else if (type.IsNullableType())
             {
