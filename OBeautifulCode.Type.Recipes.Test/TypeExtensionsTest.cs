@@ -45,19 +45,6 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void TestTypes_OpenTypes___Should_all_be_open()
-        {
-            // Arrange
-            var types = TestTypes.OpenTypes;
-
-            // Act
-            var actual = types.Select(_ => _.ContainsGenericParameters).ToList();
-
-            // Assert
-            actual.Should().AllBeEquivalentTo(true);
-        }
-
-        [Fact]
         public static void TestTypes_OpenTypesWithoutGenericTypeDefinitionTypes___Should_all_be_open_but_not_generic_type_definitions()
         {
             // Arrange
@@ -70,6 +57,19 @@ namespace OBeautifulCode.Type.Recipes.Test
             // Assert
             actual1.Should().AllBeEquivalentTo(true);
             actual2.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void TestTypes_OpenTypes___Should_all_be_open()
+        {
+            // Arrange
+            var types = TestTypes.OpenTypes;
+
+            // Act
+            var actual = types.Select(_ => _.ContainsGenericParameters).ToList();
+
+            // Assert
+            actual.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
