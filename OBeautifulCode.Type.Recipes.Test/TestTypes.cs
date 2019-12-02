@@ -10,12 +10,111 @@ namespace OBeautifulCode.Type.Recipes.Test
     using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
 
-    public class TestTypes
+    public static class TestTypes
     {
-        public Type[] OpenTypes => new[] { typeof(List<>).MakeArrayType() };
+        public static Type[] ClosedValueTupleTypes => new[]
+        {
+            (first: "one", second: 7).GetType(),
+        };
 
-        public Type[] OpenArrayTypes => new[] { typeof(List<>).MakeArrayType() };
+        public static Type[] ClosedAnonymousTypes => new[]
+        {
+            new { Anonymous = true, Inner = new { InnerAnonymous = 6 } }.GetType(),
+        };
+
+        public static Type[] ClosedInterfaceTypes => new[]
+        {
+            typeof(IEnumerable),
+            typeof(IReadOnlyList<string>),
+            typeof(IReadOnlyDictionary<IReadOnlyDictionary<Guid[], int?>, IList<IList<short>>[]>),
+        };
+
+        public static Type[] ClosedClassTypes => new[]
+        {
+            typeof(TestClass),
+            typeof(TestClassWithNestedClass.NestedInTestClass),
+            typeof(Dictionary<int, string>),
+            typeof(DerivedGenericClass<int>),
+        };
+
+        public static Type[] ClosedStructTypes => new[]
+        {
+            typeof(int),
+            typeof(DateTime),
+            typeof(Guid),
+        };
+
+        public static Type[] ClosedNullableTypes => new[]
+        {
+            typeof(int?),
+            typeof(DateTime?),
+            typeof(Guid?),
+        };
+
+        public static Type[] ClosedArrayTypes => new[]
+        {
+            typeof(int[]),
+            typeof(int?[]),
+            typeof(Guid[]),
+            typeof(Guid?[]),
+            typeof(TestClass[]),
+            typeof(IReadOnlyList<string>[]),
+            typeof(Dictionary<int, string>[]),
+            new DerivedGenericClass<int>[0].GetType(),
+        };
+
+        public static Type[] ClosedTypes => new Type[0]
+            .Concat(ClosedValueTupleTypes)
+            .Concat(ClosedAnonymousTypes)
+            .Concat(ClosedInterfaceTypes)
+            .Concat(ClosedClassTypes)
+            .Concat(ClosedStructTypes)
+            .Concat(ClosedNullableTypes)
+            .Concat(ClosedArrayTypes)
+            .ToArray();
+
+        public static Type[] GenericTypeDefinitions => new Type[0]
+            .Concat(ClosedTypes)
+            .Concat(OpenTypesWithoutGenericTypeDefinitionTypes)
+            .Where(_ => _.IsGenericType)
+            .Select(_ => _.GetGenericTypeDefinition())
+            .ToArray();
+
+        public static Type[] OpenArrayTypes => new[]
+        {
+            typeof(List<>).MakeArrayType(),
+        };
+
+        public static Type[] OpenClassTypes => new[]
+        {
+            typeof(DerivedGenericClass<>).BaseType,
+            typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType,
+            typeof(List<>).MakeGenericType(typeof(List<>)),
+        };
+
+        public static Type[] OpenInterfaceTypes => new[]
+        {
+            typeof(IReadOnlyCollection<>).MakeGenericType(typeof(IReadOnlyCollection<>)),
+        };
+
+        public static Type[] GenericParameterTypes => new[]
+        {
+            typeof(BaseGenericClass<,>).GetGenericArguments()[0],
+        };
+
+        public static Type[] OpenTypesWithoutGenericTypeDefinitionTypes => new Type[0]
+            .Concat(OpenArrayTypes)
+            .Concat(OpenClassTypes)
+            .Concat(OpenInterfaceTypes)
+            .Concat(GenericParameterTypes)
+            .ToArray();
+
+        public static Type[] OpenTypes => new Type[0]
+            .Concat(OpenTypesWithoutGenericTypeDefinitionTypes)
+            .Concat(GenericTypeDefinitions)
+            .ToArray();
     }
 
     public class TestClass

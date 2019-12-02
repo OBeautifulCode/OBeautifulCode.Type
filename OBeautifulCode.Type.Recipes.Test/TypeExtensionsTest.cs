@@ -32,6 +32,59 @@ namespace OBeautifulCode.Type.Recipes.Test
         private static readonly string ThisAssemblyNameAndVersion = "OBeautifulCode.Type.Recipes.Test" + " (" + Assembly.GetExecutingAssembly().GetName().Version + ")";
 
         [Fact]
+        public static void TestTypes_ClosedTypes___Should_all_be_closed()
+        {
+            // Arrange
+            var types = TestTypes.ClosedTypes;
+
+            // Act
+            var actual = types.Select(_ => _.ContainsGenericParameters).ToList();
+
+            // Assert
+            actual.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void TestTypes_OpenTypes___Should_all_be_open()
+        {
+            // Arrange
+            var types = TestTypes.OpenTypes;
+
+            // Act
+            var actual = types.Select(_ => _.ContainsGenericParameters).ToList();
+
+            // Assert
+            actual.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public static void TestTypes_OpenTypesWithoutGenericTypeDefinitionTypes___Should_all_be_open_but_not_generic_type_definitions()
+        {
+            // Arrange
+            var types = TestTypes.OpenTypesWithoutGenericTypeDefinitionTypes;
+
+            // Act
+            var actual1 = types.Select(_ => _.ContainsGenericParameters).ToList();
+            var actual2 = types.Select(_ => _.IsGenericTypeDefinition).ToList();
+
+            // Assert
+            actual1.Should().AllBeEquivalentTo(true);
+            actual2.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void TestTypes_GenericTypeDefinitions___Should_all_be_generic_type_definitions()
+        {
+            // Arrange
+            var types = TestTypes.GenericTypeDefinitions;
+
+            // Act
+            var actual = types.Select(_ => _.IsGenericTypeDefinition).ToList();
+
+            // Assert
+            actual.Should().AllBeEquivalentTo(true);
+        }
+        [Fact]
         public static void GetEnumerableElementType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
