@@ -128,35 +128,6 @@ namespace OBeautifulCode.Type.Recipes
         };
 
         /// <summary>
-        /// Gets the types in the inheritance path starting from the specified type's
-        /// <see cref="Type.BaseType"/> and ending in a type with no <see cref="Type.BaseType"/>.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns>
-        /// The <see cref="Type.BaseType"/> of <paramref name="type"/>, followed by that type's
-        /// <see cref="Type.BaseType"/>, and so on until a type has no <see cref="Type.BaseType"/>
-        /// (that property returns null).
-        /// If <paramref name="type"/> has no <see cref="Type.BaseType"/>, then this method returns
-        /// an empty list.
-        /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is not assignable to <see cref="EnumerableInterfaceType"/>.</exception>
-        public static IReadOnlyList<Type> GetInheritancePath(
-            this Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            var result = new List<Type>();
-                
-            type.BuildInheritancePath(result);
-
-            return result;
-        }
-
-        /// <summary>
         /// Gets the type of the elements of a specified closed Enumerable type.
         /// </summary>
         /// <param name="type">The closed Enumerable type.</param>
@@ -328,12 +299,20 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Determines if a type is a closed anonymous type.
+        /// Gets the types in the inheritance path starting from the specified type's
+        /// <see cref="Type.BaseType"/> and ending in a type with no <see cref="Type.BaseType"/>.
         /// </summary>
-        /// <param name="type">Type to check.</param>
-        /// <returns>A value indicating whether or not the type provided is a closed anonymous type.</returns>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// The <see cref="Type.BaseType"/> of <paramref name="type"/>, followed by that type's
+        /// <see cref="Type.BaseType"/>, and so on until a type has no <see cref="Type.BaseType"/>
+        /// (that property returns null).
+        /// If <paramref name="type"/> has no <see cref="Type.BaseType"/>, then this method returns
+        /// an empty list.
+        /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        public static bool IsClosedAnonymousType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not assignable to <see cref="EnumerableInterfaceType"/>.</exception>
+        public static IReadOnlyList<Type> GetInheritancePath(
             this Type type)
         {
             if (type == null)
@@ -341,42 +320,9 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
-            if (type.ContainsGenericParameters)
-            {
-                return false;
-            }
+            var result = new List<Type>();
 
-            var result = Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
-                             && type.Namespace == null
-                             && type.IsGenericType
-                             && type.Name.Contains("AnonymousType")
-                             && (type.Name.StartsWith("<>", StringComparison.Ordinal) || type.Name.StartsWith("VB$", StringComparison.Ordinal))
-                             && type.Attributes.HasFlag(TypeAttributes.NotPublic);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Determines if a type is a closed anonymous type using a faster, but potentially
-        /// less accurate heuristic than <see cref="IsClosedAnonymousType(Type)"/>.
-        /// </summary>
-        /// <param name="type">Type to check.</param>
-        /// <returns>A value indicating whether or not the type provided is a closed anonymous type.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        public static bool IsClosedAnonymousTypeFastCheck(
-            this Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            if (type.ContainsGenericParameters)
-            {
-                return false;
-            }
-
-            var result = type.Namespace == null;
+            type.BuildInheritancePath(result);
 
             return result;
         }
@@ -486,6 +432,60 @@ namespace OBeautifulCode.Type.Recipes
             }
 
             var result = (!type.IsValueType) || type.IsNullableType();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if a type is a closed anonymous type.
+        /// </summary>
+        /// <param name="type">Type to check.</param>
+        /// <returns>A value indicating whether or not the type provided is a closed anonymous type.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static bool IsClosedAnonymousType(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (type.ContainsGenericParameters)
+            {
+                return false;
+            }
+
+            var result = Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
+                             && type.Namespace == null
+                             && type.IsGenericType
+                             && type.Name.Contains("AnonymousType")
+                             && (type.Name.StartsWith("<>", StringComparison.Ordinal) || type.Name.StartsWith("VB$", StringComparison.Ordinal))
+                             && type.Attributes.HasFlag(TypeAttributes.NotPublic);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if a type is a closed anonymous type using a faster, but potentially
+        /// less accurate heuristic than <see cref="IsClosedAnonymousType(Type)"/>.
+        /// </summary>
+        /// <param name="type">Type to check.</param>
+        /// <returns>A value indicating whether or not the type provided is a closed anonymous type.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static bool IsClosedAnonymousTypeFastCheck(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (type.ContainsGenericParameters)
+            {
+                return false;
+            }
+
+            var result = type.Namespace == null;
 
             return result;
         }
