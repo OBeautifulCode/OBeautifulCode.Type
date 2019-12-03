@@ -67,7 +67,7 @@ namespace OBeautifulCode.Type.Recipes
 
         private static readonly CodeDomProvider CodeDomProvider = CodeDomProvider.CreateProvider("CSharp");
 
-        private static readonly HashSet<Type> CollectionTypes =
+        private static readonly HashSet<Type> SystemCollectionGenericTypeDefinitions =
             new HashSet<Type>(new[]
             {
                 typeof(Collection<>),
@@ -79,7 +79,7 @@ namespace OBeautifulCode.Type.Recipes
                 typeof(IReadOnlyList<>),
             });
 
-        private static readonly HashSet<Type> OrderedCollectionTypes =
+        private static readonly HashSet<Type> SystemOrderedCollectionGenericTypeDefinitions =
             new HashSet<Type>(new[]
             {
                 typeof(Collection<>),
@@ -89,14 +89,14 @@ namespace OBeautifulCode.Type.Recipes
                 typeof(IReadOnlyList<>),
             });
 
-        private static readonly HashSet<Type> UnorderedCollectionTypes =
+        private static readonly HashSet<Type> SystemUnorderedCollectionGenericTypeDefinitions =
             new HashSet<Type>(new[]
             {
                 typeof(ICollection<>),
                 typeof(IReadOnlyCollection<>),
             });
 
-        private static readonly HashSet<Type> DictionaryTypes =
+        private static readonly HashSet<Type> SystemDictionaryGenericTypeDefinitions =
             new HashSet<Type>(new[]
             {
                 typeof(Dictionary<,>),
@@ -106,7 +106,7 @@ namespace OBeautifulCode.Type.Recipes
                 typeof(ConcurrentDictionary<,>),
             });
 
-        private static readonly IReadOnlyDictionary<Type, string> TypeToAliasMap =
+        private static readonly IReadOnlyDictionary<Type, string> ValueTypeToAliasMap =
             new Dictionary<Type, string>
             {
                 { typeof(byte), "byte" },
@@ -534,7 +534,7 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Determines if the specified type is one of the following <see cref="System"/> collection types: <see cref="CollectionTypes"/>.
+        /// Determines if the specified type is one of the following <see cref="System"/> collection types: <see cref="SystemCollectionGenericTypeDefinitions"/>.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>
@@ -556,13 +556,13 @@ namespace OBeautifulCode.Type.Recipes
 
             var genericType = type.GetGenericTypeDefinition();
 
-            var result = CollectionTypes.Contains(genericType);
+            var result = SystemCollectionGenericTypeDefinitions.Contains(genericType);
 
             return result;
         }
 
         /// <summary>
-        /// Determines if the specified type is one of the following <see cref="System"/> dictionary types: <see cref="DictionaryTypes"/>.
+        /// Determines if the specified type is one of the following <see cref="System"/> dictionary types: <see cref="SystemDictionaryGenericTypeDefinitions"/>.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>
@@ -584,14 +584,14 @@ namespace OBeautifulCode.Type.Recipes
 
             var genericType = type.GetGenericTypeDefinition();
 
-            var result = DictionaryTypes.Contains(genericType);
+            var result = SystemDictionaryGenericTypeDefinitions.Contains(genericType);
 
             return result;
         }
 
         /// <summary>
         /// Determines if the specified type is one of the following <see cref="System"/>
-        /// ordered collection types: <see cref="OrderedCollectionTypes"/>.
+        /// ordered collection types: <see cref="SystemOrderedCollectionGenericTypeDefinitions"/>.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>
@@ -613,14 +613,14 @@ namespace OBeautifulCode.Type.Recipes
 
             var genericType = type.GetGenericTypeDefinition();
 
-            var result = OrderedCollectionTypes.Contains(genericType);
+            var result = SystemOrderedCollectionGenericTypeDefinitions.Contains(genericType);
 
             return result;
         }
 
         /// <summary>
         /// Determines if the specified type is one of the following <see cref="System"/>
-        /// unordered collection types: <see cref="UnorderedCollectionTypes"/>.
+        /// unordered collection types: <see cref="SystemUnorderedCollectionGenericTypeDefinitions"/>.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>
@@ -642,7 +642,7 @@ namespace OBeautifulCode.Type.Recipes
 
             var genericType = type.GetGenericTypeDefinition();
 
-            var result = UnorderedCollectionTypes.Contains(genericType);
+            var result = SystemUnorderedCollectionGenericTypeDefinitions.Contains(genericType);
 
             return result;
         }
@@ -701,9 +701,9 @@ namespace OBeautifulCode.Type.Recipes
             }
             else
             {
-                if (TypeToAliasMap.ContainsKey(type))
+                if (ValueTypeToAliasMap.ContainsKey(type))
                 {
-                    result = TypeToAliasMap[type];
+                    result = ValueTypeToAliasMap[type];
                 }
                 else if (type.IsNullableType())
                 {
@@ -880,11 +880,11 @@ namespace OBeautifulCode.Type.Recipes
             {
                 result = type.Name;
             }
-            else if (TypeToAliasMap.ContainsKey(type))
+            else if (ValueTypeToAliasMap.ContainsKey(type))
             {
                 assemblyDetailsTypes?.Add(type);
 
-                result = TypeToAliasMap[type];
+                result = ValueTypeToAliasMap[type];
             }
             else if (type.IsNullableType())
             {
