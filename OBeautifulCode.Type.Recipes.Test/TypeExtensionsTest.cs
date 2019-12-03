@@ -150,10 +150,10 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void GetEnumerableElementType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void GetClosedEnumerableElementType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.GetEnumerableElementType(null));
+            var actual = Record.Exception(() => TypeExtensions.GetClosedEnumerableElementType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -161,24 +161,11 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void GetEnumerableElementType___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
-        {
-            // Arrange, Act
-            var actuals = TestTypes.OpenTypes.Select(_ => Record.Exception(_.GetEnumerableElementType));
-
-            // Assert
-            foreach (var actual in actuals)
-            {
-                actual.Should().BeOfType<NotSupportedException>();
-                actual.Message.Should().Contain("open types are not supported");
-            }
-        }
-
-        [Fact]
-        public static void GetEnumerableElementType___Should_throw_ArgumentException___When_parameter_type_is_not_assignable_to_IEnumerable()
+        public static void GetClosedEnumerableElementType___Should_throw_ArgumentException___When_parameter_type_is_not_a_closed_Enumerable_type()
         {
             // Arrange
             var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
                 .Concat(TestTypes.ClosedValueTupleTypes)
                 .Concat(TestTypes.ClosedAnonymousTypes)
                 .Concat(TestTypes.ClosedStructTypes)
@@ -192,18 +179,18 @@ namespace OBeautifulCode.Type.Recipes.Test
                 .ToArray();
 
             // Act
-            var actuals = types.Select(_ => Record.Exception(_.GetEnumerableElementType));
+            var actuals = types.Select(_ => Record.Exception(_.GetClosedEnumerableElementType));
 
             // Assert
             foreach (var actual in actuals)
             {
                 actual.Should().BeOfType<ArgumentException>();
-                actual.Message.Should().Contain("Specified type is not assignable to IEnumerable");
+                actual.Message.Should().Contain("Specified type is not a closed Enumerable type");
             }
         }
 
         [Fact]
-        public static void GetEnumerableElementType___Should_return_element_type___When_called()
+        public static void GetClosedEnumerableElementType___Should_return_element_type___When_called()
         {
             // Arrange
             var typesAndExpected = new[]
@@ -240,17 +227,17 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = typesAndExpected.Select(_ => _.Type.GetEnumerableElementType()).ToList();
+            var actuals = typesAndExpected.Select(_ => _.Type.GetClosedEnumerableElementType()).ToList();
 
             // Assert
             actuals.Should().Equal(typesAndExpected.Select(_ => _.Expected));
         }
 
         [Fact]
-        public static void GetDictionaryKeyType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void GetClosedDictionaryKeyType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.GetDictionaryKeyType(null));
+            var actual = Record.Exception(() => TypeExtensions.GetClosedDictionaryKeyType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -258,24 +245,11 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void GetDictionaryKeyType___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
-        {
-            // Arrange, Act
-            var actuals = TestTypes.OpenTypes.Select(_ => Record.Exception(_.GetDictionaryKeyType));
-
-            // Assert
-            foreach (var actual in actuals)
-            {
-                actual.Should().BeOfType<NotSupportedException>();
-                actual.Message.Should().Contain("open types are not supported");
-            }
-        }
-
-        [Fact]
-        public static void GetDictionaryKeyType___Should_throw_ArgumentException___When_parameter_type_is_not_assignable_to_a_dictionary_type()
+        public static void GetClosedDictionaryKeyType___Should_throw_ArgumentException___When_parameter_type_is_not_a_closed_Dictionary_type()
         {
             // Arrange
             var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
                 .Concat(TestTypes.ClosedValueTupleTypes)
                 .Concat(TestTypes.ClosedAnonymousTypes)
                 .Concat(TestTypes.ClosedStructTypes)
@@ -289,18 +263,18 @@ namespace OBeautifulCode.Type.Recipes.Test
                 .ToArray();
 
             // Act
-            var actuals = types.Select(_ => Record.Exception(_.GetDictionaryKeyType));
+            var actuals = types.Select(_ => Record.Exception(_.GetClosedDictionaryKeyType));
 
             // Assert
             foreach (var actual in actuals)
             {
                 actual.Should().BeOfType<ArgumentException>();
-                actual.Message.Should().Contain("Specified type is not assignable to either IReadOnlyDictionary<T,K>, IDictionary<T,K>, or IDictionary");
+                actual.Message.Should().Contain("Specified type is not a closed Dictionary type");
             }
         }
 
         [Fact]
-        public static void GetDictionaryKeyType___Should_return_key_type___When_called()
+        public static void GetClosedDictionaryKeyType___Should_return_key_type___When_called()
         {
             // Arrange
             var typesAndExpected = new[]
@@ -320,17 +294,17 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = typesAndExpected.Select(_ => _.Type.GetDictionaryKeyType()).ToList();
+            var actuals = typesAndExpected.Select(_ => _.Type.GetClosedDictionaryKeyType()).ToList();
 
             // Assert
             actuals.Should().Equal(typesAndExpected.Select(_ => _.Expected));
         }
 
         [Fact]
-        public static void GetDictionaryValueType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void GetClosedDictionaryValueType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.GetDictionaryValueType(null));
+            var actual = Record.Exception(() => TypeExtensions.GetClosedDictionaryValueType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -338,24 +312,11 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void GetDictionaryValueType___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
-        {
-            // Arrange, Act
-            var actuals = TestTypes.OpenTypes.Select(_ => Record.Exception(_.GetDictionaryValueType));
-
-            // Assert
-            foreach (var actual in actuals)
-            {
-                actual.Should().BeOfType<NotSupportedException>();
-                actual.Message.Should().Contain("open types are not supported");
-            }
-        }
-
-        [Fact]
-        public static void GetDictionaryValueType___Should_throw_ArgumentException___When_parameter_type_is_not_assignable_to_a_dictionary_type()
+        public static void GetClosedDictionaryValueType___Should_throw_ArgumentException___When_parameter_type_is_not_a_closed_Dictionary_type()
         {
             // Arrange
             var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
                 .Concat(TestTypes.ClosedValueTupleTypes)
                 .Concat(TestTypes.ClosedAnonymousTypes)
                 .Concat(TestTypes.ClosedStructTypes)
@@ -369,18 +330,18 @@ namespace OBeautifulCode.Type.Recipes.Test
                 .ToArray();
 
             // Act
-            var actuals = types.Select(_ => Record.Exception(_.GetDictionaryValueType));
+            var actuals = types.Select(_ => Record.Exception(_.GetClosedDictionaryValueType));
 
             // Assert
             foreach (var actual in actuals)
             {
                 actual.Should().BeOfType<ArgumentException>();
-                actual.Message.Should().Contain("Specified type is not assignable to either IReadOnlyDictionary<T,K>, IDictionary<T,K>, or IDictionary");
+                actual.Message.Should().Contain("Specified type is not a closed Dictionary type");
             }
         }
 
         [Fact]
-        public static void GetDictionaryValueType___Should_return_value_type___When_called()
+        public static void GetClosedDictionaryValueType___Should_return_value_type___When_called()
         {
             // Arrange
             var typesAndExpected = new[]
@@ -400,17 +361,17 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = typesAndExpected.Select(_ => _.Type.GetDictionaryValueType()).ToList();
+            var actuals = typesAndExpected.Select(_ => _.Type.GetClosedDictionaryValueType()).ToList();
 
             // Assert
             actuals.Should().Equal(typesAndExpected.Select(_ => _.Expected));
         }
 
         [Fact]
-        public static void GetSystemCollectionElementType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void GetClosedSystemCollectionElementType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.GetSystemCollectionElementType(null));
+            var actual = Record.Exception(() => TypeExtensions.GetClosedSystemCollectionElementType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -418,24 +379,11 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void GetSystemCollectionElementType___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
-        {
-            // Arrange, Act
-            var actuals = TestTypes.OpenTypes.Select(_ => Record.Exception(_.GetSystemCollectionElementType));
-
-            // Assert
-            foreach (var actual in actuals)
-            {
-                actual.Should().BeOfType<NotSupportedException>();
-                actual.Message.Should().Contain("open types are not supported");
-            }
-        }
-
-        [Fact]
-        public static void GetSystemCollectionElementType___Should_throw_ArgumentException___When_parameter_type_is_not_a_System_Collection_type()
+        public static void GetClosedSystemCollectionElementType___Should_throw_ArgumentException___When_parameter_type_is_not_a_closed_System_Collection_type()
         {
             // Arrange
             var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
                 .Concat(TestTypes.ClosedValueTupleTypes)
                 .Concat(TestTypes.ClosedAnonymousTypes)
                 .Concat(TestTypes.ClosedStructTypes)
@@ -468,18 +416,18 @@ namespace OBeautifulCode.Type.Recipes.Test
                 .ToArray();
 
             // Act
-            var actuals = types.Select(_ => Record.Exception(_.GetSystemCollectionElementType));
+            var actuals = types.Select(_ => Record.Exception(_.GetClosedSystemCollectionElementType));
 
             // Assert
             foreach (var actual in actuals)
             {
                 actual.Should().BeOfType<ArgumentException>();
-                actual.Message.Should().Contain("Specified type is not a System Collection type");
+                actual.Message.Should().Contain("Specified type is not a closed System Collection type");
             }
         }
 
         [Fact]
-        public static void GetSystemCollectionElementType___Should_return_element_type___When_called()
+        public static void GetClosedSystemCollectionElementType___Should_return_element_type___When_called()
         {
             // Arrange
             var typesAndExpected = new[]
@@ -494,7 +442,169 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = typesAndExpected.Select(_ => _.Type.GetSystemCollectionElementType()).ToList();
+            var actuals = typesAndExpected.Select(_ => _.Type.GetClosedSystemCollectionElementType()).ToList();
+
+            // Assert
+            actuals.Should().Equal(typesAndExpected.Select(_ => _.Expected));
+        }
+
+        [Fact]
+        public static void GetClosedSystemDictionaryKeyType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.GetClosedSystemDictionaryKeyType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void GetClosedSystemDictionaryKeyType___Should_throw_ArgumentException___When_parameter_type_is_not_a_closed_System_Dictionary_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<string>),
+                    typeof(Collection<Guid>),
+                    typeof(ICollection<bool>),
+                    typeof(ReadOnlyCollection<DateTime>),
+                    typeof(IReadOnlyCollection<TimeSpan>),
+                    typeof(List<TestClass>),
+                    typeof(IList<int?>),
+                    typeof(IReadOnlyList<int[]>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericDictionaryClass),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(_.GetClosedSystemDictionaryKeyType));
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("Specified type is not a closed System Dictionary type");
+            }
+        }
+
+        [Fact]
+        public static void GetClosedSystemDictionaryKeyType___Should_return_element_type___When_called()
+        {
+            // Arrange
+            var typesAndExpected = new[]
+            {
+                new { Type = typeof(IDictionary<TestClass, string>), Expected = typeof(TestClass) },
+                new { Type = typeof(IReadOnlyDictionary<Guid?, string>), Expected = typeof(Guid?) },
+                new { Type = typeof(Dictionary<DateTime, string>), Expected = typeof(DateTime) },
+                new { Type = typeof(ReadOnlyDictionary<IList<string>, string>), Expected = typeof(IList<string>) },
+                new { Type = typeof(ConcurrentDictionary<List<bool>, string>), Expected = typeof(List<bool>) },
+            };
+
+            // Act
+            var actuals = typesAndExpected.Select(_ => _.Type.GetClosedSystemDictionaryKeyType()).ToList();
+
+            // Assert
+            actuals.Should().Equal(typesAndExpected.Select(_ => _.Expected));
+        }
+
+        [Fact]
+        public static void GetClosedSystemDictionaryValueType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.GetClosedSystemDictionaryValueType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void GetClosedSystemDictionaryValueType___Should_throw_ArgumentException___When_parameter_type_is_not_a_closed_System_Dictionary_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<string>),
+                    typeof(Collection<Guid>),
+                    typeof(ICollection<bool>),
+                    typeof(ReadOnlyCollection<DateTime>),
+                    typeof(IReadOnlyCollection<TimeSpan>),
+                    typeof(List<TestClass>),
+                    typeof(IList<int?>),
+                    typeof(IReadOnlyList<int[]>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericDictionaryClass),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(_.GetClosedSystemDictionaryValueType));
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("Specified type is not a closed System Dictionary type");
+            }
+        }
+
+        [Fact]
+        public static void GetClosedSystemDictionaryValueType___Should_return_element_type___When_called()
+        {
+            // Arrange
+            var typesAndExpected = new[]
+            {
+                new { Type = typeof(IDictionary<string, TestClass>), Expected = typeof(TestClass) },
+                new { Type = typeof(IReadOnlyDictionary<string, Guid?>), Expected = typeof(Guid?) },
+                new { Type = typeof(Dictionary<string, DateTime>), Expected = typeof(DateTime) },
+                new { Type = typeof(ReadOnlyDictionary<string, IList<string>>), Expected = typeof(IList<string>) },
+                new { Type = typeof(ConcurrentDictionary<string, List<bool>>), Expected = typeof(List<bool>) },
+            };
+
+            // Act
+            var actuals = typesAndExpected.Select(_ => _.Type.GetClosedSystemDictionaryValueType()).ToList();
 
             // Assert
             actuals.Should().Equal(typesAndExpected.Select(_ => _.Expected));
@@ -1023,10 +1133,10 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsSystemCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void IsClosedSystemCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsSystemCollectionType(null));
+            var actual = Record.Exception(() => TypeExtensions.IsClosedSystemCollectionType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -1034,7 +1144,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsSystemCollectionType___Should_return_false___When_parameter_type_is_not_a_System_collection_type()
+        public static void IsClosedSystemCollectionType___Should_return_false___When_parameter_type_is_not_a_System_collection_type()
         {
             // Arrange
             var types = new[]
@@ -1053,14 +1163,14 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsSystemCollectionType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedSystemCollectionType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsSystemCollectionType___Should_return_true___When_parameter_type_is_a_System_collection_type()
+        public static void IsClosedSystemCollectionType___Should_return_true___When_parameter_type_is_a_System_collection_type()
         {
             // Arrange
             var types = new[]
@@ -1082,17 +1192,17 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsSystemCollectionType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedSystemCollectionType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
-        public static void IsSystemDictionaryType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void IsClosedSystemDictionaryType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsSystemDictionaryType(null));
+            var actual = Record.Exception(() => TypeExtensions.IsClosedSystemDictionaryType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -1100,7 +1210,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsSystemDictionaryType___Should_return_false___When_parameter_type_is_not_a_System_dictionary_type()
+        public static void IsClosedSystemDictionaryType___Should_return_false___When_parameter_type_is_not_a_System_dictionary_type()
         {
             // Arrange
             var types = new[]
@@ -1115,14 +1225,14 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsSystemDictionaryType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedSystemDictionaryType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsSystemDictionaryType___Should_return_true___When_parameter_type_is_a_System_dictionary_type()
+        public static void IsClosedSystemDictionaryType___Should_return_true___When_parameter_type_is_a_System_dictionary_type()
         {
             // Arrange
             var types = new[]
@@ -1140,17 +1250,17 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsSystemDictionaryType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedSystemDictionaryType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
-        public static void IsSystemOrderedCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void IsClosedSystemOrderedCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsSystemOrderedCollectionType(null));
+            var actual = Record.Exception(() => TypeExtensions.IsClosedSystemOrderedCollectionType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -1158,7 +1268,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsSystemOrderedCollectionType___Should_return_false___When_parameter_type_is_not_a_System_ordered_collection_type()
+        public static void IsClosedSystemOrderedCollectionType___Should_return_false___When_parameter_type_is_not_a_System_ordered_collection_type()
         {
             // Arrange
             var types = new[]
@@ -1181,14 +1291,14 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsSystemOrderedCollectionType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedSystemOrderedCollectionType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsSystemOrderedCollectionType___Should_return_true___When_parameter_type_is_a_System_ordered_collection_type()
+        public static void IsClosedSystemOrderedCollectionType___Should_return_true___When_parameter_type_is_a_System_ordered_collection_type()
         {
             // Arrange
             var types = new[]
@@ -1206,17 +1316,17 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsSystemOrderedCollectionType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedSystemOrderedCollectionType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
-        public static void IsSystemUnorderedCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void IsClosedSystemUnorderedCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsSystemUnorderedCollectionType(null));
+            var actual = Record.Exception(() => TypeExtensions.IsClosedSystemUnorderedCollectionType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -1224,7 +1334,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsSystemUnorderedCollectionType___Should_return_false___When_parameter_type_is_not_a_System_unordered_collection_type()
+        public static void IsClosedSystemUnorderedCollectionType___Should_return_false___When_parameter_type_is_not_a_System_unordered_collection_type()
         {
             // Arrange
             var types = new[]
@@ -1254,14 +1364,14 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsSystemUnorderedCollectionType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedSystemUnorderedCollectionType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsSystemUnorderedCollectionType___Should_return_true___When_parameter_type_is_a_System_unordered_collection_type()
+        public static void IsClosedSystemUnorderedCollectionType___Should_return_true___When_parameter_type_is_a_System_unordered_collection_type()
         {
             // Arrange
             var types = new[]
@@ -1273,7 +1383,7 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsSystemUnorderedCollectionType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedSystemUnorderedCollectionType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);

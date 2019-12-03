@@ -157,16 +157,15 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Gets the type of the elements of a specified enumerable type.
+        /// Gets the type of the elements of a specified closed Enumerable type.
         /// </summary>
-        /// <param name="type">The enumerable type.</param>
+        /// <param name="type">The closed Enumerable type.</param>
         /// <returns>
-        /// The type of the elements of the specified enumerable type.
+        /// The type of the elements of the specified closed Enumerable type.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is not assignable to <see cref="EnumerableInterfaceType"/>.</exception>
-        public static Type GetEnumerableElementType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not a closed Enumerable type.</exception>
+        public static Type GetClosedEnumerableElementType(
             this Type type)
         {
             if (type == null)
@@ -174,9 +173,9 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
-            if (!type.IsAssignableTo(EnumerableInterfaceType))
+            if (type.ContainsGenericParameters || (!EnumerableInterfaceType.IsAssignableFrom(type)))
             {
-                throw new ArgumentException(Invariant($"Specified type is not assignable to IEnumerable: {type.Name}."));
+                throw new ArgumentException(Invariant($"Specified type is not a closed Enumerable type: {type.Name}."));
             }
 
             Type result;
@@ -214,52 +213,49 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Gets the type of the keys of a specified dictionary type.
+        /// Gets the type of the keys of a specified closed Dictionary type.
         /// </summary>
-        /// <param name="type">The dictionary type.</param>
+        /// <param name="type">The closed Dictionary type.</param>
         /// <returns>
-        /// The type of the keys of the specified dictionary type.
+        /// The type of the keys of the specified closed Dictionary type.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> cannot be assigned to <see cref="ReadOnlyDictionaryInterfaceGenericTypeDefinition"/>, <see cref="DictionaryInterfaceGenericTypeDefinition"/>, or <see cref="DictionaryInterfaceType"/>.</exception>
-        public static Type GetDictionaryKeyType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not a closed Dictionary type.</exception>
+        public static Type GetClosedDictionaryKeyType(
             this Type type)
         {
-            var result = type.GetDictionaryKeyOrValueTypeInternal(genericTypeArgumentIndex: 0);
+            var result = type.GetClosedDictionaryKeyOrValueTypeInternal(genericTypeArgumentIndex: 0);
 
             return result;
         }
 
         /// <summary>
-        /// Gets the type of the values of a specified dictionary type.
+        /// Gets the type of the values of a specified closed Dictionary type.
         /// </summary>
-        /// <param name="type">The dictionary type.</param>
+        /// <param name="type">The closed Dictionary type.</param>
         /// <returns>
-        /// The type of the values of the specified dictionary type.
+        /// The type of the values of the specified closed Dictionary type.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> cannot be assigned to <see cref="ReadOnlyDictionaryInterfaceGenericTypeDefinition"/>, <see cref="DictionaryInterfaceGenericTypeDefinition"/>, or <see cref="DictionaryInterfaceType"/>.</exception>
-        public static Type GetDictionaryValueType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not a closed Dictionary type.</exception>
+        public static Type GetClosedDictionaryValueType(
             this Type type)
         {
-            var result = type.GetDictionaryKeyOrValueTypeInternal(genericTypeArgumentIndex: 1);
+            var result = type.GetClosedDictionaryKeyOrValueTypeInternal(genericTypeArgumentIndex: 1);
 
             return result;
         }
 
         /// <summary>
-        /// Gets the type of the elements of the specified <see cref="System"/> Collection type.
+        /// Gets the type of the elements of the specified closed <see cref="System"/> Collection type.
         /// </summary>
-        /// <param name="type">The <see cref="System"/> Collection type.</param>
+        /// <param name="type">The closed <see cref="System"/> Collection type.</param>
         /// <returns>
-        /// The type of the elements of the specified <see cref="System"/> Collection type.
+        /// The type of the elements of the specified closed <see cref="System"/> Collection type.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is not a <see cref="System"/> collection type.  See <see cref="IsSystemCollectionType(Type)"/>.</exception>
-        public static Type GetSystemCollectionElementType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not a closed <see cref="System"/> Collection type.  See <see cref="IsClosedSystemCollectionType(Type)"/>.</exception>
+        public static Type GetClosedSystemCollectionElementType(
             this Type type)
         {
             if (type == null)
@@ -267,9 +263,9 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
-            if (!type.IsSystemCollectionType())
+            if (!type.IsClosedSystemCollectionType())
             {
-                throw new ArgumentException(Invariant($"Specified type is not a System Collection type: {type.Name}."));
+                throw new ArgumentException(Invariant($"Specified type is not a closed System Collection type: {type.Name}."));
             }
 
             var result = type.GenericTypeArguments.First();
@@ -278,16 +274,15 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Gets the type of the keys of the specified <see cref="System"/> Dictionary type.
+        /// Gets the type of the keys of the specified closed <see cref="System"/> Dictionary type.
         /// </summary>
-        /// <param name="type">The <see cref="System"/> Dictionary type.</param>
+        /// <param name="type">The closed <see cref="System"/> Dictionary type.</param>
         /// <returns>
-        /// The type of the keys of the specified <see cref="System"/> Dictionary type.
+        /// The type of the keys of the specified closed <see cref="System"/> Dictionary type.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is not a <see cref="System"/> dictionary type.  See <see cref="IsSystemDictionaryType(Type)"/>.</exception>
-        public static Type GetSystemDictionaryKeyType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not a closed <see cref="System"/> Dictionary type.  See <see cref="IsClosedSystemDictionaryType(Type)"/>.</exception>
+        public static Type GetClosedSystemDictionaryKeyType(
             this Type type)
         {
             if (type == null)
@@ -295,9 +290,9 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
-            if (!type.IsSystemDictionaryType())
+            if (!type.IsClosedSystemDictionaryType())
             {
-                throw new ArgumentException(Invariant($"Specified type is not a System Dictionary type: {type.Name}."));
+                throw new ArgumentException(Invariant($"Specified type is not a closed System Dictionary type: {type.Name}."));
             }
 
             var result = type.GenericTypeArguments[0];
@@ -306,16 +301,15 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Gets the type of the values of the specified <see cref="System"/> Dictionary type.
+        /// Gets the type of the values of the specified closed <see cref="System"/> Dictionary type.
         /// </summary>
-        /// <param name="type">The <see cref="System"/> Dictionary type.</param>
+        /// <param name="type">The closed <see cref="System"/> Dictionary type.</param>
         /// <returns>
-        /// The type of the values of the specified <see cref="System"/> Dictionary type.
+        /// The type of the values of the specified closed <see cref="System"/> Dictionary type.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is not a <see cref="System"/> dictionary type.  See <see cref="IsSystemDictionaryType(Type)"/>.</exception>
-        public static Type GetSystemDictionaryValueType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not a closed <see cref="System"/> Dictionary type.  See <see cref="IsClosedSystemDictionaryType(Type)"/>.</exception>
+        public static Type GetClosedSystemDictionaryValueType(
             this Type type)
         {
             if (type == null)
@@ -323,9 +317,9 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
-            if (!type.IsSystemDictionaryType())
+            if (!type.IsClosedSystemDictionaryType())
             {
-                throw new ArgumentException(Invariant($"Specified type is not a System Dictionary type: {type.Name}."));
+                throw new ArgumentException(Invariant($"Specified type is not a closed System Dictionary type: {type.Name}."));
             }
 
             var result = type.GenericTypeArguments[1];
@@ -391,8 +385,8 @@ namespace OBeautifulCode.Type.Recipes
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="otherType"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="otherType"/> is an open type, but not a generic type definition.</exception>
+        /// <exception cref="ArgumentException"><paramref name="type"/> is an open type.</exception>
+        /// <exception cref="ArgumentException"><paramref name="otherType"/> is an open type, but not a generic type definition.</exception>
         public static bool IsAssignableTo(
             this Type type,
             Type otherType,
@@ -410,12 +404,12 @@ namespace OBeautifulCode.Type.Recipes
 
             if (type.ContainsGenericParameters)
             {
-                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+                throw new ArgumentException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
             }
 
             if ((!otherType.IsGenericTypeDefinition) && otherType.ContainsGenericParameters)
             {
-                throw new NotSupportedException(Invariant($"Parameter '{nameof(otherType)}' is an open type, but not a generic type definition; the only open types that are supported are generic type definitions for that parameter."));
+                throw new ArgumentException(Invariant($"Parameter '{nameof(otherType)}' is an open type, but not a generic type definition; the only open types that are supported are generic type definitions for that parameter."));
             }
 
             // type is equal to the other type
@@ -600,15 +594,17 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Determines if the specified type is one of the following <see cref="System"/> collection types: <see cref="SystemCollectionGenericTypeDefinitions"/>.
+        /// Determines if the specified type is a closed version of one of the
+        /// following <see cref="System"/> Collection generic type definitions:
+        /// <see cref="SystemCollectionGenericTypeDefinitions"/>.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>
-        /// true if the specified type is a <see cref="System"/> collection type; otherwise false.
+        /// true if the specified type is a closed <see cref="System"/> collection type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        public static bool IsSystemCollectionType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is an open type.</exception>
+        public static bool IsClosedSystemCollectionType(
             this Type type)
         {
             if (type == null)
@@ -618,7 +614,7 @@ namespace OBeautifulCode.Type.Recipes
 
             if (type.ContainsGenericParameters)
             {
-                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+                return false;
             }
 
             if (!type.IsGenericType)
@@ -634,15 +630,17 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Determines if the specified type is one of the following <see cref="System"/> dictionary types: <see cref="SystemDictionaryGenericTypeDefinitions"/>.
+        /// Determines if the specified type is a closed version one of one of the
+        /// following <see cref="System"/> Dictionary generic type definitions:
+        /// <see cref="SystemDictionaryGenericTypeDefinitions"/>.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>
-        /// true if the specified type is a <see cref="System"/> dictionary type; otherwise false.
+        /// true if the specified type is a closed <see cref="System"/> dictionary type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        public static bool IsSystemDictionaryType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is an open type.</exception>
+        public static bool IsClosedSystemDictionaryType(
             this Type type)
         {
             if (type == null)
@@ -652,7 +650,7 @@ namespace OBeautifulCode.Type.Recipes
 
             if (type.ContainsGenericParameters)
             {
-                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+                return false;
             }
 
             if (!type.IsGenericType)
@@ -668,16 +666,17 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Determines if the specified type is one of the following <see cref="System"/>
-        /// ordered collection types: <see cref="SystemOrderedCollectionGenericTypeDefinitions"/>.
+        /// Determines if the specified type is a closed version of one of the
+        /// following ordered <see cref="System"/> Collection generic type definitions:
+        /// <see cref="SystemOrderedCollectionGenericTypeDefinitions"/>.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>
-        /// true if the specified type is an ordered <see cref="System"/> collection type; otherwise false.
+        /// true if the specified type is a closed, ordered <see cref="System"/> Collection type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        public static bool IsSystemOrderedCollectionType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is an open type.</exception>
+        public static bool IsClosedSystemOrderedCollectionType(
             this Type type)
         {
             if (type == null)
@@ -687,7 +686,7 @@ namespace OBeautifulCode.Type.Recipes
 
             if (type.ContainsGenericParameters)
             {
-                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+                return false;
             }
 
             if (!type.IsGenericType)
@@ -703,16 +702,17 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Determines if the specified type is one of the following <see cref="System"/>
-        /// unordered collection types: <see cref="SystemUnorderedCollectionGenericTypeDefinitions"/>.
+        /// Determines if the specified type is a closed version of one of the
+        /// following unordered <see cref="System"/> Collection generic type definitions:
+        /// <see cref="SystemUnorderedCollectionGenericTypeDefinitions"/>.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>
-        /// true if the specified type is an unordered <see cref="System"/> collection type; otherwise false.
+        /// true if the specified type is a closed, unordered <see cref="System"/> Collection type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        public static bool IsSystemUnorderedCollectionType(
+        /// <exception cref="ArgumentException"><paramref name="type"/> is an open type.</exception>
+        public static bool IsClosedSystemUnorderedCollectionType(
             this Type type)
         {
             if (type == null)
@@ -722,7 +722,7 @@ namespace OBeautifulCode.Type.Recipes
 
             if (type.ContainsGenericParameters)
             {
-                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+                return false;
             }
 
             if (!type.IsGenericType)
@@ -886,7 +886,7 @@ namespace OBeautifulCode.Type.Recipes
             }
         }
 
-        private static Type GetDictionaryKeyOrValueTypeInternal(
+        private static Type GetClosedDictionaryKeyOrValueTypeInternal(
             this Type type,
             int genericTypeArgumentIndex)
         {
@@ -897,11 +897,14 @@ namespace OBeautifulCode.Type.Recipes
 
             // IReadOnlyDictionary<T,K> and IDictionary<T,K> don't implement IDictionary
             // hence the need for the additional IsAssignableTo checks.
-            if ((!type.IsAssignableTo(DictionaryInterfaceType))
-                && (!type.IsAssignableTo(DictionaryInterfaceGenericTypeDefinition, treatUnboundGenericAsAssignableTo: true))
-                && (!type.IsAssignableTo(ReadOnlyDictionaryInterfaceGenericTypeDefinition, treatUnboundGenericAsAssignableTo: true)))
+            if (type.ContainsGenericParameters || 
+                (
+                       (!DictionaryInterfaceType.IsAssignableFrom(type))
+                    && (!type.IsAssignableTo(DictionaryInterfaceGenericTypeDefinition        , treatUnboundGenericAsAssignableTo: true))
+                    && (!type.IsAssignableTo(ReadOnlyDictionaryInterfaceGenericTypeDefinition, treatUnboundGenericAsAssignableTo: true))
+                ))
             {
-                throw new ArgumentException(Invariant($"Specified type is not assignable to either IReadOnlyDictionary<T,K>, IDictionary<T,K>, or IDictionary: {type.Name}."));
+                throw new ArgumentException(Invariant($"Specified type is not a closed Dictionary type: {type.Name}."));
             }
 
             Type result;
