@@ -214,6 +214,24 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
+        /// Gets the type of the keys of a specified dictionary type.
+        /// </summary>
+        /// <param name="type">The dictionary type.</param>
+        /// <returns>
+        /// The type of the keys of the specified dictionary type.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
+        /// <exception cref="ArgumentException"><paramref name="type"/> cannot be assigned to <see cref="ReadOnlyDictionaryInterfaceGenericTypeDefinition"/>, <see cref="DictionaryInterfaceGenericTypeDefinition"/>, or <see cref="DictionaryInterfaceType"/>.</exception>
+        public static Type GetDictionaryKeyType(
+            this Type type)
+        {
+            var result = type.GetDictionaryKeyOrValueTypeInternal(genericTypeArgumentIndex: 0);
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the type of the values of a specified dictionary type.
         /// </summary>
         /// <param name="type">The dictionary type.</param>
@@ -221,9 +239,15 @@ namespace OBeautifulCode.Type.Recipes
         /// The type of the values of the specified dictionary type.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
         /// <exception cref="ArgumentException"><paramref name="type"/> cannot be assigned to <see cref="ReadOnlyDictionaryInterfaceGenericTypeDefinition"/>, <see cref="DictionaryInterfaceGenericTypeDefinition"/>, or <see cref="DictionaryInterfaceType"/>.</exception>
         public static Type GetDictionaryValueType(
             this Type type)
+        {
+            var result = type.GetDictionaryKeyOrValueTypeInternal(genericTypeArgumentIndex: 1);
+
+            return result;
+        }
         {
             if (type == null)
             {
@@ -793,37 +817,52 @@ namespace OBeautifulCode.Type.Recipes
             return result;
         }
 
-        private static Type GetDictionaryValueTypeInternal(
-            this Type type)
+        private static Type GetDictionaryKeyOrValueTypeInternal(
+            this Type type,
+            int genericTypeArgumentIndex)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            // IReadOnlyDictionary<T,K> and IDictionary<T,K> don't implement IDictionary
+            // hence the need for the additional IsAssignableTo checks.
+            if ((!type.IsAssignableTo(DictionaryInterfaceType))
+                && (!type.IsAssignableTo(DictionaryInterfaceGenericTypeDefinition, treatUnboundGenericAsAssignableTo: true))
+                && (!type.IsAssignableTo(ReadOnlyDictionaryInterfaceGenericTypeDefinition, treatUnboundGenericAsAssignableTo: true)))
+            {
+                throw new ArgumentException(Invariant($"Specified type is not assignable to either IReadOnlyDictionary<T,K>, IDictionary<T,K>, or IDictionary: {type.Name}."));
+            }
+
             Type result;
 
             if (type.IsGenericType && (type.GetGenericTypeDefinition() == DictionaryInterfaceGenericTypeDefinition))
             {
                 // type is IDictionary<T,K>
-                result = type.GetGenericArguments()[1];
+                result = type.GetGenericArguments()[genericTypeArgumentIndex];
             }
             else if (type.IsGenericType && (type.GetGenericTypeDefinition() == ReadOnlyDictionaryInterfaceGenericTypeDefinition))
             {
                 // type is IReadOnlyDictionary<T,K>
-                result = type.GetGenericArguments()[1];
+                result = type.GetGenericArguments()[genericTypeArgumentIndex];
             }
             else
             {
-                // type implements IDictionary<T,K>/IReadOnlyDictionary<T,K> or is a subclass (sub-sub-class, ...)
-                // of a type that implements those types
-                // note that we are grabbing the first implementation.  it is possible, but
-                // highly unlikely, for a type to have multiple implementations of IDictionary<T,K>
+                // type implements or inherits IDictionary<T,K>/IReadOnlyDictionary<T,K>
+                // note that we are grabbing the first implementation
+                // it is possible, but highly unlikely, for a type to have multiple implementations of IDictionary<T,K>/IReadOnlyDictionary<T,K>
                 result = type
                     .GetInterfaces()
                     .Where(_ => _.IsGenericType && ((_.GetGenericTypeDefinition() == DictionaryInterfaceGenericTypeDefinition) || (_.GetGenericTypeDefinition() == ReadOnlyDictionaryInterfaceGenericTypeDefinition)))
-                    .Select(_ => _.GenericTypeArguments[1])
+                    .Select(_ => _.GenericTypeArguments[genericTypeArgumentIndex])
                     .FirstOrDefault();
 
                 if (result == null)
                 {
-                    var baseType = type.BaseType;
-                    result = baseType == null ? ObjectType : GetDictionaryValueTypeInternal(baseType);
+                    // we don't have to check BaseType; all of the inherited interfaces are returned by GetInterfaces()
+                    // at this point we know that this type is an IDictionary
+                    result = ObjectType;
                 }
             }
 
