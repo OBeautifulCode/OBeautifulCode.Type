@@ -21,6 +21,7 @@ namespace OBeautifulCode.Type.Recipes.Test
 
         public static Type[] ClosedAnonymousTypes => new[]
         {
+            new { SomeProperty = "property value" }.GetType(),
             new { Anonymous = true, Inner = new { InnerAnonymous = 6 } }.GetType(),
         };
 

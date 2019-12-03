@@ -328,17 +328,22 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Determines if a type is an anonymous type.
+        /// Determines if a type is a closed anonymous type.
         /// </summary>
         /// <param name="type">Type to check.</param>
-        /// <returns>A value indicating whether or not the type provided is anonymous.</returns>
+        /// <returns>A value indicating whether or not the type provided is a closed anonymous type.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        public static bool IsAnonymous(
+        public static bool IsClosedAnonymousType(
             this Type type)
         {
             if (type == null)
             {
                 throw new ArgumentNullException(nameof(type));
+            }
+
+            if (type.ContainsGenericParameters)
+            {
+                return false;
             }
 
             var result = Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
@@ -352,18 +357,23 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Determines if a type is an anonymous type using a faster, but potentially
-        /// less accurate heuristic than <see cref="IsAnonymous(Type)"/>.
+        /// Determines if a type is a closed anonymous type using a faster, but potentially
+        /// less accurate heuristic than <see cref="IsClosedAnonymousType(Type)"/>.
         /// </summary>
         /// <param name="type">Type to check.</param>
-        /// <returns>A value indicating whether or not the type provided is anonymous.</returns>
+        /// <returns>A value indicating whether or not the type provided is a closed anonymous type.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        public static bool IsAnonymousFastCheck(
+        public static bool IsClosedAnonymousTypeFastCheck(
             this Type type)
         {
             if (type == null)
             {
                 throw new ArgumentNullException(nameof(type));
+            }
+
+            if (type.ContainsGenericParameters)
+            {
+                return false;
             }
 
             var result = type.Namespace == null;
@@ -565,7 +575,7 @@ namespace OBeautifulCode.Type.Recipes
 
             var result =
                 type.IsClass &&
-                (!type.IsAnonymous()) &&
+                (!type.IsClosedAnonymousType()) &&
                 (!type.IsGenericTypeDefinition); // can't do an IsAssignableTo check on generic type definitions
 
             return result;
@@ -765,7 +775,7 @@ namespace OBeautifulCode.Type.Recipes
 
             string result;
 
-            if (type.IsAnonymous())
+            if (type.IsClosedAnonymousType())
             {
                 if (throwIfNoCompilableStringExists)
                 {
@@ -980,15 +990,15 @@ namespace OBeautifulCode.Type.Recipes
 
                 if (type.IsGenericType)
                 {
-                    var isAnonymous = type.IsAnonymous();
+                    var IsClosedAnonymousType = type.IsClosedAnonymousType();
 
-                    if (isAnonymous)
+                    if (IsClosedAnonymousType)
                     {
                         result = result.Replace("<>f__", string.Empty);
                     }
 
                     string[] genericParameters;
-                    if (isAnonymous && type.IsGenericTypeDefinition)
+                    if (IsClosedAnonymousType && type.IsGenericTypeDefinition)
                     {
                         genericParameters = type.GetGenericArguments().Select((_, i) => "T" + (i + 1).ToString(CultureInfo.InvariantCulture)).ToArray();
                     }

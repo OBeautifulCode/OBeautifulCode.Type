@@ -611,10 +611,10 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsAnonymous___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void IsClosedAnonymousType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsAnonymous(null));
+            var actual = Record.Exception(() => TypeExtensions.IsClosedAnonymousType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -622,24 +622,40 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsAnonymous___Should_return_true_for_anonymous_type()
+        public static void IsClosedAnonymousType___Should_return_false___When_parameter_type_is_not_a_closed_anonymous_type()
         {
-            // Arrange, Act, Assert
-            new { SomeProp = "prop value" }.GetType().IsAnonymous().Should().BeTrue();
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedTypes)
+                .Concat(TestTypes.OpenTypes)
+                .Except(TestTypes.ClosedAnonymousTypes)
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsClosedAnonymousType());
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsAnonymous___Should_return_false_for_concrete_type()
+        public static void IsClosedAnonymousType___Should_return_true___When_parameter_type_is_a_closed_anonymous_type()
         {
-            // Arrange, Act, Assert
-            "string type".GetType().IsAnonymous().Should().BeFalse();
+            // Arrange
+            var types = TestTypes.ClosedAnonymousTypes;
+
+            // Act
+            var actuals = types.Select(_ => _.IsClosedAnonymousType());
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
-        public static void IsAnonymousFastCheck___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void IsClosedAnonymousTypeFastCheck___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsAnonymousFastCheck(null));
+            var actual = Record.Exception(() => TypeExtensions.IsClosedAnonymousTypeFastCheck(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -647,17 +663,33 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsAnonymousFastCheck___Should_return_true_for_anonymous_type()
+        public static void IsClosedAnonymousTypeFastCheck___Should_return_false___When_parameter_type_is_not_a_closed_anonymous_type()
         {
-            // Arrange, Act, Assert
-            new { SomeProp = "prop value" }.GetType().IsAnonymousFastCheck().Should().BeTrue();
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedTypes)
+                .Concat(TestTypes.OpenTypes)
+                .Except(TestTypes.ClosedAnonymousTypes)
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsClosedAnonymousTypeFastCheck());
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsAnonymousFastCheck___Should_return_false_for_concrete_type()
+        public static void IsClosedAnonymousTypeFastCheck___Should_return_true___When_parameter_type_is_a_closed_anonymous_type()
         {
-            // Arrange, Act, Assert
-            "string type".GetType().IsAnonymousFastCheck().Should().BeFalse();
+            // Arrange
+            var types = TestTypes.ClosedAnonymousTypes;
+
+            // Act
+            var actuals = types.Select(_ => _.IsClosedAnonymousTypeFastCheck());
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
