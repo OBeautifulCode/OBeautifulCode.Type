@@ -33,6 +33,7 @@ namespace OBeautifulCode.Type.Recipes.Test
 
         public static Type[] ClosedClassTypes => new[]
         {
+            typeof(object),
             typeof(TestClass),
             typeof(TestClassWithNestedClass.NestedInTestClass),
             typeof(Dictionary<int, string>),

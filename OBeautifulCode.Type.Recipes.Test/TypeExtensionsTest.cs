@@ -161,14 +161,45 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void GetEnumerableElementType___Should_throw_ArgumentException___When_parameter_type_is_not_assignable_to_IEnumerable()
+        public static void GetEnumerableElementType___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => typeof(TestClass).GetEnumerableElementType());
+            var actuals = TestTypes.OpenTypes.Select(_ => Record.Exception(_.GetEnumerableElementType));
 
             // Assert
-            actual.Should().BeOfType<ArgumentException>();
-            actual.Message.Should().Contain("Specified type is not assignable to IEnumerable: TestClass.");
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<NotSupportedException>();
+                actual.Message.Should().Contain("open types are not supported");
+            }
+        }
+
+        [Fact]
+        public static void GetEnumerableElementType___Should_throw_ArgumentException___When_parameter_type_is_not_assignable_to_IEnumerable()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(_.GetEnumerableElementType));
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("Specified type is not assignable to IEnumerable");
+            }
         }
 
         [Fact]
@@ -216,6 +247,86 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void GetDictionaryKeyType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.GetDictionaryKeyType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void GetDictionaryKeyType___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
+        {
+            // Arrange, Act
+            var actuals = TestTypes.OpenTypes.Select(_ => Record.Exception(_.GetDictionaryKeyType));
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<NotSupportedException>();
+                actual.Message.Should().Contain("open types are not supported");
+            }
+        }
+
+        [Fact]
+        public static void GetDictionaryKeyType___Should_throw_ArgumentException___When_parameter_type_is_not_assignable_to_a_dictionary_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(TestClass),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<string>),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(_.GetDictionaryKeyType));
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("Specified type is not assignable to either IReadOnlyDictionary<T,K>, IDictionary<T,K>, or IDictionary");
+            }
+        }
+
+        [Fact]
+        public static void GetDictionaryKeyType___Should_return_key_type___When_called()
+        {
+            // Arrange
+            var typesAndExpected = new[]
+            {
+                new { Type = typeof(IDictionary<int, Guid>), Expected = typeof(int) },
+                new { Type = typeof(IReadOnlyDictionary<Guid, string>), Expected = typeof(Guid) },
+                new { Type = typeof(Dictionary<bool, int?>), Expected = typeof(bool) },
+                new { Type = typeof(ReadOnlyDictionary<TestClass, bool?>), Expected = typeof(TestClass) },
+                new { Type = typeof(ConcurrentDictionary<string, DateTime>), Expected = typeof(string) },
+
+                new { Type = typeof(BaseClassIDictionary<DateTime, string>), Expected = typeof(DateTime) },
+                new { Type = typeof(DerivedClassIDictionary<TestClass, int>), Expected = typeof(TestClass) },
+                new { Type = typeof(GenericClassDictionary<TimeSpan, bool?>), Expected = typeof(TimeSpan) },
+                new { Type = typeof(NonGenericDictionaryClass), Expected = typeof(string) },
+                new { Type = typeof(IGenericIReadOnlyDictionary<string, TestClass>), Expected = typeof(string) },
+                new { Type = typeof(INonGenericIReadOnlyDictionary), Expected = typeof(int) },
+            };
+
+            // Act
+            var actuals = typesAndExpected.Select(_ => _.Type.GetDictionaryKeyType()).ToList();
+
+            // Assert
+            actuals.Should().Equal(typesAndExpected.Select(_ => _.Expected));
+        }
+
+        [Fact]
         public static void GetDictionaryValueType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
@@ -227,14 +338,45 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void GetDictionaryValueType___Should_throw_ArgumentException___When_parameter_type_is_not_assignable_to_a_dictionary_type()
+        public static void GetDictionaryValueType___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => typeof(TestClass).GetDictionaryValueType());
+            var actuals = TestTypes.OpenTypes.Select(_ => Record.Exception(_.GetDictionaryValueType));
 
             // Assert
-            actual.Should().BeOfType<ArgumentException>();
-            actual.Message.Should().Contain("Specified type is cannot be assigned to either IReadOnlyDictionary<T,K>, IDictionary<T,K>, or IDictionary: TestClass.");
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<NotSupportedException>();
+                actual.Message.Should().Contain("open types are not supported");
+            }
+        }
+
+        [Fact]
+        public static void GetDictionaryValueType___Should_throw_ArgumentException___When_parameter_type_is_not_assignable_to_a_dictionary_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(TestClass),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<string>),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(_.GetDictionaryValueType));
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("Specified type is not assignable to either IReadOnlyDictionary<T,K>, IDictionary<T,K>, or IDictionary");
+            }
         }
 
         [Fact]
@@ -244,9 +386,17 @@ namespace OBeautifulCode.Type.Recipes.Test
             var typesAndExpected = new[]
             {
                 new { Type = typeof(IDictionary<int, Guid>), Expected = typeof(Guid) },
-                new { Type = typeof(IReadOnlyDictionary<int, int?>), Expected = typeof(int?) },
-                new { Type = typeof(Dictionary<int, string>), Expected = typeof(string) },
-                new { Type = typeof(ReadOnlyDictionary<int, TestClass>), Expected = typeof(TestClass) },
+                new { Type = typeof(IReadOnlyDictionary<Guid, string>), Expected = typeof(string) },
+                new { Type = typeof(Dictionary<bool, int?>), Expected = typeof(int?) },
+                new { Type = typeof(ReadOnlyDictionary<TestClass, bool?>), Expected = typeof(bool?) },
+                new { Type = typeof(ConcurrentDictionary<string, DateTime>), Expected = typeof(DateTime) },
+
+                new { Type = typeof(BaseClassIDictionary<DateTime, string>), Expected = typeof(string) },
+                new { Type = typeof(DerivedClassIDictionary<TestClass, int>), Expected = typeof(int) },
+                new { Type = typeof(GenericClassDictionary<TimeSpan, bool?>), Expected = typeof(bool?) },
+                new { Type = typeof(NonGenericDictionaryClass), Expected = typeof(int?) },
+                new { Type = typeof(IGenericIReadOnlyDictionary<string, TestClass>), Expected = typeof(TestClass) },
+                new { Type = typeof(INonGenericIReadOnlyDictionary), Expected = typeof(DateTime) },
             };
 
             // Act
