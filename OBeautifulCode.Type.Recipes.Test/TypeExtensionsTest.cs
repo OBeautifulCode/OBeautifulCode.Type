@@ -844,6 +844,23 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void IsAssignableToNull___Should_throw_NotSupportedException___When_parameter_type_an_open_type()
+        {
+            // Arrange
+            var types = TestTypes.OpenTypes;
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(() => _.IsAssignableToNull()));
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<NotSupportedException>();
+                actual.Message.Should().Contain("Parameter 'type' is an open type; open types are not supported for that parameter");
+            }
+        }
+
+        [Fact]
         public static void IsAssignableToNull___Should_return_false___When_parameter_type_is_not_assignable_to_null()
         {
             // Arrange
@@ -874,6 +891,8 @@ namespace OBeautifulCode.Type.Recipes.Test
                 typeof(DateTime?),
                 typeof(string),
                 typeof(List<string>),
+                typeof(TestClass),
+                typeof(DerivedClassIDictionary<string, string>),
             };
 
             // Act

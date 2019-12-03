@@ -423,12 +423,18 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is assignable to null, otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
         public static bool IsAssignableToNull(
             this Type type)
         {
             if (type == null)
             {
                 throw new ArgumentNullException(nameof(type));
+            }
+
+            if (type.ContainsGenericParameters)
+            {
+                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
             }
 
             var result = (!type.IsValueType) || type.IsNullableType();
