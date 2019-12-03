@@ -248,22 +248,87 @@ namespace OBeautifulCode.Type.Recipes
 
             return result;
         }
+
+        /// <summary>
+        /// Gets the type of the elements of the specified <see cref="System"/> Collection type.
+        /// </summary>
+        /// <param name="type">The <see cref="System"/> Collection type.</param>
+        /// <returns>
+        /// The type of the elements of the specified <see cref="System"/> Collection type.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not a <see cref="System"/> collection type.  See <see cref="IsSystemCollectionType(Type)"/>.</exception>
+        public static Type GetSystemCollectionElementType(
+            this Type type)
         {
             if (type == null)
             {
                 throw new ArgumentNullException(nameof(type));
             }
 
-            // IReadOnlyDictionary<T,K> and IDictionary<T,K> don't implement IDictionary
-            // hence the need for the additional IsAssignableTo checks.
-            if ((!type.IsAssignableTo(ReadOnlyDictionaryInterfaceGenericTypeDefinition, treatUnboundGenericAsAssignableTo: true)) &&
-                (!type.IsAssignableTo(DictionaryInterfaceGenericTypeDefinition, treatUnboundGenericAsAssignableTo: true)) &&
-                (!type.IsAssignableTo(DictionaryInterfaceType)))
+            if (!type.IsSystemCollectionType())
             {
-                throw new ArgumentException(Invariant($"Specified type is cannot be assigned to either IReadOnlyDictionary<T,K>, IDictionary<T,K>, or IDictionary: {type.Name}."));
+                throw new ArgumentException(Invariant($"Specified type is not a System Collection type: {type.Name}."));
             }
 
-            var result = type.GetDictionaryValueTypeInternal();
+            var result = type.GenericTypeArguments.First();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the type of the keys of the specified <see cref="System"/> Dictionary type.
+        /// </summary>
+        /// <param name="type">The <see cref="System"/> Dictionary type.</param>
+        /// <returns>
+        /// The type of the keys of the specified <see cref="System"/> Dictionary type.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not a <see cref="System"/> dictionary type.  See <see cref="IsSystemDictionaryType(Type)"/>.</exception>
+        public static Type GetSystemDictionaryKeyType(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (!type.IsSystemDictionaryType())
+            {
+                throw new ArgumentException(Invariant($"Specified type is not a System Dictionary type: {type.Name}."));
+            }
+
+            var result = type.GenericTypeArguments[0];
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the type of the values of the specified <see cref="System"/> Dictionary type.
+        /// </summary>
+        /// <param name="type">The <see cref="System"/> Dictionary type.</param>
+        /// <returns>
+        /// The type of the values of the specified <see cref="System"/> Dictionary type.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
+        /// <exception cref="ArgumentException"><paramref name="type"/> is not a <see cref="System"/> dictionary type.  See <see cref="IsSystemDictionaryType(Type)"/>.</exception>
+        public static Type GetSystemDictionaryValueType(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (!type.IsSystemDictionaryType())
+            {
+                throw new ArgumentException(Invariant($"Specified type is not a System Dictionary type: {type.Name}."));
+            }
+
+            var result = type.GenericTypeArguments[1];
 
             return result;
         }
@@ -387,12 +452,13 @@ namespace OBeautifulCode.Type.Recipes
                     return false;
                 }
 
-                // check if the base type is assignable to the other type
+                // check if the base types are assignable to the other type
                 // note that we don't need to check the interfaces that the base type 
                 // implements because the GetInterfaces() call above returns all the interfaces implemented or inherited
-                var result = baseType.IsAssignableToInternal(otherType);
-
-                return result;
+                if (type.GetInheritancePath().Any(_ => _.IsGenericType && (_.GetGenericTypeDefinition() == otherType)))
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -541,6 +607,7 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is a <see cref="System"/> collection type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
         public static bool IsSystemCollectionType(
             this Type type)
         {
@@ -549,14 +616,19 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
+            if (type.ContainsGenericParameters)
+            {
+                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+            }
+
             if (!type.IsGenericType)
             {
                 return false;
             }
 
-            var genericType = type.GetGenericTypeDefinition();
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
 
-            var result = SystemCollectionGenericTypeDefinitions.Contains(genericType);
+            var result = SystemCollectionGenericTypeDefinitions.Contains(genericTypeDefinition);
 
             return result;
         }
@@ -569,6 +641,7 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is a <see cref="System"/> dictionary type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
         public static bool IsSystemDictionaryType(
             this Type type)
         {
@@ -577,14 +650,19 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
+            if (type.ContainsGenericParameters)
+            {
+                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+            }
+
             if (!type.IsGenericType)
             {
                 return false;
             }
 
-            var genericType = type.GetGenericTypeDefinition();
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
 
-            var result = SystemDictionaryGenericTypeDefinitions.Contains(genericType);
+            var result = SystemDictionaryGenericTypeDefinitions.Contains(genericTypeDefinition);
 
             return result;
         }
@@ -598,6 +676,7 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is an ordered <see cref="System"/> collection type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
         public static bool IsSystemOrderedCollectionType(
             this Type type)
         {
@@ -606,14 +685,19 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
+            if (type.ContainsGenericParameters)
+            {
+                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+            }
+
             if (!type.IsGenericType)
             {
                 return false;
             }
 
-            var genericType = type.GetGenericTypeDefinition();
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
 
-            var result = SystemOrderedCollectionGenericTypeDefinitions.Contains(genericType);
+            var result = SystemOrderedCollectionGenericTypeDefinitions.Contains(genericTypeDefinition);
 
             return result;
         }
@@ -627,6 +711,7 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is an unordered <see cref="System"/> collection type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
         public static bool IsSystemUnorderedCollectionType(
             this Type type)
         {
@@ -635,14 +720,19 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
+            if (type.ContainsGenericParameters)
+            {
+                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+            }
+
             if (!type.IsGenericType)
             {
                 return false;
             }
 
-            var genericType = type.GetGenericTypeDefinition();
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
 
-            var result = SystemUnorderedCollectionGenericTypeDefinitions.Contains(genericType);
+            var result = SystemUnorderedCollectionGenericTypeDefinitions.Contains(genericTypeDefinition);
 
             return result;
         }
@@ -794,27 +884,6 @@ namespace OBeautifulCode.Type.Recipes
 
                 type.BaseType.BuildInheritancePath(traversedPath);
             }
-        }
-
-        private static bool IsAssignableToInternal(
-            this Type type,
-            Type otherType)
-        {
-            // type's generic type definition version is the other type
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == otherType)
-            {
-                return true;
-            }
-
-            var baseType = type.BaseType;
-            if (baseType == null)
-            {
-                return false;
-            }
-
-            var result = baseType.IsAssignableToInternal(otherType);
-
-            return result;
         }
 
         private static Type GetDictionaryKeyOrValueTypeInternal(

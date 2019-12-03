@@ -407,6 +407,100 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void GetSystemCollectionElementType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.GetSystemCollectionElementType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void GetSystemCollectionElementType___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
+        {
+            // Arrange, Act
+            var actuals = TestTypes.OpenTypes.Select(_ => Record.Exception(_.GetSystemCollectionElementType));
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<NotSupportedException>();
+                actual.Message.Should().Contain("open types are not supported");
+            }
+        }
+
+        [Fact]
+        public static void GetSystemCollectionElementType___Should_throw_ArgumentException___When_parameter_type_is_not_a_System_Collection_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<string>),
+                    typeof(IDictionary<string, string>),
+                    typeof(IReadOnlyDictionary<string, string>),
+                    typeof(Dictionary<string, string>),
+                    typeof(ReadOnlyDictionary<string, string>),
+                    typeof(ConcurrentDictionary<string, string>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericDictionaryClass),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(_.GetSystemCollectionElementType));
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("Specified type is not a System Collection type");
+            }
+        }
+
+        [Fact]
+        public static void GetSystemCollectionElementType___Should_return_element_type___When_called()
+        {
+            // Arrange
+            var typesAndExpected = new[]
+            {
+                new { Type = typeof(Collection<Guid>), Expected = typeof(Guid) },
+                new { Type = typeof(ICollection<bool>), Expected = typeof(bool) },
+                new { Type = typeof(ReadOnlyCollection<DateTime>), Expected = typeof(DateTime) },
+                new { Type = typeof(IReadOnlyCollection<TimeSpan>), Expected = typeof(TimeSpan) },
+                new { Type = typeof(List<TestClass>), Expected = typeof(TestClass) },
+                new { Type = typeof(IList<int?>), Expected = typeof(int?) },
+                new { Type = typeof(IReadOnlyList<int[]>), Expected = typeof(int[]) },
+            };
+
+            // Act
+            var actuals = typesAndExpected.Select(_ => _.Type.GetSystemCollectionElementType()).ToList();
+
+            // Assert
+            actuals.Should().Equal(typesAndExpected.Select(_ => _.Expected));
+        }
+
+        [Fact]
         public static void IsAnonymous___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
