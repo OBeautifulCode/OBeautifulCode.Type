@@ -633,181 +633,200 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsAssignableTo___Should_throw_ArgumentException___When_parameter_type_is_an_unbound_generic_type()
+        public static void IsAssignableTo___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
         {
-            // Arrange, Act
-            var actual1 = Record.Exception(() => typeof(IEnumerable<>).IsAssignableTo(A.Dummy<Type>()));
-            var actual2 = Record.Exception(() => typeof(List<>).IsAssignableTo(A.Dummy<Type>()));
+            // Arrange
+            var types = TestTypes.OpenTypes;
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(() => _.IsAssignableTo(typeof(object))));
 
             // Assert
-            actual1.Should().BeOfType<ArgumentException>();
-            actual1.Message.Should().Contain("type.IsGenericTypeDefinition");
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<NotSupportedException>();
+                actual.Message.Should().Contain("Parameter 'type' is an open type; open types are not supported for that parameter.");
+            }
+        }
 
-            actual2.Should().BeOfType<ArgumentException>();
-            actual2.Message.Should().Contain("type.IsGenericTypeDefinition");
+        [Fact]
+        public static void IsAssignableTo___Should_throw_NotSupportedException___When_parameter_otherType_is_an_open_type_but_not_a_generic_type_definition()
+        {
+            // Arrange
+            var types = TestTypes.OpenTypesWithoutGenericTypeDefinitionTypes;
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(() => typeof(object).IsAssignableTo(_)));
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<NotSupportedException>();
+                actual.Message.Should().Contain("Parameter 'otherType' is an open type, but not a generic type definition; the only open types that are supported are generic type definitions for that parameter.");
+            }
         }
 
         [Fact]
         public static void IsAssignableTo___Should_return_true___When_type_is_equal_to_otherType()
         {
-            // Arrange, Act
-            var actual1 = typeof(string).IsAssignableTo(typeof(string));
-            var actual2 = typeof(List<string>).IsAssignableTo(typeof(List<string>));
-            var actual3 = typeof(IEnumerable<string>).IsAssignableTo(typeof(IEnumerable<string>));
+            // Arrange
+            var types = TestTypes.ClosedTypes;
+
+            // Act
+            var actuals1 = types.Select(_ => _.IsAssignableTo(_, treatGenericTypeDefinitionAsAssignableTo: false)).ToList();
+            var actuals2 = types.Select(_ => _.IsAssignableTo(_, treatGenericTypeDefinitionAsAssignableTo: true)).ToList();
 
             // Assert
-            actual1.Should().BeTrue();
-            actual2.Should().BeTrue();
-            actual3.Should().BeTrue();
+            actuals1.Should().AllBeEquivalentTo(true);
+            actuals2.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
         public static void IsAssignableTo___Should_return_true___When_IsAssignableFrom_returns_true()
         {
-            // Arrange, Act
-            var actual1 = typeof(string).IsAssignableTo(typeof(object));
-            var actual2 = typeof(List<string>).IsAssignableTo(typeof(IList));
-            var actual3 = typeof(List<string>).IsAssignableTo(typeof(IList<string>));
+            // Arrange
+            var types = new[]
+            {
+                new { Type = typeof(string), OtherType = typeof(object) },
+                new { Type = typeof(List<string>), OtherType = typeof(IList) },
+                new { Type = typeof(List<string>), OtherType = typeof(IList<string>) },
+                new { Type = typeof(DerivedClassIList<string>), OtherType = typeof(BaseClassIList<string>) },
+            };
+
+            // Act
+            var actuals1 = types.Select(_ => _.Type.IsAssignableTo(_.OtherType, treatGenericTypeDefinitionAsAssignableTo: false)).ToList();
+            var actuals2 = types.Select(_ => _.Type.IsAssignableTo(_.OtherType, treatGenericTypeDefinitionAsAssignableTo: true)).ToList();
 
             // Assert
-            actual1.Should().BeTrue();
-            actual2.Should().BeTrue();
-            actual3.Should().BeTrue();
+            actuals1.Should().AllBeEquivalentTo(true);
+            actuals2.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
-        public static void IsAssignableTo___Should_return_false___When_IsAssignableFrom_returns_false_and_otherType_is_not_unbound_generic_and_treatUnboundGenericAsAssignableTo_is_false()
+        public static void IsAssignableTo___Should_return_false___When_IsAssignableFrom_returns_false_and_otherType_is_not_a_generic_type_definition()
         {
-            // Arrange, Act
-            var actual1 = typeof(List<string>).IsAssignableTo(typeof(List<object>));
-            var actual2 = typeof(List<string>).IsAssignableTo(typeof(IList<object>));
-            var actual3 = typeof(object).IsAssignableTo(typeof(string));
-            var actual4 = typeof(BaseClassIList<string>).IsAssignableTo(typeof(DerivedClassIList<string>));
-            var actual5 = typeof(IList<string>).IsAssignableTo(typeof(BaseClassIList<string>));
+            // Arrange
+            var types = new[]
+            {
+                new { Type = typeof(List<string>), OtherType = typeof(List<object>) },
+                new { Type = typeof(List<string>), OtherType = typeof(IList<object>) },
+                new { Type = typeof(object), OtherType = typeof(string) },
+                new { Type = typeof(BaseClassIList<string>), OtherType = typeof(DerivedClassIList<string>) },
+                new { Type = typeof(IList<string>), OtherType = typeof(BaseClassIList<string>) },
+            };
+
+            // Act
+            var actuals1 = types.Select(_ => _.Type.IsAssignableTo(_.OtherType, treatGenericTypeDefinitionAsAssignableTo: false)).ToList();
+            var actuals2 = types.Select(_ => _.Type.IsAssignableTo(_.OtherType, treatGenericTypeDefinitionAsAssignableTo: true)).ToList();
 
             // Assert
-            actual1.Should().BeFalse();
-            actual2.Should().BeFalse();
-            actual3.Should().BeFalse();
-            actual4.Should().BeFalse();
-            actual5.Should().BeFalse();
+            actuals1.Should().AllBeEquivalentTo(false);
+            actuals2.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsAssignableTo___Should_return_false___When_IsAssignableFrom_returns_false_and_otherType_is_not_unbound_generic_and_treatUnboundGenericAsAssignableTo_is_true()
+        public static void IsAssignableTo___Should_return_true___When_type_GenericTypeDefinition_is_equal_to_otherType_and_treatGenericTypeDefinitionAsAssignableTo_is_true()
         {
-            // Arrange, Act
-            var actual1 = typeof(List<string>).IsAssignableTo(typeof(List<object>), treatUnboundGenericAsAssignableTo: true);
-            var actual2 = typeof(List<string>).IsAssignableTo(typeof(IList<object>), treatUnboundGenericAsAssignableTo: true);
-            var actual3 = typeof(object).IsAssignableTo(typeof(string), treatUnboundGenericAsAssignableTo: true);
-            var actual4 = typeof(BaseClassIList<string>).IsAssignableTo(typeof(DerivedClassIList<string>), treatUnboundGenericAsAssignableTo: true);
-            var actual5 = typeof(IList<string>).IsAssignableTo(typeof(BaseClassIList<string>), treatUnboundGenericAsAssignableTo: true);
+            // Arrange
+            var types = TestTypes.ClosedTypes.Where(_ => _.IsGenericType).ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsAssignableTo(_.GetGenericTypeDefinition(), treatGenericTypeDefinitionAsAssignableTo: true));
 
             // Assert
-            actual1.Should().BeFalse();
-            actual2.Should().BeFalse();
-            actual3.Should().BeFalse();
-            actual4.Should().BeFalse();
-            actual5.Should().BeFalse();
+            actuals.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
-        public static void IsAssignableTo___Should_return_true___When_type_GenericTypeDefinition_is_equal_to_otherType_and_treatUnboundGenericAsAssignableTo_is_true()
+        public static void IsAssignableTo___Should_return_false___When_type_GenericTypeDefinition_is_equal_to_otherType_and_treatGenericTypeDefinitionAsAssignableTo_is_false()
         {
-            // Arrange, Act
-            var actual1 = typeof(List<string>).IsAssignableTo(typeof(List<>), treatUnboundGenericAsAssignableTo: true);
-            var actual2 = typeof(IList<string>).IsAssignableTo(typeof(IList<>), treatUnboundGenericAsAssignableTo: true);
-            var actual3 = typeof(int?).IsAssignableTo(typeof(Nullable<>), treatUnboundGenericAsAssignableTo: true);
+            // Arrange
+            var types = TestTypes.ClosedTypes.Where(_ => _.IsGenericType).ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsAssignableTo(_.GetGenericTypeDefinition(), treatGenericTypeDefinitionAsAssignableTo: false));
 
             // Assert
-            actual1.Should().BeTrue();
-            actual2.Should().BeTrue();
-            actual3.Should().BeTrue();
+            actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsAssignableTo___Should_return_false___When_type_GenericTypeDefinition_is_equal_to_otherType_and_treatUnboundGenericAsAssignableTo_is_false()
+        public static void IsAssignableTo___Should_return_true___When_type_implements_or_inherits_an_interface_whose_generic_type_definition_equals_otherType_and_treatGenericTypeDefinitionAsAssignableTo_is_true()
         {
-            // Arrange, Act
-            var actual1 = typeof(List<string>).IsAssignableTo(typeof(List<>));
-            var actual2 = typeof(IList<string>).IsAssignableTo(typeof(IList<>));
-            var actual3 = typeof(int?).IsAssignableTo(typeof(Nullable<>));
+            // Arrange
+            var types = new[]
+            {
+                new { Type = typeof(List<string>), OtherType = typeof(IList<>) },
+                new { Type = typeof(List<string>), OtherType = typeof(IEnumerable<>) },
+                new { Type = typeof(IList<string>), OtherType = typeof(IEnumerable<>) },
+                new { Type = typeof(DerivedClassIList<string>), OtherType = typeof(IEnumerable<>) },
+                new { Type = typeof(DerivedClassIList<string>), OtherType = typeof(BaseClassIList<>) },
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.Type.IsAssignableTo(_.OtherType, treatGenericTypeDefinitionAsAssignableTo: true));
 
             // Assert
-            actual1.Should().BeFalse();
-            actual2.Should().BeFalse();
-            actual3.Should().BeFalse();
+            actuals.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
-        public static void IsAssignableTo___Should_return_true___When_type_implements_or_inherits_an_interface_whose_generic_type_definition_equals_otherType_and_treatUnboundGenericAsAssignableTo_is_true()
+        public static void IsAssignableTo___Should_return_false___When_type_implements_or_inherits_an_interface_whose_generic_type_definition_equals_otherType_and_treatGenericTypeDefinitionAsAssignableTo_is_false()
         {
-            // Arrange, Act
-            var actual1 = typeof(List<string>).IsAssignableTo(typeof(IList<>), treatUnboundGenericAsAssignableTo: true);
-            var actual2 = typeof(List<string>).IsAssignableTo(typeof(IEnumerable<>), treatUnboundGenericAsAssignableTo: true);
-            var actual3 = typeof(IList<string>).IsAssignableTo(typeof(IEnumerable<>), treatUnboundGenericAsAssignableTo: true);
-            var actual4 = typeof(DerivedClassIList<string>).IsAssignableTo(typeof(IEnumerable<>), treatUnboundGenericAsAssignableTo: true);
-            var actual5 = typeof(DerivedClassIList<string>).IsAssignableTo(typeof(BaseClassIList<>), treatUnboundGenericAsAssignableTo: true);
+            // Arrange
+            var types = new[]
+            {
+                new { Type = typeof(List<string>), OtherType = typeof(IList<>) },
+                new { Type = typeof(List<string>), OtherType = typeof(IEnumerable<>) },
+                new { Type = typeof(IList<string>), OtherType = typeof(IEnumerable<>) },
+                new { Type = typeof(DerivedClassIList<string>), OtherType = typeof(IEnumerable<>) },
+                new { Type = typeof(DerivedClassIList<string>), OtherType = typeof(BaseClassIList<>) },
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.Type.IsAssignableTo(_.OtherType, treatGenericTypeDefinitionAsAssignableTo: false));
 
             // Assert
-            actual1.Should().BeTrue();
-            actual2.Should().BeTrue();
-            actual3.Should().BeTrue();
-            actual4.Should().BeTrue();
-            actual5.Should().BeTrue();
+            actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsAssignableTo___Should_return_false___When_type_implements_or_inherits_an_interface_whose_generic_type_definition_equals_otherType_and_treatUnboundGenericAsAssignableTo_is_false()
+        public static void IsAssignableTo___Should_return_false___When_type_does_not_implement_nor_inherit_an_interface_whose_generic_type_definition_equals_otherType()
         {
-            // Arrange, Act
-            var actual1 = typeof(List<string>).IsAssignableTo(typeof(IList<>));
-            var actual2 = typeof(List<string>).IsAssignableTo(typeof(IEnumerable<>));
-            var actual3 = typeof(IList<string>).IsAssignableTo(typeof(IEnumerable<>));
-            var actual4 = typeof(DerivedClassIList<string>).IsAssignableTo(typeof(IEnumerable<>));
-            var actual5 = typeof(DerivedClassIList<string>).IsAssignableTo(typeof(BaseClassIList<>));
+            // Arrange
+            var types = new[]
+            {
+                new { Type = typeof(IList<string>), OtherType = typeof(List<>) },
+                new { Type = typeof(IEnumerable<string>), OtherType = typeof(IList<>) },
+                new { Type = typeof(IEnumerable<string>), OtherType = typeof(List<>) },
+                new { Type = typeof(BaseClassIList<string>), OtherType = typeof(DerivedClassIList<>) },
+                new { Type = typeof(IList<string>), OtherType = typeof(BaseClassIList<>) },
+            };
+
+            // Act
+            var actuals1 = types.Select(_ => _.Type.IsAssignableTo(_.OtherType, treatGenericTypeDefinitionAsAssignableTo: false));
+            var actuals2 = types.Select(_ => _.Type.IsAssignableTo(_.OtherType, treatGenericTypeDefinitionAsAssignableTo: true));
 
             // Assert
-            actual1.Should().BeFalse();
-            actual2.Should().BeFalse();
-            actual3.Should().BeFalse();
-            actual4.Should().BeFalse();
-            actual5.Should().BeFalse();
+            actuals1.Should().AllBeEquivalentTo(false);
+            actuals2.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsAssignableTo___Should_return_false___When_type_does_not_implement_nor_inherit_an_interface_whose_generic_type_definition_equals_otherType_and_treatUnboundGenericAsAssignableTo_is_true()
+        public static void IsAssignableTo___Should_return_true___When_type_BaseType_implements_or_inherits_an_interface_whose_generic_type_definition_equals_otherType_and_treatGenericTypeDefinitionAsAssignableTo_is_true()
         {
             // Arrange, Act
-            var actual1 = typeof(IList<string>).IsAssignableTo(typeof(List<>), treatUnboundGenericAsAssignableTo: true);
-            var actual2 = typeof(IEnumerable<string>).IsAssignableTo(typeof(IList<>), treatUnboundGenericAsAssignableTo: true);
-            var actual3 = typeof(IEnumerable<string>).IsAssignableTo(typeof(List<>), treatUnboundGenericAsAssignableTo: true);
-            var actual4 = typeof(BaseClassIList<string>).IsAssignableTo(typeof(DerivedClassIList<>), treatUnboundGenericAsAssignableTo: true);
-            var actual5 = typeof(IList<string>).IsAssignableTo(typeof(BaseClassIList<>), treatUnboundGenericAsAssignableTo: true);
-
-            // Assert
-            actual1.Should().BeFalse();
-            actual2.Should().BeFalse();
-            actual3.Should().BeFalse();
-            actual4.Should().BeFalse();
-            actual5.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void IsAssignableTo___Should_return_true___When_type_BaseType_implements_or_inherits_an_interface_whose_generic_type_definition_equals_otherType_and_treatUnboundGenericAsAssignableTo_is_true()
-        {
-            // Arrange, Act
-            var actual = typeof(GenericClassList<string>).IsAssignableTo(typeof(List<>), treatUnboundGenericAsAssignableTo: true);
+            var actual = typeof(GenericClassList<string>).IsAssignableTo(typeof(List<>), treatGenericTypeDefinitionAsAssignableTo: true);
 
             // Assert
             actual.Should().BeTrue();
         }
 
         [Fact]
-        public static void IsAssignableTo___Should_return_false___When_type_BaseType_implements_or_inherits_an_interface_whose_generic_type_definition_equals_otherType_and_treatUnboundGenericAsAssignableTo_is_false()
+        public static void IsAssignableTo___Should_return_false___When_type_BaseType_implements_or_inherits_an_interface_whose_generic_type_definition_equals_otherType_and_treatGenericTypeDefinitionAsAssignableTo_is_false()
         {
             // Arrange, Act
-            var actual = typeof(GenericClassList<string>).IsAssignableTo(typeof(List<>));
+            var actual = typeof(GenericClassList<string>).IsAssignableTo(typeof(List<>), treatGenericTypeDefinitionAsAssignableTo: false);
 
             // Assert
             actual.Should().BeFalse();

@@ -335,18 +335,18 @@ namespace OBeautifulCode.Type.Recipes
         /// </remarks>
         /// <param name="type">The current type.</param>
         /// <param name="otherType">The type to check for ability to assign to.</param>
-        /// <param name="treatUnboundGenericAsAssignableTo">Treats an unbound generic as a type that can be assigned to (e.g. IsAssignableTo(List&lt;int&gt;, List&lt;&gt;)).</param>
+        /// <param name="treatGenericTypeDefinitionAsAssignableTo">If <paramref name="otherType"/> is a generic type definition, specifies whether the method should treat that type as if a closed type can be assigned to it (e.g. IsAssignableTo(List&lt;int&gt;, List&lt;&gt;)).</param>
         /// <returns>
         /// true if <paramref name="type"/> can be assigned to <paramref name="otherType"/>; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="otherType"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is an open type.</exception>
-        /// <exception cref="ArgumentException"><paramref name="otherType"/> is an open type, but not a generic type definition.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="otherType"/> is an open type, but not a generic type definition.</exception>
         public static bool IsAssignableTo(
             this Type type,
             Type otherType,
-            bool treatUnboundGenericAsAssignableTo = false)
+            bool treatGenericTypeDefinitionAsAssignableTo = false)
         {
             if (type == null)
             {
@@ -360,12 +360,12 @@ namespace OBeautifulCode.Type.Recipes
 
             if (type.ContainsGenericParameters)
             {
-                throw new ArgumentException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
             }
 
             if ((!otherType.IsGenericTypeDefinition) && otherType.ContainsGenericParameters)
             {
-                throw new ArgumentException(Invariant($"Parameter '{nameof(otherType)}' is an open type, but not a generic type definition; the only open types that are supported are generic type definitions for that parameter."));
+                throw new NotSupportedException(Invariant($"Parameter '{nameof(otherType)}' is an open type, but not a generic type definition; the only open types that are supported are generic type definitions for that parameter."));
             }
 
             // type is equal to the other type
@@ -381,7 +381,7 @@ namespace OBeautifulCode.Type.Recipes
             }
 
             // other type is a generic type definition and we are treating the specified closed type as if it can be assigned to a generic type definition
-            if (treatUnboundGenericAsAssignableTo && otherType.IsGenericTypeDefinition)
+            if (treatGenericTypeDefinitionAsAssignableTo && otherType.IsGenericTypeDefinition)
             {
                 // type's generic type definition is the other type
                 if (type.IsGenericType && type.GetGenericTypeDefinition() == otherType)
@@ -910,8 +910,8 @@ namespace OBeautifulCode.Type.Recipes
             if (type.ContainsGenericParameters || 
                 (
                        (!DictionaryInterfaceType.IsAssignableFrom(type))
-                    && (!type.IsAssignableTo(DictionaryInterfaceGenericTypeDefinition        , treatUnboundGenericAsAssignableTo: true))
-                    && (!type.IsAssignableTo(ReadOnlyDictionaryInterfaceGenericTypeDefinition, treatUnboundGenericAsAssignableTo: true))
+                    && (!type.IsAssignableTo(DictionaryInterfaceGenericTypeDefinition        , treatGenericTypeDefinitionAsAssignableTo: true))
+                    && (!type.IsAssignableTo(ReadOnlyDictionaryInterfaceGenericTypeDefinition, treatGenericTypeDefinitionAsAssignableTo: true))
                 ))
             {
                 throw new ArgumentException(Invariant($"Specified type is not a closed Dictionary type: {type.Name}."));
