@@ -1116,10 +1116,10 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsNonAnonymousClosedClassType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void IsClosedNonAnonymousClassType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsNonAnonymousClosedClassType(null));
+            var actual = Record.Exception(() => TypeExtensions.IsClosedNonAnonymousClassType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -1127,67 +1127,36 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsNonAnonymousClosedClassType___Should_return_false___When_parameter_type_is_an_interface_type()
+        public static void IsClosedNonAnonymousClassType___Should_return_false___When_parameter_type_is_not_a_class_or_anonymous_or_not_closed()
         {
             // Arrange
-            var types = new[]
-            {
-                typeof(IList),
-                typeof(IList<string>),
-            };
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedInterfaceTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .ToList();
 
             // Act
-            var actuals = types.Select(_ => _.IsNonAnonymousClosedClassType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedNonAnonymousClassType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsNonAnonymousClosedClassType___Should_return_false___When_parameter_type_is_an_open_generic_type()
+        public static void IsClosedNonAnonymousClassType___Should_return_true___When_parameter_type_is_a_not_anonymous_closed_class_type()
         {
             // Arrange
-            var types = new[]
-            {
-                typeof(List<>),
-                typeof(Dictionary<,>),
-            };
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedClassTypes)
+                .Concat(TestTypes.ClosedArrayTypes)
+                .ToList();
 
             // Act
-            var actuals = types.Select(_ => _.IsNonAnonymousClosedClassType()).ToList();
-
-            // Assert
-            actuals.Should().AllBeEquivalentTo(false);
-        }
-
-        [Fact]
-        public static void IsNonAnonymousClosedClassType___Should_return_false___When_parameter_type_is_an_anonymous_type()
-        {
-            // Arrange
-            var types = new[]
-            {
-                new { test = "test" }.GetType(),
-            };
-
-            // Act
-            var actuals = types.Select(_ => _.IsNonAnonymousClosedClassType()).ToList();
-
-            // Assert
-            actuals.Should().AllBeEquivalentTo(false);
-        }
-
-        [Fact]
-        public static void IsNonAnonymousClosedClassType___Should_return_true___When_parameter_type_is_a_not_anonymous_closed_class()
-        {
-            // Arrange
-            var types = new[]
-            {
-                typeof(List<string>),
-                typeof(Dictionary<string, string>),
-            };
-
-            // Act
-            var actuals = types.Select(_ => _.IsNonAnonymousClosedClassType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedNonAnonymousClassType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);

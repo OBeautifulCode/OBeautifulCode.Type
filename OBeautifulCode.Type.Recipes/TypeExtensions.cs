@@ -616,7 +616,7 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is a class type, non-anonymous, and closed.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        public static bool IsNonAnonymousClosedClassType(
+        public static bool IsClosedNonAnonymousClassType(
             this Type type)
         {
             if (type == null)
@@ -624,10 +624,10 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
-            var result =
-                type.IsClass &&
-                (!type.IsClosedAnonymousType()) &&
-                (!type.IsGenericTypeDefinition); // can't do an IsAssignableTo check on generic type definitions
+            var result = 
+                type.IsClass 
+                && (!type.IsClosedAnonymousType()) 
+                && (!type.ContainsGenericParameters);
 
             return result;
         }
