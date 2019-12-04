@@ -125,7 +125,7 @@ namespace OBeautifulCode.Type.Recipes
                 { typeof(char), "char" },
                 { typeof(string), "string" },
                 { typeof(void), "void" },
-        };
+            };
 
         /// <summary>
         /// Gets the type of the elements of a specified closed Enumerable type.
@@ -369,7 +369,7 @@ namespace OBeautifulCode.Type.Recipes
         /// That's because that type doesn't implement IComparable&lt;IComparable&lt;string&gt;&gt;
         /// per the heuristic described above.  That said, any type that is assignable to <see cref="IComparable"/>
         /// will return true per the heuristic above.  For example:
-        /// typeof(IComparable).HasWorkingDefaultComparer() == true
+        /// typeof(IComparable).HasWorkingDefaultComparer() == true.
         /// </remarks>
         /// <param name="type">The type.</param>
         /// <returns>
@@ -406,7 +406,7 @@ namespace OBeautifulCode.Type.Recipes
             {
                 return true;
             }
-            
+
             if (type.IsClosedNullableType())
             {
                 var underlyingType = type.GetGenericArguments()[0];
@@ -426,7 +426,7 @@ namespace OBeautifulCode.Type.Recipes
             var boxedType = Nullable.GetUnderlyingType(type) ?? type;
 
             var result = ComparableInterfaceType.IsAssignableFrom(boxedType);
-            
+
             return result;
         }
 
@@ -506,7 +506,7 @@ namespace OBeautifulCode.Type.Recipes
                 }
 
                 // check if the base types are assignable to the other type
-                // note that we don't need to check the interfaces that the base type 
+                // note that we don't need to check the interfaces that the base type
                 // implements because the GetInterfaces() call above returns all the interfaces implemented or inherited
                 if (type.GetInheritancePath().Any(_ => _.IsGenericType && (_.GetGenericTypeDefinition() == otherType)))
                 {
@@ -604,7 +604,7 @@ namespace OBeautifulCode.Type.Recipes
         /// Determines if the specified type is a class type, that's not anonymous, and is closed.
         /// </summary>
         /// <remarks>
-        /// This is basically asking, "Is this a class type that can be constructed/new-ed up?"
+        /// This is basically asking, "Is this a class type that can be constructed/new-ed up?".
         /// </remarks>
         /// <param name="type">The type.</param>
         /// <returns>
@@ -619,9 +619,9 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
-            var result = 
-                type.IsClass 
-                && (!type.IsClosedAnonymousType()) 
+            var result =
+                type.IsClass
+                && (!type.IsClosedAnonymousType())
                 && (!type.ContainsGenericParameters);
 
             return result;
@@ -953,12 +953,11 @@ namespace OBeautifulCode.Type.Recipes
 
             // IReadOnlyDictionary<T,K> and IDictionary<T,K> don't implement IDictionary
             // hence the need for the additional IsAssignableTo checks.
-            if (type.ContainsGenericParameters || 
+            if (type.ContainsGenericParameters ||
                 (
                        (!DictionaryInterfaceType.IsAssignableFrom(type))
-                    && (!type.IsAssignableTo(DictionaryInterfaceGenericTypeDefinition        , treatGenericTypeDefinitionAsAssignableTo: true))
-                    && (!type.IsAssignableTo(ReadOnlyDictionaryInterfaceGenericTypeDefinition, treatGenericTypeDefinitionAsAssignableTo: true))
-                ))
+                    && (!type.IsAssignableTo(DictionaryInterfaceGenericTypeDefinition, treatGenericTypeDefinitionAsAssignableTo: true))
+                    && (!type.IsAssignableTo(ReadOnlyDictionaryInterfaceGenericTypeDefinition, treatGenericTypeDefinitionAsAssignableTo: true))))
             {
                 throw new ArgumentException(Invariant($"Specified type is not a closed Dictionary type: {type.Name}."));
             }
