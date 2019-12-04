@@ -996,7 +996,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void HasWorkingDefaultComparer_type___Should_return_false___When_parameter_type_is_an_open_type()
+        public static void HasWorkingDefaultComparer_type___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
         {
             // Arrange
             var types = new Type[0]
@@ -1010,10 +1010,14 @@ namespace OBeautifulCode.Type.Recipes.Test
                 .ToList();
 
             // Act
-            var actuals = types.Select(_ => _.HasWorkingDefaultComparer()).ToList();
+            var actuals = types.Select(_ => Record.Exception(() => _.HasWorkingDefaultComparer())).ToList();
 
             // Assert
-            actuals.Should().AllBeEquivalentTo(false);
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<NotSupportedException>();
+                actual.Message.Should().Contain("Parameter 'type' is an open type; open types are not supported for that parameter");
+            }
         }
 
         [Fact]

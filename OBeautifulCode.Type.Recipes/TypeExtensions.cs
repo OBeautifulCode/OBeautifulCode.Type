@@ -377,6 +377,7 @@ namespace OBeautifulCode.Type.Recipes
         /// comparer for the specified type, otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
         public static bool HasWorkingDefaultComparer(
             this Type type)
         {
@@ -389,7 +390,7 @@ namespace OBeautifulCode.Type.Recipes
             // not even using reflection
             if (type.ContainsGenericParameters)
             {
-                return false;
+                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
             }
 
             // Previously, we called Comparer<T>.Default and checked whether that was equal to ObjectComparer<T>.
