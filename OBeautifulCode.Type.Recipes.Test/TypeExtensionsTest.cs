@@ -1163,10 +1163,10 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsNullableType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void IsClosedNullableType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsNullableType(null));
+            var actual = Record.Exception(() => TypeExtensions.IsClosedNullableType(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -1174,38 +1174,31 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsNullableType___Should_return_false___When_parameter_type_is_not_Nullable()
+        public static void IsClosedNullableType___Should_return_false___When_parameter_type_is_not_closed_nullable_type()
         {
             // Arrange
-            var types = new[]
-            {
-                typeof(string),
-                typeof(int),
-                typeof(Guid),
-                typeof(bool),
-                typeof(BaseClassIList<string>),
-            };
+            typeof(int?).GetGenericTypeDefinition().IsClosedNullableType();
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedTypes)
+                .Except(TestTypes.ClosedNullableTypes)
+                .ToList();
 
             // Act
-            var actuals = types.Select(_ => _.IsNullableType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedNullableType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsNullableType___Should_return_true___When_parameter_type_is_Nullable()
+        public static void IsClosedNullableType___Should_return_true___When_parameter_type_is_a_closed_nullable()
         {
             // Arrange
-            var types = new[]
-            {
-                typeof(int?),
-                typeof(Guid?),
-                typeof(bool?),
-            };
+            var types = TestTypes.ClosedNullableTypes;
 
             // Act
-            var actuals = types.Select(_ => _.IsNullableType()).ToList();
+            var actuals = types.Select(_ => _.IsClosedNullableType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);

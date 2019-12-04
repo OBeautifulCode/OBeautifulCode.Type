@@ -407,7 +407,7 @@ namespace OBeautifulCode.Type.Recipes
                 return true;
             }
             
-            if (type.IsNullableType())
+            if (type.IsClosedNullableType())
             {
                 var underlyingType = type.GetGenericArguments()[0];
 
@@ -546,7 +546,7 @@ namespace OBeautifulCode.Type.Recipes
                 throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
             }
 
-            var result = (!type.IsValueType) || type.IsNullableType();
+            var result = (!type.IsValueType) || type.IsClosedNullableType();
 
             return result;
         }
@@ -633,15 +633,15 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Determines if the specified type is <see cref="Nullable{T}"/>.
+        /// Determines if the specified type is a closed <see cref="Nullable{T}"/> type.
         /// </summary>
         /// <remarks>Adapted from: <a href="https://stackoverflow.com/a/41281601/356790" />.</remarks>
         /// <param name="type">The type.</param>
         /// <returns>
-        /// true if the specified type is <see cref="Nullable{T}"/>, otherwise false.
+        /// true if the specified type is a closed <see cref="Nullable{T}"/> type, otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        public static bool IsNullableType(
+        public static bool IsClosedNullableType(
             this Type type)
         {
             if (type == null)
@@ -856,7 +856,7 @@ namespace OBeautifulCode.Type.Recipes
                 {
                     result = ValueTypeToAliasMap[type];
                 }
-                else if (type.IsNullableType())
+                else if (type.IsClosedNullableType())
                 {
                     result = Nullable.GetUnderlyingType(type).ToStringCompilable() + "?";
                 }
@@ -1019,7 +1019,7 @@ namespace OBeautifulCode.Type.Recipes
 
                 result = ValueTypeToAliasMap[type];
             }
-            else if (type.IsNullableType())
+            else if (type.IsClosedNullableType())
             {
                 result = Nullable.GetUnderlyingType(type).ToStringReadableInternal(options, assemblyDetailsTypes) + "?";
             }
