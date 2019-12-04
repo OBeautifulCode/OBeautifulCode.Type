@@ -376,6 +376,7 @@ namespace OBeautifulCode.Type.Recipes
         /// true if <see cref="Comparer{T}.Default"/> returns a working (non-throwing)
         /// comparer for the specified type, otherwise false.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
         public static bool HasWorkingDefaultComparer(
             this Type type)
         {
@@ -518,7 +519,13 @@ namespace OBeautifulCode.Type.Recipes
         /// <summary>
         /// Determines if the specified type is assignable to null.
         /// </summary>
-        /// <remarks>Adapted from: <a href="https://stackoverflow.com/a/1770232/356790" />.</remarks>
+        /// <remarks>
+        /// Adapted from: <a href="https://stackoverflow.com/a/1770232/356790" />.
+        /// We are specifically throwing <see cref="NotSupportedException"/> for open types here
+        /// instead of returning false unlike some of the other IsClosed... methods because
+        /// likely if you are passing-in an open type, you are doing something wrong, similar
+        /// to the GetClosed... methods.
+        /// </remarks>
         /// <param name="type">The type.</param>
         /// <returns>
         /// true if the specified type is assignable to null, otherwise false.
