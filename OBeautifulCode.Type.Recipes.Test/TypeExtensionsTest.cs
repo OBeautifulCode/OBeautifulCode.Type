@@ -985,10 +985,10 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsComparableType_type___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void HasWorkingDefaultComparer_type___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsComparableType(null));
+            var actual = Record.Exception(() => TypeExtensions.HasWorkingDefaultComparer(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -996,44 +996,80 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsComparableType_T___Should_return_false___When_parameter_type_is_not_comparable()
+        public static void HasWorkingDefaultComparer_type___Should_return_false___When_parameter_type_is_an_open_type()
         {
-            // Arrange, Act
-            var actuals = new[]
-            {
-                TypeExtensions.IsComparableType<NonComparableClass>(),
-            };
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(new[]
+                {
+                    typeof(IComparable<>),
+                    typeof(ICustomGenericComparable<>),
+                    typeof(CustomGenericComparableClass<>),
+                })
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.HasWorkingDefaultComparer()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsComparableType_T___Should_return_true___When_parameter_type_is_comparable()
+        public static void HasWorkingDefaultComparer_type___Should_return_false___When_parameter_type_does_not_have_a_working_default_comparer()
         {
-            // Arrange, Act
-            var actuals = new[]
+            // Arrange
+            var types = new[]
             {
-                TypeExtensions.IsComparableType<int>(),
-                TypeExtensions.IsComparableType<Guid>(),
-                TypeExtensions.IsComparableType<bool>(),
-                TypeExtensions.IsComparableType<DateTime>(),
-                TypeExtensions.IsComparableType<int?>(),
-                TypeExtensions.IsComparableType<Guid?>(),
-                TypeExtensions.IsComparableType<bool?>(),
-                TypeExtensions.IsComparableType<DateTime?>(),
-                TypeExtensions.IsComparableType<string>(),
-                TypeExtensions.IsComparableType<DayOfWeek>(),
-                TypeExtensions.IsComparableType<DayOfWeek?>(),
-                TypeExtensions.IsComparableType<ComparableClass>(),
+                typeof(NonComparableClass),
+                typeof(INonComparable),
+                typeof(ComparableOfStringClass),
+                typeof(IComparable<string>),
             };
+
+            // Act
+            var actuals = types.Select(_ => _.HasWorkingDefaultComparer()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void HasWorkingDefaultComparer_type___Should_return_true___When_parameter_type_has_a_working_default_comparer()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(int),
+                typeof(Guid),
+                typeof(bool),
+                typeof(DateTime),
+                typeof(int?),
+                typeof(Guid?),
+                typeof(bool?),
+                typeof(DateTime?),
+                typeof(string),
+                typeof(DayOfWeek),
+                typeof(DayOfWeek?),
+                typeof(ComparableClass),
+                typeof(ICustomGenericComparable),
+                typeof(ICustomGenericComparable<string>),
+                typeof(ICustomComparable),
+                typeof(CustomGenericComparableClass),
+                typeof(CustomGenericComparableClass<string>),
+                typeof(CustomComparableClass),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.HasWorkingDefaultComparer()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);
         }
 
         [Fact]
-        public static void IsComparableType_type___Should_return_false___When_parameter_type_is_not_comparable()
+        public static void HasWorkingDefaultComparer_type___Should_return_false___When_parameter_type_is_not_comparable()
         {
             // Arrange
             var types = new[]
@@ -1042,14 +1078,14 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsComparableType()).ToList();
+            var actuals = types.Select(_ => _.HasWorkingDefaultComparer()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsComparableType_type___Should_return_true___When_parameter_type_is_comparable()
+        public static void HasWorkingDefaultComparer_type___Should_return_true___When_parameter_type_is_comparable()
         {
             // Arrange
             var types = new[]
@@ -1069,7 +1105,7 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsComparableType()).ToList();
+            var actuals = types.Select(_ => _.HasWorkingDefaultComparer()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);

@@ -328,6 +328,107 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
+        /// Determines if <see cref="Comparer{T}.Default"/> will return a
+        /// working (non-throwing) comparer for the specified type.
+        /// </summary>
+        /// <remarks>
+        /// See remarks in <see cref="HasWorkingDefaultComparer(Type)"/>.
+        /// </remarks>
+        /// <typeparam name="T">The type.</typeparam>
+        /// <returns>
+        /// true if <see cref="Comparer{T}.Default"/> returns a working (non-throwing)
+        /// comparer for the specified type, otherwise false.
+        /// </returns>
+        public static bool HasWorkingDefaultComparer<T>()
+        {
+            var type = typeof(T);
+
+            var result = HasWorkingDefaultComparer(type);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if <see cref="Comparer{T}.Default"/> will return a
+        /// working (non-throwing) comparer for the specified type.
+        /// </summary>
+        /// <remarks>
+        /// <see cref="Comparer{T}.Default" /> will always return some comparer for
+        /// any given closed type.  However, that comparer, when used, will or will no
+        /// throw based on the type itself.  If the type implements or inherits <see cref="IComparable{T}"/>
+        /// where T is itself, then the comparer will ultimately use that implementation.
+        /// We say "ultimately" here and below because a wrapper object is used.
+        /// If the type is nullable and the underlying type implements or inherits <see cref="IComparable{T}"/>
+        /// where T is the underlying type, then the comparer will ultimately use that implementation.
+        /// Finally, if the the type, when boxed, implements or inherits <see cref="IComparable"/> then the comparer
+        /// will ultimately use that implementation.  If not, then, upon using the comparer to compare two
+        /// objects, an exception will be thrown.
+        /// It's further important to note that this method is NOT simply checking whether the specified
+        /// type is assignable to <see cref="IComparable{T}"/>.  For example:
+        /// typeof(IComparable&lt;string&gt;).HasWorkingDefaultComparer() == false
+        /// That's because that type doesn't implement IComparable&lt;IComparable&lt;string&gt;&gt;
+        /// per the heuristic described above.  That said, any type that is assignable to <see cref="IComparable"/>
+        /// will return true per the heuristic above.  For example:
+        /// typeof(IComparable).HasWorkingDefaultComparer() == true
+        /// </remarks>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// true if <see cref="Comparer{T}.Default"/> returns a working (non-throwing)
+        /// comparer for the specified type, otherwise false.
+        /// </returns>
+        public static bool HasWorkingDefaultComparer(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            // you cannot call Comparer{T}.Default on a closed type,
+            // not even using reflection
+            if (type.ContainsGenericParameters)
+            {
+                return false;
+            }
+
+            // Previously, we called Comparer<T>.Default and checked whether that was equal to ObjectComparer<T>.
+            // If so, we considered the type to be NOT comparable.  Comparer<T>.Default checks, among other things,
+            // whether T is IComparable<T>.  Unfortunately, types like Enum don't implement IComparable<T>,
+            // but are IComparable.  So for enums, Comparer<T>.Default returns ObjectComparer<T>.  It turns out,
+            // ObjectComparer<T> doesn't just check for reference equality.  Among other things, it checks whether
+            // the type is IComparable.  So we combined the approach taken by Comparer<T>.Default and ObjectComparer<T>
+            // into the follow...
+            var genericComparableType = ComparableInterfaceGenericTypeDefinition.MakeGenericType(type);
+
+            if (genericComparableType.IsAssignableFrom(type))
+            {
+                return true;
+            }
+            
+            if (type.IsNullableType())
+            {
+                var underlyingType = type.GetGenericArguments()[0];
+
+                var underlyingGenericComparableType = ComparableInterfaceGenericTypeDefinition.MakeGenericType(underlyingType);
+
+                if (underlyingGenericComparableType.IsAssignableFrom(underlyingType))
+                {
+                    return true;
+                }
+            }
+
+            // Is type boxed to IComparable?
+            // for example, Nullable<Enum> is not IComparable, but it boxes to Enum which is:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.nullable?view=netframework-4.8
+            // https://stackoverflow.com/questions/59180389/given-a-type-how-do-you-determine-what-type-it-is-boxed-as#59180620
+            var boxedType = Nullable.GetUnderlyingType(type) ?? type;
+
+            var result = ComparableInterfaceType.IsAssignableFrom(boxedType);
+            
+            return result;
+        }
+
+        /// <summary>
         /// Determines if a type if assignable to another type.
         /// </summary>
         /// <remarks>
@@ -492,70 +593,6 @@ namespace OBeautifulCode.Type.Recipes
             }
 
             var result = type.Namespace == null;
-
-            return result;
-        }
-
-        /// <summary>
-        /// Determines if the specified type is comparable.
-        /// </summary>
-        /// <typeparam name="T">The type.</typeparam>
-        /// <returns>
-        /// true if the type is comparable, otherwise false.
-        /// </returns>
-        public static bool IsComparableType<T>()
-        {
-            var type = typeof(T);
-
-            var result = IsComparableType(type);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Determines if the specified type is comparable.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns>
-        /// true if the type is comparable, otherwise false.
-        /// </returns>
-        public static bool IsComparableType(
-            this Type type)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            // Previously, we called Comparer<T>.Default and checked whether that was equal to ObjectComparer<T>.
-            // If so, we considered the type to be NOT comparable.  Comparer<T>.Default checks, among other things,
-            // whether T is IComparable<T>.  Unfortunately, types like Enum don't implement IComparable<T>,
-            // but are IComparable.  So for enums, Comparer<T>.Default returns ObjectComparer<T>.  It turns out,
-            // ObjectComparer<T> doesn't just check for reference equality.  Among other things, it checks whether
-            // the type is IComparable.  So we combined the approach taken by Comparer<T>.Default and ObjectComparer<T>
-            // into the follow...
-            bool result;
-
-            var genericComparableType = ComparableInterfaceGenericTypeDefinition.MakeGenericType(type);
-
-            if (type.IsAssignableTo(genericComparableType))
-            {
-                result = true;
-            }
-            else if (type.IsAssignableTo(ComparableInterfaceType))
-            {
-                result = true;
-            }
-            else if (type.IsNullableType())
-            {
-                var underlyingType = type.GetGenericArguments()[0];
-
-                result = IsComparableType(underlyingType);
-            }
-            else
-            {
-                result = false;
-            }
 
             return result;
         }

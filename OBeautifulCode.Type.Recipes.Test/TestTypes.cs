@@ -323,6 +323,62 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
     }
 
+    #pragma warning disable SA1201 // Elements should appear in the correct order
+    public interface INonComparable
+    {
+    }
+
+    public interface ICustomGenericComparable : IComparable<ICustomGenericComparable>
+    {
+    }
+
+    public interface ICustomGenericComparable<T> : IComparable<ICustomGenericComparable<T>>
+    {
+    }
+
+    public interface ICustomComparable : IComparable
+    {
+    }
+
+#pragma warning restore SA1201 // Elements should appear in the correct order
+
+    public class CustomGenericComparableClass : IComparable<CustomGenericComparableClass>
+    {
+        public int CompareTo(CustomGenericComparableClass other)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class CustomGenericComparableClass<T> : IComparable<CustomGenericComparableClass<T>>
+    {
+        public int CompareTo(CustomGenericComparableClass<T> other)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class CustomComparableClass : IComparable
+    {
+        public int CompareTo(object obj)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ComparableOfStringClass : IComparable<string>
+    {
+        public int CompareTo(string other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CompareTo(object obj)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class BaseGenericClass<TBase1, TBase2>
     {
     }
