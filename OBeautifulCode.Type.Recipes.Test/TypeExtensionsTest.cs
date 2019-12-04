@@ -611,6 +611,17 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void HasWorkingDefaultComparer_type___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.HasWorkingDefaultComparer(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
         public static void HasWorkingDefaultComparer_type___Should_throw_NotSupportedException___When_parameter_type_is_an_open_type()
         {
             // Arrange
@@ -1102,17 +1113,6 @@ namespace OBeautifulCode.Type.Recipes.Test
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);
-        }
-
-        [Fact]
-        public static void HasWorkingDefaultComparer_type___Should_throw_ArgumentNullException___When_parameter_type_is_null()
-        {
-            // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.HasWorkingDefaultComparer(null));
-
-            // Assert
-            actual.Should().BeOfType<ArgumentNullException>();
-            actual.Message.Should().Contain("type");
         }
 
         [Fact]
