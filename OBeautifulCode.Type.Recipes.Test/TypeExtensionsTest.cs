@@ -326,6 +326,18 @@ namespace OBeautifulCode.Type.Recipes.Test
                 .Concat(TestTypes.ClosedNullableTypes)
                 .Concat(new[]
                 {
+                    typeof(Collection<>),
+                    typeof(ICollection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
                     typeof(TestClass),
                     typeof(IComparable),
                     typeof(IComparable<string>),
@@ -407,11 +419,24 @@ namespace OBeautifulCode.Type.Recipes.Test
                 .Concat(TestTypes.ClosedNullableTypes)
                 .Concat(new[]
                 {
+                    typeof(Collection<>),
+                    typeof(ICollection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
                     typeof(TestClass),
                     typeof(IComparable),
                     typeof(IComparable<string>),
                     typeof(IEnumerable),
                     typeof(IEnumerable<string>),
+                    typeof(IEnumerable<KeyValuePair<string, string>>),
                     typeof(Collection<Guid>),
                     typeof(ICollection<bool>),
                     typeof(ReadOnlyCollection<DateTime>),
@@ -488,11 +513,24 @@ namespace OBeautifulCode.Type.Recipes.Test
                 .Concat(TestTypes.ClosedNullableTypes)
                 .Concat(new[]
                 {
+                    typeof(Collection<>),
+                    typeof(ICollection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
                     typeof(TestClass),
                     typeof(IComparable),
                     typeof(IComparable<string>),
                     typeof(IEnumerable),
                     typeof(IEnumerable<string>),
+                    typeof(IEnumerable<KeyValuePair<string, string>>),
                     typeof(Collection<Guid>),
                     typeof(ICollection<bool>),
                     typeof(ReadOnlyCollection<DateTime>),
@@ -1216,23 +1254,53 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsClosedSystemCollectionType___Should_return_false___When_parameter_type_is_not_a_System_collection_type()
+        public static void IsClosedSystemCollectionType___Should_return_false___When_parameter_type_is_not_a_closed_System_Collection_type()
         {
             // Arrange
-            var types = new[]
-            {
-                typeof(Guid),
-                typeof(Guid?),
-                typeof(string),
-                typeof(int),
-                typeof(NonGenericClassCollection),
-                typeof(KeyValuePair<,>),
-                typeof(KeyValuePair<string, string>),
-                typeof(IReadOnlyDictionary<string, string>),
-                typeof(Dictionary<string, string>),
-                typeof(bool[]),
-                typeof(string[]),
-            };
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(Collection<>),
+                    typeof(ICollection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<string>),
+                    typeof(IDictionary<string, string>),
+                    typeof(IReadOnlyDictionary<string, string>),
+                    typeof(Dictionary<string, string>),
+                    typeof(ReadOnlyDictionary<string, string>),
+                    typeof(ConcurrentDictionary<string, string>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericDictionaryClass),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                })
+                .ToArray();
 
             // Act
             var actuals = types.Select(_ => _.IsClosedSystemCollectionType()).ToList();
@@ -1242,18 +1310,11 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsClosedSystemCollectionType___Should_return_true___When_parameter_type_is_a_System_collection_type()
+        public static void IsClosedSystemCollectionType___Should_return_true___When_parameter_type_is_a_closed_System_Collection_type()
         {
             // Arrange
             var types = new[]
             {
-                typeof(Collection<>),
-                typeof(ICollection<>),
-                typeof(ReadOnlyCollection<>),
-                typeof(IReadOnlyCollection<>),
-                typeof(List<>),
-                typeof(IList<>),
-                typeof(IReadOnlyList<>),
                 typeof(Collection<string>),
                 typeof(ICollection<string>),
                 typeof(ReadOnlyCollection<string>),
@@ -1282,19 +1343,56 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsClosedSystemDictionaryType___Should_return_false___When_parameter_type_is_not_a_System_dictionary_type()
+        public static void IsClosedSystemDictionaryType___Should_return_false___When_parameter_type_is_not_a_closed_System_Dictionary_type()
         {
             // Arrange
-            var types = new[]
-            {
-                typeof(Guid),
-                typeof(Guid?),
-                typeof(string),
-                typeof(int),
-                typeof(NonGenericDictionaryClass),
-                typeof(KeyValuePair<,>),
-                typeof(KeyValuePair<string, string>),
-            };
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(Collection<>),
+                    typeof(ICollection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<string>),
+                    typeof(IEnumerable<KeyValuePair<string, string>>),
+                    typeof(Collection<Guid>),
+                    typeof(ICollection<bool>),
+                    typeof(ReadOnlyCollection<DateTime>),
+                    typeof(IReadOnlyCollection<TimeSpan>),
+                    typeof(List<TestClass>),
+                    typeof(IList<int?>),
+                    typeof(IReadOnlyList<int[]>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericDictionaryClass),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                })
+                .ToArray();
 
             // Act
             var actuals = types.Select(_ => _.IsClosedSystemDictionaryType()).ToList();
@@ -1304,16 +1402,11 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsClosedSystemDictionaryType___Should_return_true___When_parameter_type_is_a_System_dictionary_type()
+        public static void IsClosedSystemDictionaryType___Should_return_true___When_parameter_type_is_a_closed_System_Dictionary_type()
         {
             // Arrange
             var types = new[]
             {
-                typeof(Dictionary<,>),
-                typeof(IDictionary<,>),
-                typeof(ReadOnlyDictionary<,>),
-                typeof(IReadOnlyDictionary<,>),
-                typeof(ConcurrentDictionary<,>),
                 typeof(Dictionary<string, string>),
                 typeof(IDictionary<string, string>),
                 typeof(ReadOnlyDictionary<string, string>),
@@ -1340,27 +1433,55 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsClosedSystemOrderedCollectionType___Should_return_false___When_parameter_type_is_not_a_System_ordered_collection_type()
+        public static void IsClosedSystemOrderedCollectionType___Should_return_false___When_parameter_type_is_not_a_closed_ordered_System_Collection_type()
         {
             // Arrange
-            var types = new[]
-            {
-                typeof(Guid),
-                typeof(Guid?),
-                typeof(string),
-                typeof(int),
-                typeof(NonGenericClassCollection),
-                typeof(KeyValuePair<,>),
-                typeof(KeyValuePair<string, string>),
-                typeof(IReadOnlyDictionary<string, string>),
-                typeof(Dictionary<string, string>),
-                typeof(ICollection<>),
-                typeof(ICollection<string>),
-                typeof(IReadOnlyCollection<>),
-                typeof(IReadOnlyCollection<string>),
-                typeof(bool[]),
-                typeof(string[]),
-            };
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(Collection<>),
+                    typeof(ICollection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<string>),
+                    typeof(IDictionary<string, string>),
+                    typeof(IReadOnlyDictionary<string, string>),
+                    typeof(Dictionary<string, string>),
+                    typeof(ReadOnlyDictionary<string, string>),
+                    typeof(ConcurrentDictionary<string, string>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericDictionaryClass),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                    typeof(ICollection<string>),
+                    typeof(IReadOnlyCollection<string>),
+                })
+                .ToArray();
 
             // Act
             var actuals = types.Select(_ => _.IsClosedSystemOrderedCollectionType()).ToList();
@@ -1370,16 +1491,11 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsClosedSystemOrderedCollectionType___Should_return_true___When_parameter_type_is_a_System_ordered_collection_type()
+        public static void IsClosedSystemOrderedCollectionType___Should_return_true___When_parameter_type_is_a_closed_ordered_System_Collection_type()
         {
             // Arrange
             var types = new[]
             {
-                typeof(Collection<>),
-                typeof(ReadOnlyCollection<>),
-                typeof(List<>),
-                typeof(IList<>),
-                typeof(IReadOnlyList<>),
                 typeof(Collection<string>),
                 typeof(ReadOnlyCollection<string>),
                 typeof(List<string>),
@@ -1406,34 +1522,58 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsClosedSystemUnorderedCollectionType___Should_return_false___When_parameter_type_is_not_a_System_unordered_collection_type()
+        public static void IsClosedSystemUnorderedCollectionType___Should_return_false___When_parameter_type_is_not_a_closed_unordered_System_Collection_type()
         {
             // Arrange
-            var types = new[]
-            {
-                typeof(Guid),
-                typeof(Guid?),
-                typeof(string),
-                typeof(int),
-                typeof(NonGenericClassCollection),
-                typeof(KeyValuePair<,>),
-                typeof(KeyValuePair<string, string>),
-                typeof(IReadOnlyDictionary<string, string>),
-                typeof(Dictionary<string, string>),
-                typeof(bool[]),
-                typeof(string[]),
-                typeof(Collection<>),
-                typeof(ReadOnlyCollection<>),
-                typeof(List<>),
-                typeof(IList<>),
-                typeof(IReadOnlyList<>),
-                typeof(Collection<string>),
-                typeof(ReadOnlyCollection<string>),
-                typeof(List<string>),
-                typeof(IList<string>),
-                typeof(IReadOnlyList<string>),
-                typeof(INonGenericIReadOnlyCollection),
-            };
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(Collection<>),
+                    typeof(ICollection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<string>),
+                    typeof(IDictionary<string, string>),
+                    typeof(IReadOnlyDictionary<string, string>),
+                    typeof(Dictionary<string, string>),
+                    typeof(ReadOnlyDictionary<string, string>),
+                    typeof(ConcurrentDictionary<string, string>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericDictionaryClass),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                    typeof(Collection<string>),
+                    typeof(ReadOnlyCollection<string>),
+                    typeof(List<string>),
+                    typeof(IList<string>),
+                    typeof(IReadOnlyList<string>),
+                })
+                .ToArray();
 
             // Act
             var actuals = types.Select(_ => _.IsClosedSystemUnorderedCollectionType()).ToList();
@@ -1443,14 +1583,12 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsClosedSystemUnorderedCollectionType___Should_return_true___When_parameter_type_is_a_System_unordered_collection_type()
+        public static void IsClosedSystemUnorderedCollectionType___Should_return_true___When_parameter_type_is_a_closed_unordered_System_Collection_type()
         {
             // Arrange
             var types = new[]
             {
-                typeof(ICollection<>),
                 typeof(ICollection<string>),
-                typeof(IReadOnlyCollection<>),
                 typeof(IReadOnlyCollection<string>),
             };
 
