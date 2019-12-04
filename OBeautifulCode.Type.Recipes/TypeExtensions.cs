@@ -570,12 +570,7 @@ namespace OBeautifulCode.Type.Recipes
                 return false;
             }
 
-            var result = Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
-                             && type.Namespace == null
-                             && type.IsGenericType
-                             && type.Name.Contains("AnonymousType")
-                             && (type.Name.StartsWith("<>", StringComparison.Ordinal) || type.Name.StartsWith("VB$", StringComparison.Ordinal))
-                             && type.Attributes.HasFlag(TypeAttributes.NotPublic);
+            var result = type.IsAnonymousType();
 
             return result;
         }
@@ -1002,6 +997,19 @@ namespace OBeautifulCode.Type.Recipes
             return result;
         }
 
+        private static bool IsAnonymousType(
+            this Type type)
+        {
+            var result = Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
+                         && type.Namespace == null
+                         && type.IsGenericType
+                         && type.Name.Contains("AnonymousType")
+                         && (type.Name.StartsWith("<>", StringComparison.Ordinal) || type.Name.StartsWith("VB$", StringComparison.Ordinal))
+                         && type.Attributes.HasFlag(TypeAttributes.NotPublic);
+
+            return result;
+        }
+
         private static string ToStringReadableInternal(
             this Type type,
             ToStringReadableOptions options,
@@ -1041,15 +1049,15 @@ namespace OBeautifulCode.Type.Recipes
 
                 if (type.IsGenericType)
                 {
-                    var IsClosedAnonymousType = type.IsClosedAnonymousType();
+                    var isAnonymousType = type.IsAnonymousType();
 
-                    if (IsClosedAnonymousType)
+                    if (isAnonymousType)
                     {
                         result = result.Replace("<>f__", string.Empty);
                     }
 
                     string[] genericParameters;
-                    if (IsClosedAnonymousType && type.IsGenericTypeDefinition)
+                    if (isAnonymousType && type.IsGenericTypeDefinition)
                     {
                         genericParameters = type.GetGenericArguments().Select((_, i) => "T" + (i + 1).ToString(CultureInfo.InvariantCulture)).ToArray();
                     }
