@@ -158,7 +158,7 @@ namespace OBeautifulCode.Type.Recipes
             else if (type.IsGenericType && (type.GetGenericTypeDefinition() == EnumerableInterfaceGenericTypeDefinition))
             {
                 // type is IEnumerable<T>
-                result = type.GetGenericArguments()[0];
+                result = type.GenericTypeArguments[0];
             }
             else
             {
@@ -409,7 +409,7 @@ namespace OBeautifulCode.Type.Recipes
 
             if (type.IsClosedNullableType())
             {
-                var underlyingType = type.GetGenericArguments()[0];
+                var underlyingType = type.GenericTypeArguments[0];
 
                 var underlyingGenericComparableType = ComparableInterfaceGenericTypeDefinition.MakeGenericType(underlyingType);
 
@@ -878,7 +878,7 @@ namespace OBeautifulCode.Type.Recipes
                         }
                         else
                         {
-                            var genericParameters = type.GetGenericArguments().Select(_ => _.ToStringCompilable()).ToArray();
+                            var genericParameters = type.GenericTypeArguments.Select(_ => _.ToStringCompilable()).ToArray();
 
                             result = GenericBracketsRegex.Replace(result, "<" + string.Join(", ", genericParameters) + ">");
                         }
@@ -963,12 +963,12 @@ namespace OBeautifulCode.Type.Recipes
             if (type.IsGenericType && (type.GetGenericTypeDefinition() == DictionaryInterfaceGenericTypeDefinition))
             {
                 // type is IDictionary<T,K>
-                result = type.GetGenericArguments()[genericTypeArgumentIndex];
+                result = type.GenericTypeArguments[genericTypeArgumentIndex];
             }
             else if (type.IsGenericType && (type.GetGenericTypeDefinition() == ReadOnlyDictionaryInterfaceGenericTypeDefinition))
             {
                 // type is IReadOnlyDictionary<T,K>
-                result = type.GetGenericArguments()[genericTypeArgumentIndex];
+                result = type.GenericTypeArguments[genericTypeArgumentIndex];
             }
             else
             {
@@ -1052,7 +1052,7 @@ namespace OBeautifulCode.Type.Recipes
                     }
 
                     string[] genericParameters;
-                    if (isAnonymousType && type.IsGenericTypeDefinition)
+                    if (isAnonymousType && type.ContainsGenericParameters)
                     {
                         genericParameters = type.GetGenericArguments().Select((_, i) => "T" + (i + 1).ToString(CultureInfo.InvariantCulture)).ToArray();
                     }
