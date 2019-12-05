@@ -157,7 +157,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                 new { Type = typeof(BaseClassIDictionary<DateTime, string>), Expected = typeof(KeyValuePair<DateTime, string>) },
                 new { Type = typeof(DerivedClassIDictionary<TestClass, int>), Expected = typeof(KeyValuePair<TestClass, int>) },
                 new { Type = typeof(GenericClassDictionary<TimeSpan, bool?>), Expected = typeof(KeyValuePair<TimeSpan, bool?>) },
-                new { Type = typeof(NonGenericDictionaryClass), Expected = typeof(KeyValuePair<string, int?>) },
+                new { Type = typeof(NonGenericClassDictionary), Expected = typeof(KeyValuePair<string, int?>) },
                 new { Type = typeof(IGenericIReadOnlyDictionary<string, TestClass>), Expected = typeof(KeyValuePair<string, TestClass>) },
                 new { Type = typeof(INonGenericIReadOnlyDictionary), Expected = typeof(KeyValuePair<int, DateTime>) },
             };
@@ -224,7 +224,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                 new { Type = typeof(BaseClassIDictionary<DateTime, string>), Expected = typeof(DateTime) },
                 new { Type = typeof(DerivedClassIDictionary<TestClass, int>), Expected = typeof(TestClass) },
                 new { Type = typeof(GenericClassDictionary<TimeSpan, bool?>), Expected = typeof(TimeSpan) },
-                new { Type = typeof(NonGenericDictionaryClass), Expected = typeof(string) },
+                new { Type = typeof(NonGenericClassDictionary), Expected = typeof(string) },
                 new { Type = typeof(IGenericIReadOnlyDictionary<string, TestClass>), Expected = typeof(string) },
                 new { Type = typeof(INonGenericIReadOnlyDictionary), Expected = typeof(int) },
             };
@@ -291,7 +291,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                 new { Type = typeof(BaseClassIDictionary<DateTime, string>), Expected = typeof(string) },
                 new { Type = typeof(DerivedClassIDictionary<TestClass, int>), Expected = typeof(int) },
                 new { Type = typeof(GenericClassDictionary<TimeSpan, bool?>), Expected = typeof(bool?) },
-                new { Type = typeof(NonGenericDictionaryClass), Expected = typeof(int?) },
+                new { Type = typeof(NonGenericClassDictionary), Expected = typeof(int?) },
                 new { Type = typeof(IGenericIReadOnlyDictionary<string, TestClass>), Expected = typeof(TestClass) },
                 new { Type = typeof(INonGenericIReadOnlyDictionary), Expected = typeof(DateTime) },
             };
@@ -357,7 +357,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(BaseClassIDictionary<DateTime, string>),
                     typeof(DerivedClassIDictionary<TestClass, int>),
                     typeof(GenericClassDictionary<TimeSpan, bool?>),
-                    typeof(NonGenericDictionaryClass),
+                    typeof(NonGenericClassDictionary),
                     typeof(IGenericIReadOnlyDictionary<string, TestClass>),
                     typeof(INonGenericIReadOnlyDictionary),
                 })
@@ -453,7 +453,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(BaseClassIDictionary<DateTime, string>),
                     typeof(DerivedClassIDictionary<TestClass, int>),
                     typeof(GenericClassDictionary<TimeSpan, bool?>),
-                    typeof(NonGenericDictionaryClass),
+                    typeof(NonGenericClassDictionary),
                     typeof(IGenericIReadOnlyDictionary<string, TestClass>),
                     typeof(INonGenericIReadOnlyDictionary),
                 })
@@ -547,7 +547,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(BaseClassIDictionary<DateTime, string>),
                     typeof(DerivedClassIDictionary<TestClass, int>),
                     typeof(GenericClassDictionary<TimeSpan, bool?>),
-                    typeof(NonGenericDictionaryClass),
+                    typeof(NonGenericClassDictionary),
                     typeof(IGenericIReadOnlyDictionary<string, TestClass>),
                     typeof(INonGenericIReadOnlyDictionary),
                 })
@@ -1296,7 +1296,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(BaseClassIDictionary<DateTime, string>),
                     typeof(DerivedClassIDictionary<TestClass, int>),
                     typeof(GenericClassDictionary<TimeSpan, bool?>),
-                    typeof(NonGenericDictionaryClass),
+                    typeof(NonGenericClassDictionary),
                     typeof(IGenericIReadOnlyDictionary<string, TestClass>),
                     typeof(INonGenericIReadOnlyDictionary),
                 })
@@ -1388,7 +1388,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(BaseClassIDictionary<DateTime, string>),
                     typeof(DerivedClassIDictionary<TestClass, int>),
                     typeof(GenericClassDictionary<TimeSpan, bool?>),
-                    typeof(NonGenericDictionaryClass),
+                    typeof(NonGenericClassDictionary),
                     typeof(IGenericIReadOnlyDictionary<string, TestClass>),
                     typeof(INonGenericIReadOnlyDictionary),
                 })
@@ -1475,7 +1475,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(BaseClassIDictionary<DateTime, string>),
                     typeof(DerivedClassIDictionary<TestClass, int>),
                     typeof(GenericClassDictionary<TimeSpan, bool?>),
-                    typeof(NonGenericDictionaryClass),
+                    typeof(NonGenericClassDictionary),
                     typeof(IGenericIReadOnlyDictionary<string, TestClass>),
                     typeof(INonGenericIReadOnlyDictionary),
                     typeof(ICollection<string>),
@@ -1564,7 +1564,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(BaseClassIDictionary<DateTime, string>),
                     typeof(DerivedClassIDictionary<TestClass, int>),
                     typeof(GenericClassDictionary<TimeSpan, bool?>),
-                    typeof(NonGenericDictionaryClass),
+                    typeof(NonGenericClassDictionary),
                     typeof(IGenericIReadOnlyDictionary<string, TestClass>),
                     typeof(INonGenericIReadOnlyDictionary),
                     typeof(Collection<string>),
