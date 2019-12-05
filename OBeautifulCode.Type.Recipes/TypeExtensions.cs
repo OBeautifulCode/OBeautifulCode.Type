@@ -659,7 +659,6 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is a closed <see cref="System"/> collection type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is an open type.</exception>
         public static bool IsClosedSystemCollectionType(
             this Type type)
         {
@@ -695,7 +694,6 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is a closed <see cref="System"/> dictionary type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is an open type.</exception>
         public static bool IsClosedSystemDictionaryType(
             this Type type)
         {
@@ -731,7 +729,6 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is a closed, ordered <see cref="System"/> Collection type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is an open type.</exception>
         public static bool IsClosedSystemOrderedCollectionType(
             this Type type)
         {
@@ -767,7 +764,6 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the specified type is a closed, unordered <see cref="System"/> Collection type; otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="type"/> is an open type.</exception>
         public static bool IsClosedSystemUnorderedCollectionType(
             this Type type)
         {
