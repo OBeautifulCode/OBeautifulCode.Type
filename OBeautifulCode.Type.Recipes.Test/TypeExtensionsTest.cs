@@ -27,7 +27,9 @@ namespace OBeautifulCode.Type.Recipes.Test
 
     public static class TypeExtensionsTest
     {
-        private const string MsCorLibNameAndVersion = "mscorlib (4.0.0.0)";
+        private const string MsCorLibAssemblyNameAndVersion = "mscorlib (4.0.0.0)";
+
+        private const string ValueTupleAssemblyNameAndVersion = "System.ValueTuple (4.0.3.0)";
 
         private static readonly string ThisAssemblyNameAndVersion = "OBeautifulCode.Type.Recipes.Test" + " (" + Assembly.GetExecutingAssembly().GetName().Version + ")";
 
@@ -1930,48 +1932,48 @@ namespace OBeautifulCode.Type.Recipes.Test
             var typesAndExpected = new[]
             {
                 // value tuple:
-                new { Type = (first: "one", second: 7).GetType(), Expected = Invariant($"ValueTuple<string, int> || System.ValueTuple<T1, T2> => {MsCorLibNameAndVersion} | string => {MsCorLibNameAndVersion} | int => {MsCorLibNameAndVersion}") },
+                new { Type = (first: "one", second: 7).GetType(), Expected = Invariant($"ValueTuple<string, int> || System.ValueTuple<T1, T2> => {ValueTupleAssemblyNameAndVersion} | string => {MsCorLibAssemblyNameAndVersion} | int => {MsCorLibAssemblyNameAndVersion}") },
 
                 // anonymous type:
-                new { Type = anonymousObject.GetType(), Expected = Invariant($"{anonymousTypeName}<bool, {innerAnonymousTypeName}<int>> || {anonymousTypeName}<T1, T2> => {ThisAssemblyNameAndVersion} | bool => {MsCorLibNameAndVersion} | {innerAnonymousTypeName}<T1> => {ThisAssemblyNameAndVersion} | int => {MsCorLibNameAndVersion}") },
+                new { Type = anonymousObject.GetType(), Expected = Invariant($"{anonymousTypeName}<bool, {innerAnonymousTypeName}<int>> || {anonymousTypeName}<T1, T2> => {ThisAssemblyNameAndVersion} | bool => {MsCorLibAssemblyNameAndVersion} | {innerAnonymousTypeName}<T1> => {ThisAssemblyNameAndVersion} | int => {MsCorLibAssemblyNameAndVersion}") },
 
                 // anonymous type generic type definition:
                 new { Type = anonymousObject.GetType().GetGenericTypeDefinition(), Expected = Invariant($"{anonymousTypeName}<T1, T2> || {anonymousTypeName}<T1, T2> => {ThisAssemblyNameAndVersion}") },
 
                 // generic open constructed types:
-                new { Type = typeof(DerivedGenericClass<>).BaseType, Expected = Invariant($"BaseGenericClass<string, TDerived> || OBeautifulCode.Type.Recipes.Test.BaseGenericClass<TBase1, TBase2> => {ThisAssemblyNameAndVersion} | string => {MsCorLibNameAndVersion}") },
+                new { Type = typeof(DerivedGenericClass<>).BaseType, Expected = Invariant($"BaseGenericClass<string, TDerived> || OBeautifulCode.Type.Recipes.Test.BaseGenericClass<TBase1, TBase2> => {ThisAssemblyNameAndVersion} | string => {MsCorLibAssemblyNameAndVersion}") },
                 new { Type = typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType, Expected = Invariant($"OrphanedGenericClass<DerivedGenericClass<TDerived>> || OBeautifulCode.Type.Recipes.Test.OrphanedGenericClass<TOrphaned> => {ThisAssemblyNameAndVersion} | OBeautifulCode.Type.Recipes.Test.DerivedGenericClass<TDerived> => {ThisAssemblyNameAndVersion}") },
 
                 // generic parameter:
                 new { Type = typeof(BaseGenericClass<,>).GetGenericArguments()[0], Expected = "TBase1" },
 
                 // generic type definitions:
-                new { Type = typeof(IList<>), Expected = Invariant($"IList<T> || System.Collections.Generic.IList<T> => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(List<>), Expected = Invariant($"List<T> || System.Collections.Generic.List<T> => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(IReadOnlyDictionary<,>), Expected = Invariant($"IReadOnlyDictionary<TKey, TValue> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibNameAndVersion}") },
+                new { Type = typeof(IList<>), Expected = Invariant($"IList<T> || System.Collections.Generic.IList<T> => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(List<>), Expected = Invariant($"List<T> || System.Collections.Generic.List<T> => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(IReadOnlyDictionary<,>), Expected = Invariant($"IReadOnlyDictionary<TKey, TValue> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibAssemblyNameAndVersion}") },
                 new { Type = typeof(DerivedGenericClass<>), Expected = Invariant($"DerivedGenericClass<TDerived> || OBeautifulCode.Type.Recipes.Test.DerivedGenericClass<TDerived> => {ThisAssemblyNameAndVersion}") },
 
                 // other types
-                new { Type = new DerivedGenericClass<int>[0].GetType(), Expected = Invariant($"DerivedGenericClass<int>[] || OBeautifulCode.Type.Recipes.Test.DerivedGenericClass<TDerived> => {ThisAssemblyNameAndVersion} | int => {MsCorLibNameAndVersion}") },
+                new { Type = new DerivedGenericClass<int>[0].GetType(), Expected = Invariant($"DerivedGenericClass<int>[] || OBeautifulCode.Type.Recipes.Test.DerivedGenericClass<TDerived> => {ThisAssemblyNameAndVersion} | int => {MsCorLibAssemblyNameAndVersion}") },
                 new { Type = typeof(DerivedGenericClass<>.NestedInDerivedGeneric), Expected = Invariant($"DerivedGenericClass<TDerived>.NestedInDerivedGeneric || OBeautifulCode.Type.Recipes.Test.DerivedGenericClass<TDerived>.NestedInDerivedGeneric => {ThisAssemblyNameAndVersion}") },
-                new { Type = typeof(string), Expected = Invariant($"string || string => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(int), Expected = Invariant($"int || int => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(int?), Expected = Invariant($"int? || int => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(Guid), Expected = Invariant($"Guid || System.Guid => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(Guid?), Expected = Invariant($"Guid? || System.Guid => {MsCorLibNameAndVersion}") },
+                new { Type = typeof(string), Expected = Invariant($"string || string => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(int), Expected = Invariant($"int || int => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(int?), Expected = Invariant($"int? || int => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(Guid), Expected = Invariant($"Guid || System.Guid => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(Guid?), Expected = Invariant($"Guid? || System.Guid => {MsCorLibAssemblyNameAndVersion}") },
                 new { Type = typeof(TestClass), Expected = Invariant($"TestClass || OBeautifulCode.Type.Recipes.Test.TestClass => {ThisAssemblyNameAndVersion}") },
                 new { Type = typeof(TestClassWithNestedClass.NestedInTestClass), Expected = Invariant($"TestClassWithNestedClass.NestedInTestClass || OBeautifulCode.Type.Recipes.Test.TestClassWithNestedClass.NestedInTestClass => {ThisAssemblyNameAndVersion}") },
-                new { Type = typeof(IReadOnlyDictionary<string, int?>), Expected = Invariant($"IReadOnlyDictionary<string, int?> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibNameAndVersion} | string => {MsCorLibNameAndVersion} | int => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(IReadOnlyDictionary<string, Guid?>), Expected = Invariant($"IReadOnlyDictionary<string, Guid?> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibNameAndVersion} | string => {MsCorLibNameAndVersion} | System.Guid => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(string[]), Expected = Invariant($"string[] || string => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(int?[]), Expected = Invariant($"int?[] || int => {MsCorLibNameAndVersion}") },
+                new { Type = typeof(IReadOnlyDictionary<string, int?>), Expected = Invariant($"IReadOnlyDictionary<string, int?> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibAssemblyNameAndVersion} | string => {MsCorLibAssemblyNameAndVersion} | int => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(IReadOnlyDictionary<string, Guid?>), Expected = Invariant($"IReadOnlyDictionary<string, Guid?> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibAssemblyNameAndVersion} | string => {MsCorLibAssemblyNameAndVersion} | System.Guid => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(string[]), Expected = Invariant($"string[] || string => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(int?[]), Expected = Invariant($"int?[] || int => {MsCorLibAssemblyNameAndVersion}") },
                 new { Type = typeof(TestClass[]), Expected = Invariant($"TestClass[] || OBeautifulCode.Type.Recipes.Test.TestClass => {ThisAssemblyNameAndVersion}") },
-                new { Type = typeof(Guid?[]), Expected = Invariant($"Guid?[] || System.Guid => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(IList<int?[]>), Expected = Invariant($"IList<int?[]> || System.Collections.Generic.IList<T> => {MsCorLibNameAndVersion} | int => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(IReadOnlyDictionary<TestClass, bool?>[]), Expected = Invariant($"IReadOnlyDictionary<TestClass, bool?>[] || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibNameAndVersion} | OBeautifulCode.Type.Recipes.Test.TestClass => {ThisAssemblyNameAndVersion} | bool => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(IReadOnlyDictionary<bool[], TestClass>), Expected = Invariant($"IReadOnlyDictionary<bool[], TestClass> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibNameAndVersion} | bool => {MsCorLibNameAndVersion} | OBeautifulCode.Type.Recipes.Test.TestClass => {ThisAssemblyNameAndVersion}") },
-                new { Type = typeof(IReadOnlyDictionary<TestClass, bool[]>), Expected = Invariant($"IReadOnlyDictionary<TestClass, bool[]> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibNameAndVersion} | OBeautifulCode.Type.Recipes.Test.TestClass => {ThisAssemblyNameAndVersion} | bool => {MsCorLibNameAndVersion}") },
-                new { Type = typeof(IReadOnlyDictionary<IReadOnlyDictionary<Guid[], int?>, IList<IList<short>>[]>), Expected = Invariant($"IReadOnlyDictionary<IReadOnlyDictionary<Guid[], int?>, IList<IList<short>>[]> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibNameAndVersion} | System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibNameAndVersion} | System.Guid => {MsCorLibNameAndVersion} | int => {MsCorLibNameAndVersion} | System.Collections.Generic.IList<T> => {MsCorLibNameAndVersion} | System.Collections.Generic.IList<T> => {MsCorLibNameAndVersion} | short => {MsCorLibNameAndVersion}") },
+                new { Type = typeof(Guid?[]), Expected = Invariant($"Guid?[] || System.Guid => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(IList<int?[]>), Expected = Invariant($"IList<int?[]> || System.Collections.Generic.IList<T> => {MsCorLibAssemblyNameAndVersion} | int => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(IReadOnlyDictionary<TestClass, bool?>[]), Expected = Invariant($"IReadOnlyDictionary<TestClass, bool?>[] || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibAssemblyNameAndVersion} | OBeautifulCode.Type.Recipes.Test.TestClass => {ThisAssemblyNameAndVersion} | bool => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(IReadOnlyDictionary<bool[], TestClass>), Expected = Invariant($"IReadOnlyDictionary<bool[], TestClass> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibAssemblyNameAndVersion} | bool => {MsCorLibAssemblyNameAndVersion} | OBeautifulCode.Type.Recipes.Test.TestClass => {ThisAssemblyNameAndVersion}") },
+                new { Type = typeof(IReadOnlyDictionary<TestClass, bool[]>), Expected = Invariant($"IReadOnlyDictionary<TestClass, bool[]> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibAssemblyNameAndVersion} | OBeautifulCode.Type.Recipes.Test.TestClass => {ThisAssemblyNameAndVersion} | bool => {MsCorLibAssemblyNameAndVersion}") },
+                new { Type = typeof(IReadOnlyDictionary<IReadOnlyDictionary<Guid[], int?>, IList<IList<short>>[]>), Expected = Invariant($"IReadOnlyDictionary<IReadOnlyDictionary<Guid[], int?>, IList<IList<short>>[]> || System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibAssemblyNameAndVersion} | System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> => {MsCorLibAssemblyNameAndVersion} | System.Guid => {MsCorLibAssemblyNameAndVersion} | int => {MsCorLibAssemblyNameAndVersion} | System.Collections.Generic.IList<T> => {MsCorLibAssemblyNameAndVersion} | System.Collections.Generic.IList<T> => {MsCorLibAssemblyNameAndVersion} | short => {MsCorLibAssemblyNameAndVersion}") },
             };
 
             // Act
