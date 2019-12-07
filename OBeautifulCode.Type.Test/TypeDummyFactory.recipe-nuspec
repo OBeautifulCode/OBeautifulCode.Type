@@ -11,6 +11,7 @@
     </dependencies>
   </metadata>
   <files>
+    <file src=".analyzers\SuppressBecause.cs" target="content\net462\.recipes\OBeautifulCode.Type\SuppressBecause.cs" />
     <file src="TypeDummyFactory.cs" target="content\net462\.recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
   </files>
 </package>
