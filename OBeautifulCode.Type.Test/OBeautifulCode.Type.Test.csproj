@@ -113,14 +113,16 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\SuppressBecause.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Type\SuppressBecause.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="Containers\UtcDateTimeRangeInclusiveTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TypeDummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OBeautifulCode.Type.Recipes\OBeautifulCode.Type.Recipes.csproj">
+      <Project>{704cc23a-1465-4599-a759-b32e629a23c2}</Project>
+      <Name>OBeautifulCode.Type.Recipes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OBeautifulCode.Type\OBeautifulCode.Type.csproj">
       <Project>{E651BF26-9AA6-449C-B581-0EC675C9F306}</Project>
       <Name>OBeautifulCode.Type</Name>
