@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IDeepCloneable.cs" company="OBeautifulCode">
+// <copyright file="IDeepCloneable{T}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -14,6 +14,7 @@ namespace OBeautifulCode.Type
     /// their full object graphs.
     /// </summary>
     /// <typeparam name="T">The type of object to clone.</typeparam>
+    // ReSharper disable once TypeParameterCanBeVariant
     public interface IDeepCloneable<T> : ICloneable
     {
         /// <summary>

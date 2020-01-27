@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ICanBeIdentifiedByString.cs" company="OBeautifulCode">
+// <copyright file="IDeclareGetHashCodeMethod.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,15 +7,16 @@
 namespace OBeautifulCode.Type
 {
     /// <summary>
-    /// Represents an object that has a string unique identifier.
+    /// Declares the <see cref="IHashable.GetHashCode"/> method.
     /// </summary>
-    // ReSharper disable once UnusedMember.Global
-    public interface ICanBeIdentifiedByString : ICanBeIdentified
+    // ReSharper disable once TypeParameterCanBeVariant
+    public interface IDeclareGetHashCodeMethod
     {
         /// <summary>
-        /// Gets or sets the unique identifier.
+        /// Returns a hash code for this instance.
         /// </summary>
+        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
         // ReSharper disable once UnusedMember.Global
-        string Id { get; set; }
+        int GetHashCode();
     }
 }

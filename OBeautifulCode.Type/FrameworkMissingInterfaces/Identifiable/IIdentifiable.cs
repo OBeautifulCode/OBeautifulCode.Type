@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IModelViaCodeGen.cs" company="OBeautifulCode">
+// <copyright file="IIdentifiable.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,13 +11,10 @@ namespace OBeautifulCode.Type
     using OBeautifulCode.Type.Internal;
 
     /// <summary>
-    /// Represents an object that is expected to be an
-    /// <see cref="IModel{T}"/> that is implemented with generated code.
+    /// Represents an object that has a unique identifier.
     /// </summary>
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
-
-    // ReSharper disable once UnusedMember.Global
-    public interface IModelViaCodeGen
+    public interface IIdentifiable
     {
     }
 }

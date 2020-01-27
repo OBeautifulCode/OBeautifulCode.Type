@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IModel.cs" company="OBeautifulCode">
+// <copyright file="IIdentifiableByGuid.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,16 +7,17 @@
 namespace OBeautifulCode.Type
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
-
-    using OBeautifulCode.Type.Internal;
 
     /// <summary>
-    /// Represents the contract of a model object.
+    /// Represents an object that has a GUID unique identifier.
     /// </summary>
     // ReSharper disable once UnusedMember.Global
-    [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
-    public interface IModel : IStringRepresentable, IHashable, ICloneable
+    public interface IIdentifiableByGuid : IIdentifiable
     {
+        /// <summary>
+        /// Gets or sets the unique identifier.
+        /// </summary>
+        // ReSharper disable once UnusedMember.Global
+        Guid Id { get; set; }
     }
 }
