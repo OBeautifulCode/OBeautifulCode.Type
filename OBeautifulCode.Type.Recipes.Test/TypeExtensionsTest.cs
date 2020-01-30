@@ -1982,5 +1982,66 @@ namespace OBeautifulCode.Type.Recipes.Test
             // Assert
             typesAndExpected.Select(_ => _.Expected).Should().Equal(actuals);
         }
+
+        [Fact]
+        public static void ToStringWithoutGenericComponent___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.ToStringWithoutGenericComponent(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void ToStringWithoutGenericComponent___Should_return_string_representation_of_type_without_generic_component___When_called()
+        {
+            // Arrange
+            var innerAnonymousObject = new { InnerAnonymous = 6 };
+
+            var anonymousObject = new { Anonymous = true, Inner = innerAnonymousObject };
+            var anonymousTypeName = new Regex("AnonymousType\\d*").Match(anonymousObject.GetType().Name).ToString();
+
+            var typesAndExpected = new[]
+            {
+                new { Type = anonymousObject.GetType(), Expected = anonymousTypeName },
+                new { Type = anonymousObject.GetType().GetGenericTypeDefinition(), Expected = anonymousTypeName },
+                new { Type = typeof(DerivedGenericClass<>).BaseType, Expected = "BaseGenericClass" },
+                new { Type = typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType, Expected = "OrphanedGenericClass" },
+                new { Type = typeof(BaseGenericClass<,>).GetGenericArguments()[0], Expected = "TBase1" },
+                new { Type = typeof(DerivedGenericClass<>), Expected = "DerivedGenericClass" },
+                new { Type = new DerivedGenericClass<int>[0].GetType(), Expected = "DerivedGenericClass[]" },
+                new { Type = typeof(DerivedGenericClass<>.NestedInDerivedGeneric), Expected = "NestedInDerivedGeneric" },
+                new { Type = typeof(string), Expected = "string" },
+                new { Type = typeof(int), Expected = "int" },
+                new { Type = typeof(int?), Expected = "Nullable" },
+                new { Type = typeof(Guid), Expected = "Guid" },
+                new { Type = typeof(Guid?), Expected = "Nullable" },
+                new { Type = typeof(TestClass), Expected = "TestClass" },
+                new { Type = typeof(TestClassWithNestedClass.NestedInTestClass), Expected = "NestedInTestClass" },
+                new { Type = typeof(IReadOnlyDictionary<string, int?>), Expected = "IReadOnlyDictionary" },
+                new { Type = typeof(IReadOnlyDictionary<string, Guid?>), Expected = "IReadOnlyDictionary" },
+                new { Type = typeof(string[]), Expected = "string[]" },
+                new { Type = typeof(int?[]), Expected = "Nullable[]" },
+                new { Type = typeof(TestClass[]), Expected = "TestClass[]" },
+                new { Type = typeof(Guid?[]), Expected = "Nullable[]" },
+                new { Type = typeof(IList<int?[]>), Expected = "IList" },
+                new { Type = typeof(IReadOnlyDictionary<TestClass, bool?>[]), Expected = "IReadOnlyDictionary[]" },
+                new { Type = typeof(IReadOnlyDictionary<bool[], TestClass>), Expected = "IReadOnlyDictionary" },
+                new { Type = typeof(IReadOnlyDictionary<TestClass, bool[]>), Expected = "IReadOnlyDictionary" },
+                new { Type = typeof(IList<>), Expected = "IList" },
+                new { Type = typeof(List<>), Expected = "List" },
+                new { Type = typeof(IReadOnlyDictionary<,>), Expected = "IReadOnlyDictionary" },
+                new { Type = typeof(IReadOnlyDictionary<IReadOnlyDictionary<Guid[], int?>, IList<IList<short>>[]>), Expected = "IReadOnlyDictionary" },
+                new { Type = (first: "one", second: 10).GetType(), Expected = "ValueTuple" },
+            };
+
+            // Act
+            var actuals = typesAndExpected.Select(_ => _.Type.ToStringWithoutGenericComponent()).ToList();
+
+            // Assert
+            typesAndExpected.Select(_ => _.Expected).Should().Equal(actuals);
+        }
     }
 }
