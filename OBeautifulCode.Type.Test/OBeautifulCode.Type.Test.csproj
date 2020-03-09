@@ -127,6 +127,13 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TypeDummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeDummyFactory.designer.cs">
+      <DependentUpon>TypeDummyFactory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TypeDummyFactoryTest.cs" />
+    <Compile Include="TypeDummyFactoryTest.designer.cs">
+      <DependentUpon>TypeDummyFactoryTest.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OBeautifulCode.Type.Recipes\OBeautifulCode.Type.Recipes.csproj">

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<package>
+<package >
   <metadata>
     <id>OBeautifulCode.Type.Recipes.DummyFactory</id>
-    <description>A dummy factory for OBC.Type types.</description>
-    <tags>obc type dummy factory dummyfactory</tags>
+    <description>A Dummy Factory for types in OBeautifulCode.Type</description>
+    <tags>dummyfactory dummy factory fakeiteasy autofixture snippet codeinclude utility shared recipe Type</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Type/master/OBeautifulCode.Type.Test/nuget-icon.png</iconUrl>
     <dependencies>
       <dependency id="OBeautifulCode.Type" version="$version$" />
@@ -13,5 +13,6 @@
   <files>
     <file src=".analyzers\SuppressBecause.cs" target="content\net462\.recipes\OBeautifulCode.Type\SuppressBecause.cs" />
     <file src="TypeDummyFactory.cs" target="content\net462\.recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
+    <file src="TypeDummyFactory.designer.cs" target="content\net462\.recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
   </files>
 </package>
