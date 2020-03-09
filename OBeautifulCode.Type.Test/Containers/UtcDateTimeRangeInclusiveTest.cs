@@ -7,6 +7,7 @@
 namespace OBeautifulCode.Type.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     using FakeItEasy;
 
@@ -15,11 +16,13 @@ namespace OBeautifulCode.Type.Test
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
     using OBeautifulCode.Equality.Recipes;
+    using OBeautifulCode.Type.Test.Internal;
 
     using Xunit;
 
     public static partial class UtcDateTimeRangeInclusiveTest
     {
+        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static UtcDateTimeRangeInclusiveTest()
         {
             EquatableTestScenarios.RemoveAllScenarios();

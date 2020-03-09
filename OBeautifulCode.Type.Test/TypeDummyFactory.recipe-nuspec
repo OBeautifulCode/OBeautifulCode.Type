@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>OBeautifulCode.Type.Recipes.DummyFactory</id>
     <description>A Dummy Factory for types in OBeautifulCode.Type</description>
