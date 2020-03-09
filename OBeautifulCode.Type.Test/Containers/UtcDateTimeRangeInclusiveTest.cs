@@ -7,32 +7,52 @@
 namespace OBeautifulCode.Type.Test
 {
     using System;
-    using System.Linq;
-    using System.Threading;
 
     using FakeItEasy;
 
     using FluentAssertions;
 
     using OBeautifulCode.AutoFakeItEasy;
+    using OBeautifulCode.CodeGen.ModelObject.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     using Xunit;
 
-    public static class UtcDateTimeRangeInclusiveTest
+    public static partial class UtcDateTimeRangeInclusiveTest
     {
-        private static readonly UtcDateTimeRangeInclusive ObjectForEquatableTests = A.Dummy<UtcDateTimeRangeInclusive>();
-
-        private static readonly UtcDateTimeRangeInclusive ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests =
-            new UtcDateTimeRangeInclusive(ObjectForEquatableTests.StartDateTimeInUtc, ObjectForEquatableTests.EndDateTimeInUtc);
-
-        private static readonly UtcDateTimeRangeInclusive[] ObjectsThatAreNotEqualToObjectForEquatableTests =
+        static UtcDateTimeRangeInclusiveTest()
         {
-            A.Dummy<UtcDateTimeRangeInclusive>(),
-            new UtcDateTimeRangeInclusive(A.Dummy<DateTime>().ThatIs(_ => _.ToUniversalTime() <= ObjectForEquatableTests.EndDateTimeInUtc).ToUniversalTime(), ObjectForEquatableTests.EndDateTimeInUtc),
-            new UtcDateTimeRangeInclusive(ObjectForEquatableTests.StartDateTimeInUtc, A.Dummy<DateTime>().ThatIs(_ => _.ToUniversalTime() >= ObjectForEquatableTests.StartDateTimeInUtc).ToUniversalTime()),
-        };
+            EquatableTestScenarios.RemoveAllScenarios();
 
-        private static readonly string ObjectThatIsNotTheSameTypeAsObjectForEquatableTests = A.Dummy<string>();
+            EquatableTestScenarios.AddScenario(
+                new EquatableTestScenario<UtcDateTimeRangeInclusive>
+                {
+                    ReferenceObject = ReferenceObjectForEquatableTestScenarios,
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new UtcDateTimeRangeInclusive[]
+                    {
+                        new UtcDateTimeRangeInclusive(
+                            ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc,
+                            ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc),
+                    },
+                    ObjectsThatAreNotEqualToReferenceObject = new UtcDateTimeRangeInclusive[]
+                    {
+                        new UtcDateTimeRangeInclusive(
+                            A.Dummy<UtcDateTimeRangeInclusive>().Whose(_ => (!_.StartDateTimeInUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc)) && (_.StartDateTimeInUtc <= ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc)).StartDateTimeInUtc,
+                            ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc),
+                        new UtcDateTimeRangeInclusive(
+                            ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc,
+                            A.Dummy<UtcDateTimeRangeInclusive>().Whose(_ => (!_.EndDateTimeInUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc)) && (_.EndDateTimeInUtc >= ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc)).EndDateTimeInUtc),
+                    },
+                    ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
+                    {
+                        A.Dummy<object>(),
+                        A.Dummy<string>(),
+                        A.Dummy<int>(),
+                        A.Dummy<int?>(),
+                        A.Dummy<Guid>(),
+                    },
+                });
+        }
 
         [Fact]
         public static void Constructor___Should_throw_ArgumentException___When_parameter_startDateTimeInUtc_is_not_DateTimeKind_Utc()
@@ -99,289 +119,6 @@ namespace OBeautifulCode.Type.Test
 
             // Assert
             ex.Should().BeNull();
-        }
-
-        [Fact]
-        public static void StartDateTimeInUtc___Should_return_same_startDateTimeInUtc_passed_to_constructor___When_getting()
-        {
-            // Arrange
-            var expected = DateTime.UtcNow;
-            Thread.Sleep(100);
-            var endDateTimeInUtc = DateTime.UtcNow;
-            var systemUnderTest = new UtcDateTimeRangeInclusive(expected, endDateTimeInUtc);
-
-            // Act
-            var actual = systemUnderTest.StartDateTimeInUtc;
-
-            // Assert
-            actual.Should().Be(expected);
-        }
-
-        [Fact]
-        public static void EndDateTimeInUtc___Should_return_same_endDateTimeInUtc_passed_to_constructor___When_getting()
-        {
-            // Arrange
-            var startDateTimeInUtc = DateTime.UtcNow;
-            Thread.Sleep(100);
-            var expected = DateTime.UtcNow;
-            var systemUnderTest = new UtcDateTimeRangeInclusive(startDateTimeInUtc, expected);
-
-            // Act
-            var actual = systemUnderTest.EndDateTimeInUtc;
-
-            // Assert
-            actual.Should().Be(expected);
-        }
-
-        [Fact]
-        public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
-        {
-            // Arrange
-            UtcDateTimeRangeInclusive systemUnderTest1 = null;
-            UtcDateTimeRangeInclusive systemUnderTest2 = null;
-
-            // Act
-            var result = systemUnderTest1 == systemUnderTest2;
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void EqualsOperator___Should_return_false___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
-        {
-            // Arrange
-            UtcDateTimeRangeInclusive systemUnderTest = null;
-
-            // Act
-            var result1 = systemUnderTest == ObjectForEquatableTests;
-            var result2 = ObjectForEquatableTests == systemUnderTest;
-
-            // Assert
-            result1.Should().BeFalse();
-            result2.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void EqualsOperator___Should_return_true___When_same_object_is_on_both_sides_of_operator()
-        {
-            // Arrange, Act
-#pragma warning disable CS1718 // Comparison made to same variable
-            var result = ObjectForEquatableTests == ObjectForEquatableTests;
-#pragma warning restore CS1718 // Comparison made to same variable
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void EqualsOperator___Should_return_false___When_objects_being_compared_have_different_property_values()
-        {
-            // Arrange, Act
-            var results = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => ObjectForEquatableTests == _).ToList();
-
-            // Assert
-            results.ForEach(_ => _.Should().BeFalse());
-        }
-
-        [Fact]
-        public static void EqualsOperator___Should_return_true___When_objects_being_compared_have_same_property_values()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests == ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests;
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
-        {
-            // Arrange
-            UtcDateTimeRangeInclusive systemUnderTest1 = null;
-            UtcDateTimeRangeInclusive systemUnderTest2 = null;
-
-            // Act
-            var result = systemUnderTest1 != systemUnderTest2;
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void NotEqualsOperator___Should_return_true___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
-        {
-            // Arrange
-            UtcDateTimeRangeInclusive systemUnderTest = null;
-
-            // Act
-            var result1 = systemUnderTest != ObjectForEquatableTests;
-            var result2 = ObjectForEquatableTests != systemUnderTest;
-
-            // Assert
-            result1.Should().BeTrue();
-            result2.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void NotEqualsOperator___Should_return_false___When_same_object_is_on_both_sides_of_operator()
-        {
-            // Arrange, Act
-#pragma warning disable CS1718 // Comparison made to same variable
-            var result = ObjectForEquatableTests != ObjectForEquatableTests;
-#pragma warning restore CS1718 // Comparison made to same variable
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void NotEqualsOperator___Should_return_true___When_objects_being_compared_have_different_property_values()
-        {
-            // Arrange, Act
-            var results = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => ObjectForEquatableTests != _).ToList();
-
-            // sAssert
-            results.ForEach(_ => _.Should().BeTrue());
-        }
-
-        [Fact]
-        public static void NotEqualsOperator___Should_return_false___When_objects_being_compared_have_same_property_values()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests != ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests;
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void Equals_with_UtcDateTimeRangeInclusive___Should_return_false___When_parameter_other_is_null()
-        {
-            // Arrange
-            UtcDateTimeRangeInclusive systemUnderTest = null;
-
-            // Act
-            var result = ObjectForEquatableTests.Equals(systemUnderTest);
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void Equals_with_UtcDateTimeRangeInclusive___Should_return_true___When_parameter_other_is_same_object()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals(ObjectForEquatableTests);
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void Equals_with_UtcDateTimeRangeInclusive___Should_return_false___When_objects_being_compared_have_different_property_values()
-        {
-            // Arrange, Act
-            var results = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => ObjectForEquatableTests.Equals(_)).ToList();
-
-            // Assert
-            results.ForEach(_ => _.Should().BeFalse());
-        }
-
-        [Fact]
-        public static void Equals_with_UtcDateTimeRangeInclusive___Should_return_true___When_objects_being_compared_have_same_property_values()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals(ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests);
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void Equals_with_Object___Should_return_false___When_parameter_other_is_null()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals(null);
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void Equals_with_Object___Should_return_false___When_parameter_other_is_not_of_the_same_type()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals((object)ObjectThatIsNotTheSameTypeAsObjectForEquatableTests);
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void Equals_with_Object___Should_return_true___When_parameter_other_is_same_object()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals((object)ObjectForEquatableTests);
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void Equals_with_Object___Should_return_false___When_objects_being_compared_have_different_property_values()
-        {
-            // Arrange, Act
-            var results = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => ObjectForEquatableTests.Equals((object)_)).ToList();
-
-            // Assert
-            results.ForEach(_ => _.Should().BeFalse());
-        }
-
-        [Fact]
-        public static void Equals_with_Object___Should_return_true___When_objects_being_compared_have_same_property_values()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals((object)ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests);
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void GetHashCode___Should_not_be_equal_for_two_objects___When_objects_have_different_property_values()
-        {
-            // Arrange, Act
-            var hashCode1 = ObjectForEquatableTests.GetHashCode();
-            var hashCode2 = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => _.GetHashCode()).ToList();
-
-            // Assert
-            hashCode2.ForEach(_ => _.Should().NotBe(hashCode1));
-        }
-
-        [Fact]
-        public static void GetHashCode___Should_be_equal_for_two_objects___When_objects_have_the_same_property_values()
-        {
-            // Arrange, Act
-            var hash1 = ObjectForEquatableTests.GetHashCode();
-            var hash2 = ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests.GetHashCode();
-
-            // Assert
-            hash1.Should().Be(hash2);
-        }
-
-        [Fact]
-        public static void DeepClone___Should_clone_item___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<UtcDateTimeRangeInclusive>();
-
-            // Act
-            var actual = systemUnderTest.DeepClone();
-
-            // Assert
-            actual.Should().Be(systemUnderTest);
-            actual.Should().NotBeSameAs(systemUnderTest);
         }
 
         [Fact]

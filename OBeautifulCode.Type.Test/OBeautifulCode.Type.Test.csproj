@@ -104,6 +104,13 @@
     <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Workflow.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\WorkflowExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ComparableTestScenarios{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ComparableTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\EquatableTestScenarios{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\EquatableTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\SuppressBecause.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ValidatedComparableTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ValidatedEquatableTestScenario{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
@@ -114,6 +121,9 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\SuppressBecause.cs" />
     <Compile Include="Containers\UtcDateTimeRangeInclusiveTest.cs" />
+    <Compile Include="Containers\UtcDateTimeRangeInclusiveTest.designer.cs">
+      <DependentUpon>UtcDateTimeRangeInclusiveTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TypeDummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

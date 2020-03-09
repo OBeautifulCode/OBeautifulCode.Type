@@ -47,6 +47,9 @@
   <ItemGroup>
     <Compile Include=".analyzers\SuppressBecause.cs" />
     <Compile Include="Containers\UtcDateTimeRangeInclusive.cs" />
+    <Compile Include="Containers\UtcDateTimeRangeInclusive.designer.cs">
+      <DependentUpon>UtcDateTimeRangeInclusive.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeclaredMethods\IDeclareToStringMethod.cs" />
     <Compile Include="DeclaredMethods\IDeclareGetHashCodeMethod.cs" />
     <Compile Include="DeclaredMethods\IDeclareEqualsMethod{T}.cs" />
