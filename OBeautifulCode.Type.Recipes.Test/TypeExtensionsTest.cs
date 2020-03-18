@@ -1283,6 +1283,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(IComparable),
                     typeof(IComparable<string>),
                     typeof(IEnumerable),
+                    typeof(IEnumerable<>),
                     typeof(IEnumerable<string>),
                     typeof(IDictionary<string, string>),
                     typeof(IReadOnlyDictionary<string, string>),
@@ -1372,6 +1373,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(IComparable),
                     typeof(IComparable<string>),
                     typeof(IEnumerable),
+                    typeof(IEnumerable<>),
                     typeof(IEnumerable<string>),
                     typeof(IEnumerable<KeyValuePair<string, string>>),
                     typeof(Collection<Guid>),
@@ -1424,6 +1426,98 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void IsClosedSystemEnumerableType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsClosedSystemEnumerableType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsClosedSystemEnumerableType___Should_return_false___When_parameter_type_is_not_a_closed_Enumerable_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(Collection<>),
+                    typeof(ICollection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<>),
+                    typeof(IDictionary<string, string>),
+                    typeof(IReadOnlyDictionary<string, string>),
+                    typeof(Dictionary<string, string>),
+                    typeof(ReadOnlyDictionary<string, string>),
+                    typeof(ConcurrentDictionary<string, string>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericClassDictionary),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                    typeof(ICollection<string>),
+                    typeof(IReadOnlyCollection<string>),
+                    typeof(Collection<string>),
+                    typeof(ReadOnlyCollection<string>),
+                    typeof(List<string>),
+                    typeof(IList<string>),
+                    typeof(IReadOnlyList<string>),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => _.IsClosedSystemEnumerableType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsClosedSystemEnumerableType___Should_return_true___When_parameter_type_is_a_closed_ordered_System_Collection_type()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(IEnumerable<string>),
+                typeof(IEnumerable<int>),
+                typeof(IEnumerable<TestClass>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsClosedSystemEnumerableType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
         public static void IsClosedSystemOrderedCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
@@ -1462,6 +1556,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(IComparable),
                     typeof(IComparable<string>),
                     typeof(IEnumerable),
+                    typeof(IEnumerable<>),
                     typeof(IEnumerable<string>),
                     typeof(IDictionary<string, string>),
                     typeof(IReadOnlyDictionary<string, string>),
@@ -1551,6 +1646,7 @@ namespace OBeautifulCode.Type.Recipes.Test
                     typeof(IComparable),
                     typeof(IComparable<string>),
                     typeof(IEnumerable),
+                    typeof(IEnumerable<>),
                     typeof(IEnumerable<string>),
                     typeof(IDictionary<string, string>),
                     typeof(IReadOnlyDictionary<string, string>),
