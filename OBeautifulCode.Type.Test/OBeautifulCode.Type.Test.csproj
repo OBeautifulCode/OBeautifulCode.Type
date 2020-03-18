@@ -120,10 +120,10 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\SuppressBecause.cs" />
-    <Compile Include="Containers\UtcDateTimeRangeInclusiveTest.cs" />
-    <Compile Include="Containers\UtcDateTimeRangeInclusiveTest.designer.cs">
+    <Content Include="Containers\UtcDateTimeRangeInclusiveTest.cs" />
+    <Content Include="Containers\UtcDateTimeRangeInclusiveTest.designer.cs">
       <DependentUpon>UtcDateTimeRangeInclusiveTest.cs</DependentUpon>
-    </Compile>
+    </Content>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TypeDummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
