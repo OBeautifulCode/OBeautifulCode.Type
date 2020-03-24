@@ -11,9 +11,9 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Type.Recipes;
 
     using static System.FormattableString;
 
@@ -77,12 +77,17 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
         /// <summary>
         /// Removes all scenarios.
         /// </summary>
-        public void RemoveAllScenarios()
+        /// <returns>
+        /// This object.
+        /// </returns>
+        public ComparableTestScenarios<T> RemoveAllScenarios()
         {
             lock (this.lockScenarios)
             {
                 this.scenarios.Clear();
             }
+
+            return this;
         }
 
         /// <summary>
@@ -95,7 +100,15 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
         {
             lock (this.lockScenarios)
             {
-                this.scenarios.AsTest("ComparableTestScenarios.Scenarios").Must().NotBeEmptyEnumerable(because: "Use a static constructor on your test class to add scenarios by calling ComparableTestScenarios.AddScenario(...).", applyBecause: ApplyBecause.SuffixedToDefaultMessage);
+                var typeCompilableString = typeof(T).ToStringCompilable();
+
+                var becauseNoScenarios = new[]
+                {
+                    Invariant($"Use a static constructor on your test class to add scenarios by calling {nameof(ComparableTestScenarios<object>)}.{nameof(ComparableTestScenarios<object>.AddScenario)}(...)."),
+                    Invariant($"If you need to force the consuming unit tests to pass and you'll write your own unit tests, clear all scenarios by calling {nameof(ComparableTestScenarios<object>)}.{nameof(ComparableTestScenarios<object>.RemoveAllScenarios)}() and then add {nameof(ComparableTestScenario<object>)}<{typeCompilableString}>.{nameof(ComparableTestScenario<object>.ForceGeneratedTestsToPassAndWriteMyOwnScenario)}."),
+                };
+
+                this.scenarios.AsTest(Invariant($"{nameof(ComparableTestScenarios<object>)}.{nameof(ComparableTestScenarios<object>.scenarios)}")).Must().NotBeEmptyEnumerable(because: string.Join(Environment.NewLine, becauseNoScenarios), applyBecause: ApplyBecause.SuffixedToDefaultMessage);
 
                 var result = new List<ValidatedComparableTestScenario<T>>();
 
@@ -109,43 +122,16 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
 
                     var scenarioName = string.IsNullOrWhiteSpace(scenario.Name) ? "<Unnamed Scenario>" : scenario.Name;
 
-                    var scenarioId = Invariant($"{scenarioName} (comparable test scenario #{scenarioNumber} of {scenariosCount}):");
-
-                    new { scenario.ReferenceObject }.AsTest().Must().NotBeNull(scenarioId);
-
-                    if (scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject != null)
-                    {
-                        new { scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject }.AsTest().Must().NotContainAnyNullElements(scenarioId);
-                    }
-
-                    if (scenario.ObjectsThatAreLessThanReferenceObject != null)
-                    {
-                        new { scenario.ObjectsThatAreLessThanReferenceObject }.AsTest().Must().NotContainAnyNullElements(scenarioId);
-                    }
-                    
-                    if (scenario.ObjectsThatAreGreaterThanReferenceObject != null)
-                    {
-                        new { scenario.ObjectsThatAreGreaterThanReferenceObject }.AsTest().Must().NotContainAnyNullElements(scenarioId);
-                    }
-                    
-                    if (scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject != null)
-                    {
-                        new { scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject }.AsTest().Must().NotContainAnyNullElements(scenarioId);
-                    }
-
-                    if (scenario.ObjectsThatAreNotOfTheSameTypeAsReferenceObject != null)
-                    {
-                        new { scenario.ObjectsThatAreNotOfTheSameTypeAsReferenceObject }.AsTest().Must().NotContainAnyNullElements(scenarioId);
-                    }
+                    var scenarioId = Invariant($"{scenarioName} ({nameof(ComparableTestScenario<object>)} #{scenarioNumber} of {scenariosCount}):");
 
                     var validatedScenario = new ValidatedComparableTestScenario<T>(
                         scenarioId,
                         scenario.ReferenceObject,
-                        scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject?.ToList() ?? new List<T>(),
-                        scenario.ObjectsThatAreLessThanReferenceObject?.ToList() ?? new List<T>(),
-                        scenario.ObjectsThatAreGreaterThanReferenceObject?.ToList() ?? new List<T>(),
-                        scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject?.ToList() ?? new List<T>(),
-                        scenario.ObjectsThatAreNotOfTheSameTypeAsReferenceObject?.ToList() ?? new List<object>());
+                        scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject ?? new List<T>(),
+                        scenario.ObjectsThatAreLessThanReferenceObject ?? new List<T>(),
+                        scenario.ObjectsThatAreGreaterThanReferenceObject ?? new List<T>(),
+                        scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject ?? new List<T>(),
+                        scenario.ObjectsThatAreNotOfTheSameTypeAsReferenceObject ?? new List<object>());
 
                     result.Add(validatedScenario);
                 }

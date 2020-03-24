@@ -104,13 +104,28 @@
     <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Workflow.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\WorkflowExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
-    <Compile Include=".recipes\OBeautifulCode.CodeGen\ComparableTestScenarios{T}.cs" />
-    <Compile Include=".recipes\OBeautifulCode.CodeGen\ComparableTestScenario{T}.cs" />
-    <Compile Include=".recipes\OBeautifulCode.CodeGen\EquatableTestScenarios{T}.cs" />
-    <Compile Include=".recipes\OBeautifulCode.CodeGen\EquatableTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\Comparable\ComparableTestScenarios{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\Comparable\ComparableTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\Comparable\ValidatedComparableTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ConstructorArgumentValidation\ConstructorArgumentValidationTestScenarios{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ConstructorArgumentValidation\ConstructorArgumentValidationTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ConstructorArgumentValidation\ValidatedConstructorArgumentValidationTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ConstructorPropertyAssignment\ConstructorPropertyAssignmentTestScenarios{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ConstructorPropertyAssignment\ConstructorPropertyAssignmentTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ConstructorPropertyAssignment\SystemUnderTestExpectedPropertyValue{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ConstructorPropertyAssignment\ValidatedConstructorPropertyAssignmentTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\DeepCloneWith\DeepCloneWithTestScenarios{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\DeepCloneWith\DeepCloneWithTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\DeepCloneWith\SystemUnderTestDeepCloneWithValue{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\DeepCloneWith\ValidatedDeepCloneWithTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\Equatable\EquatableTestScenarios{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\Equatable\EquatableTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\Equatable\ValidatedEquatableTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\StringRepresentationTestScenarios{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\StringRepresentationTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\SystemUnderTestExpectedStringRepresentation{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\ValidatedStringRepresentationTestScenario{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeGen\SuppressBecause.cs" />
-    <Compile Include=".recipes\OBeautifulCode.CodeGen\ValidatedComparableTestScenario{T}.cs" />
-    <Compile Include=".recipes\OBeautifulCode.CodeGen\ValidatedEquatableTestScenario{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
@@ -120,10 +135,10 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\SuppressBecause.cs" />
-    <Content Include="Containers\UtcDateTimeRangeInclusiveTest.cs" />
-    <Content Include="Containers\UtcDateTimeRangeInclusiveTest.designer.cs">
+    <Compile Include="Containers\UtcDateTimeRangeInclusiveTest.cs" />
+    <Compile Include="Containers\UtcDateTimeRangeInclusiveTest.designer.cs">
       <DependentUpon>UtcDateTimeRangeInclusiveTest.cs</DependentUpon>
-    </Content>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TypeDummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

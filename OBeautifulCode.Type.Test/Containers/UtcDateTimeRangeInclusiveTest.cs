@@ -25,89 +25,168 @@ namespace OBeautifulCode.Type.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static UtcDateTimeRangeInclusiveTest()
         {
-            EquatableTestScenarios.RemoveAllScenarios();
-
-            EquatableTestScenarios.AddScenario(
-                new EquatableTestScenario<UtcDateTimeRangeInclusive>
-                {
-                    ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new UtcDateTimeRangeInclusive[]
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(
+                    new ConstructorArgumentValidationTestScenario<UtcDateTimeRangeInclusive>
                     {
-                        new UtcDateTimeRangeInclusive(
-                            ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc,
-                            ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc),
-                    },
-                    ObjectsThatAreNotEqualToReferenceObject = new UtcDateTimeRangeInclusive[]
+                        Name = "constructor should throw ArgumentException when 'startDateTimeInUtc' is DateTimeKind.Local",
+                        ConstructionFunc = () =>
+                        {
+                            var startDateTime = new DateTime(1, DateTimeKind.Local);
+
+                            return new UtcDateTimeRangeInclusive(startDateTime, DateTime.UtcNow);
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "startDateTimeInUtc DateTimeKind is not Utc" },
+                    })
+                .AddScenario(
+                    new ConstructorArgumentValidationTestScenario<UtcDateTimeRangeInclusive>
                     {
-                        new UtcDateTimeRangeInclusive(
-                            A.Dummy<UtcDateTimeRangeInclusive>().Whose(_ => (!_.StartDateTimeInUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc)) && (_.StartDateTimeInUtc <= ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc)).StartDateTimeInUtc,
-                            ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc),
-                        new UtcDateTimeRangeInclusive(
-                            ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc,
-                            A.Dummy<UtcDateTimeRangeInclusive>().Whose(_ => (!_.EndDateTimeInUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc)) && (_.EndDateTimeInUtc >= ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc)).EndDateTimeInUtc),
-                    },
-                    ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
+                        Name = "constructor should throw ArgumentException when 'startDateTimeInUtc' is DateTimeKind.Unspecified",
+                        ConstructionFunc = () =>
+                        {
+                            var startDateTime = new DateTime(1, DateTimeKind.Unspecified);
+
+                            return new UtcDateTimeRangeInclusive(startDateTime, DateTime.UtcNow);
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "startDateTimeInUtc DateTimeKind is not Utc" },
+                    })
+                .AddScenario(
+                    new ConstructorArgumentValidationTestScenario<UtcDateTimeRangeInclusive>
                     {
-                        A.Dummy<object>(),
-                        A.Dummy<string>(),
-                        A.Dummy<int>(),
-                        A.Dummy<int?>(),
-                        A.Dummy<Guid>(),
-                    },
-                });
-        }
+                        Name = "constructor should throw ArgumentException when 'endDateTimeInUtc' is DateTimeKind.Local",
+                        ConstructionFunc = () =>
+                        {
+                            var endDateTime = new DateTime(1, DateTimeKind.Local);
 
-        [Fact]
-        public static void Constructor___Should_throw_ArgumentException___When_parameter_startDateTimeInUtc_is_not_DateTimeKind_Utc()
-        {
-            // Arrange
-            var startDateTime1 = new DateTime(1, DateTimeKind.Local);
-            var startDateTime2 = new DateTime(1, DateTimeKind.Unspecified);
+                            return new UtcDateTimeRangeInclusive(DateTime.UtcNow, endDateTime);
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "endDateTimeInUtc DateTimeKind is not Utc" },
+                    })
+                .AddScenario(
+                    new ConstructorArgumentValidationTestScenario<UtcDateTimeRangeInclusive>
+                    {
+                        Name = "constructor should throw ArgumentException when 'endDateTimeInUtc' is DateTimeKind.Unspecified",
+                        ConstructionFunc = () =>
+                        {
+                            var endDateTime = new DateTime(1, DateTimeKind.Unspecified);
 
-            // Act
-            var ex1 = Record.Exception(() => new UtcDateTimeRangeInclusive(startDateTime1, DateTime.UtcNow));
-            var ex2 = Record.Exception(() => new UtcDateTimeRangeInclusive(startDateTime2, DateTime.UtcNow));
+                            return new UtcDateTimeRangeInclusive(DateTime.UtcNow, endDateTime);
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "endDateTimeInUtc DateTimeKind is not Utc" },
+                    })
+                .AddScenario(
+                    new ConstructorArgumentValidationTestScenario<UtcDateTimeRangeInclusive>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when 'startDateTimeInUtc' > 'endDateTimeInUtc'",
+                        ConstructionFunc = () =>
+                        {
+                            var startDateTimeInUtc = DateTime.UtcNow;
 
-            // Assert
-            ex1.Should().BeOfType<ArgumentException>();
-            ex1.Message.Should().Contain("startDateTimeInUtc DateTimeKind is not Utc");
+                            var endDateTimeInUtc = startDateTimeInUtc.AddMilliseconds(-1);
 
-            ex2.Should().BeOfType<ArgumentException>();
-            ex2.Message.Should().Contain("startDateTimeInUtc DateTimeKind is not Utc");
-        }
+                            return new UtcDateTimeRangeInclusive(startDateTimeInUtc, endDateTimeInUtc);
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "startDateTimeInUtc is > endDateTimeInUtc" },
+                    });
 
-        [Fact]
-        public static void Constructor___Should_throw_ArgumentException___When_parameter_endDateTimeInUtc_is_not_DateTimeKind_Utc()
-        {
-            // Arrange
-            var endDateTime1 = new DateTime(1, DateTimeKind.Local);
-            var endDateTime2 = new DateTime(1, DateTimeKind.Unspecified);
+            StringRepresentationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(
+                    new StringRepresentationTestScenario<UtcDateTimeRangeInclusive>
+                    {
+                        Name = "ToString() should return string representation of date time range",
+                        SystemUnderTestExpectedStringRepresentationFunc = () =>
+                        {
+                            var startDateTime = new DateTime(2019, 3, 10, 14, 4, 59, DateTimeKind.Utc);
+                            var endDateTime = new DateTime(2020, 11, 22, 9, 43, 4, DateTimeKind.Utc);
 
-            // Act
-            var ex1 = Record.Exception(() => new UtcDateTimeRangeInclusive(DateTime.UtcNow, endDateTime1));
-            var ex2 = Record.Exception(() => new UtcDateTimeRangeInclusive(DateTime.UtcNow, endDateTime2));
+                            return new SystemUnderTestExpectedStringRepresentation<UtcDateTimeRangeInclusive>
+                            {
+                                SystemUnderTest = new UtcDateTimeRangeInclusive(startDateTime, endDateTime),
+                                ExpectedStringRepresentation = "03/10/2019 14:04:59 to 11/22/2020 09:43:04",
+                            };
+                        },
+                    });
 
-            // Assert
-            ex1.Should().BeOfType<ArgumentException>();
-            ex1.Message.Should().Contain("endDateTimeInUtc DateTimeKind is not Utc");
+            EquatableTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(
+                    new EquatableTestScenario<UtcDateTimeRangeInclusive>
+                    {
+                        ReferenceObject = ReferenceObjectForEquatableTestScenarios,
+                        ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new UtcDateTimeRangeInclusive[]
+                        {
+                            new UtcDateTimeRangeInclusive(
+                                ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc,
+                                ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc),
+                        },
+                        ObjectsThatAreNotEqualToReferenceObject = new UtcDateTimeRangeInclusive[]
+                        {
+                            new UtcDateTimeRangeInclusive(
+                                A.Dummy<UtcDateTimeRangeInclusive>().Whose(_ => (!_.StartDateTimeInUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc)) && (_.StartDateTimeInUtc <= ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc)).StartDateTimeInUtc,
+                                ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc),
+                            new UtcDateTimeRangeInclusive(
+                                ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc,
+                                A.Dummy<UtcDateTimeRangeInclusive>().Whose(_ => (!_.EndDateTimeInUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EndDateTimeInUtc)) && (_.EndDateTimeInUtc >= ReferenceObjectForEquatableTestScenarios.StartDateTimeInUtc)).EndDateTimeInUtc),
+                        },
+                        ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
+                        {
+                            A.Dummy<object>(),
+                            A.Dummy<string>(),
+                            A.Dummy<int>(),
+                            A.Dummy<int?>(),
+                            A.Dummy<Guid>(),
+                        },
+                    });
 
-            ex2.Should().BeOfType<ArgumentException>();
-            ex2.Message.Should().Contain("endDateTimeInUtc DateTimeKind is not Utc");
-        }
+            DeepCloneWithTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<UtcDateTimeRangeInclusive>
+                    {
+                        Name = "DeepCloneWithStartDateTimeInUtc should deep clone object and replace ParentBoolProperty with the provided parentBoolProperty",
+                        WithPropertyName = "StartDateTimeInUtc",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<UtcDateTimeRangeInclusive>();
 
-        [Fact]
-        public static void Constructor___Should_throw_ArgumentOutOfRangeException___When_parameter_startDateTimeInUtc_is_greater_than_endDateTimeInUtc()
-        {
-            // Arrange
-            var startDateTimeInUtc = DateTime.UtcNow;
-            var endDateTimeInUtc = startDateTimeInUtc.AddMilliseconds(-1);
+                            var referenceObject = A.Dummy<UtcDateTimeRangeInclusive>().ThatIs(_ => (!systemUnderTest.StartDateTimeInUtc.IsEqualTo(_.StartDateTimeInUtc)) && (_.StartDateTimeInUtc <= systemUnderTest.StartDateTimeInUtc));
 
-            // Act
-            var ex = Record.Exception(() => new UtcDateTimeRangeInclusive(startDateTimeInUtc, endDateTimeInUtc));
+                            var result = new SystemUnderTestDeepCloneWithValue<UtcDateTimeRangeInclusive>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.StartDateTimeInUtc,
+                            };
 
-            // Assert
-            ex.Should().BeOfType<ArgumentOutOfRangeException>();
-            ex.Message.Should().Contain("startDateTimeInUtc is > endDateTimeInUtc");
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<UtcDateTimeRangeInclusive>
+                    {
+                        Name = "DeepCloneWithEndDateTimeInUtc should deep clone object and replace ParentBoolProperty with the provided parentBoolProperty",
+                        WithPropertyName = "EndDateTimeInUtc",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<UtcDateTimeRangeInclusive>();
+
+                            var referenceObject = A.Dummy<UtcDateTimeRangeInclusive>().ThatIs(_ => (!systemUnderTest.EndDateTimeInUtc.IsEqualTo(_.EndDateTimeInUtc)) && (_.EndDateTimeInUtc >= systemUnderTest.EndDateTimeInUtc));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<UtcDateTimeRangeInclusive>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.EndDateTimeInUtc,
+                            };
+
+                            return result;
+                        },
+                    });
         }
 
         [Fact]
@@ -122,22 +201,6 @@ namespace OBeautifulCode.Type.Test
 
             // Assert
             ex.Should().BeNull();
-        }
-
-        [Fact]
-        public static void ToString___Should_return_string_representation_of_date_time_range___When_called()
-        {
-            // Arrange
-            var startDateTime = new DateTime(2019, 3, 10, 14, 4, 59, DateTimeKind.Utc);
-            var endDateTime = new DateTime(2020, 11, 22, 9, 43, 4, DateTimeKind.Utc);
-
-            var systemUnderTest = new UtcDateTimeRangeInclusive(startDateTime, endDateTime);
-
-            // Act
-            var actual = systemUnderTest.ToString();
-
-            // Assert
-            actual.Should().Be("03/10/2019 14:04:59 to 11/22/2020 09:43:04");
         }
     }
 }
