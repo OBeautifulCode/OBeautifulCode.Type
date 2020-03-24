@@ -164,7 +164,7 @@
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\test.ruleset" />
     <None Include="app.config" />
-    <None Include="TypeDummyFactory.recipe-nuspec" />
+    <None Include="DummyFactory.recipe-nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
