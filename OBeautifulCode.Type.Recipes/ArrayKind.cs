@@ -36,6 +36,6 @@ namespace OBeautifulCode.Type.Recipes
         /// <summary>
         /// A multidimensional array.  Can have 1 to 32 dimensions.
         /// </summary>
-        MultiDimensional,
+        Multidimensional,
     }
 }

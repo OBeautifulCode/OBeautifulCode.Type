@@ -151,7 +151,7 @@ namespace OBeautifulCode.Type.Recipes
             }
             else if (type.GetArrayRank() > 1)
             {
-                result = ArrayKind.MultiDimensional;
+                result = ArrayKind.Multidimensional;
             }
             else if (type == type.GetElementType().MakeArrayType())
             {
@@ -159,7 +159,7 @@ namespace OBeautifulCode.Type.Recipes
             }
             else
             {
-                result = ArrayKind.MultiDimensional;
+                result = ArrayKind.Multidimensional;
             }
 
             return result;

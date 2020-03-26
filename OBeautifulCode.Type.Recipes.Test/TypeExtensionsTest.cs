@@ -201,7 +201,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void GetArrayKind___Should_return_ArrayKind_MultiDimensional___When_type_is_a_multidimensional_array()
+        public static void GetArrayKind___Should_return_ArrayKind_Multidimensional___When_type_is_a_multidimensional_array()
         {
             // Arrange
             var types = new[]
@@ -284,7 +284,7 @@ namespace OBeautifulCode.Type.Recipes.Test
             var actuals = types.Select(_ => _.GetArrayKind()).ToList();
 
             // Assert
-            actuals.Should().AllBeEquivalentTo(ArrayKind.MultiDimensional);
+            actuals.Should().AllBeEquivalentTo(ArrayKind.Multidimensional);
         }
 
         [Fact]
