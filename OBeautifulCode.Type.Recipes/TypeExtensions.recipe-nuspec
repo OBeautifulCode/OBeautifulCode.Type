@@ -8,6 +8,7 @@
   </metadata>
   <files>
     <file src=".analyzers\SuppressBecause.cs" target="content\net462\.recipes\OBeautifulCode.Type\SuppressBecause.cs" />
+    <file src="ArrayKind.cs" target="content\net462\.recipes\OBeautifulCode.Type\ArrayKind.cs" />
     <file src="TypeExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <file src="ToStringReadableOptions.cs" target="content\net462\.recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
   </files>

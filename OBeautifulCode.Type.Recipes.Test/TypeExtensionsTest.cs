@@ -88,6 +88,206 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void GetArrayKind___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.GetArrayKind(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void GetArrayKind___Should_return_ArrayKind_None___When_type_is_not_an_array()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(object),
+                typeof(string),
+                typeof(Guid),
+                typeof(DateTime),
+                typeof(int),
+                typeof(Guid?),
+                typeof(DateTime?),
+                typeof(int?),
+                typeof(IReadOnlyCollection<object>),
+                typeof(IReadOnlyCollection<string>),
+                typeof(IReadOnlyCollection<Guid>),
+                typeof(IReadOnlyCollection<DateTime>),
+                typeof(IReadOnlyCollection<int>),
+                typeof(List<object>),
+                typeof(List<string>),
+                typeof(List<Guid>),
+                typeof(List<DateTime>),
+                typeof(List<int>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.GetArrayKind()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(ArrayKind.None);
+        }
+
+        [Fact]
+        public static void GetArrayKind___Should_return_ArrayKind_Vector___When_type_is_a_vector_array()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(object[]),
+                typeof(string[]),
+                typeof(Guid[]),
+                typeof(DateTime[]),
+                typeof(int[]),
+                typeof(Guid?[]),
+                typeof(DateTime?[]),
+                typeof(int?[]),
+                typeof(IReadOnlyCollection<object>[]),
+                typeof(IReadOnlyCollection<string>[]),
+                typeof(IReadOnlyCollection<Guid>[]),
+                typeof(IReadOnlyCollection<DateTime>[]),
+                typeof(IReadOnlyCollection<int>[]),
+                typeof(List<object>[]),
+                typeof(List<string>[]),
+                typeof(List<Guid>[]),
+                typeof(List<DateTime>[]),
+                typeof(List<int>[]),
+                typeof(object[][]),
+                typeof(string[][]),
+                typeof(Guid[][]),
+                typeof(DateTime[][]),
+                typeof(int[][]),
+                typeof(Guid?[][]),
+                typeof(DateTime?[][]),
+                typeof(int?[][]),
+                typeof(IReadOnlyCollection<object>[][]),
+                typeof(IReadOnlyCollection<string>[][]),
+                typeof(IReadOnlyCollection<Guid>[][]),
+                typeof(IReadOnlyCollection<DateTime>[][]),
+                typeof(IReadOnlyCollection<int>[][]),
+                typeof(List<object>[][]),
+                typeof(List<string>[][]),
+                typeof(List<Guid>[][]),
+                typeof(List<DateTime>[][]),
+                typeof(List<int>[][]),
+                typeof(object[][,]),
+                typeof(string[][,]),
+                typeof(Guid[][,]),
+                typeof(DateTime[][,]),
+                typeof(int[][,]),
+                typeof(Guid?[][,]),
+                typeof(DateTime?[][,]),
+                typeof(int?[][,]),
+                typeof(IReadOnlyCollection<object>[][,]),
+                typeof(IReadOnlyCollection<string>[][,]),
+                typeof(IReadOnlyCollection<Guid>[][,]),
+                typeof(IReadOnlyCollection<DateTime>[][,]),
+                typeof(IReadOnlyCollection<int>[][,]),
+                typeof(List<object>[][,]),
+                typeof(List<string>[][,]),
+                typeof(List<Guid>[][,]),
+                typeof(List<DateTime>[][,]),
+                typeof(List<int>[][,]),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.GetArrayKind()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(ArrayKind.Vector);
+        }
+
+        [Fact]
+        public static void GetArrayKind___Should_return_ArrayKind_MultiDimensional___When_type_is_a_multidimensional_array()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(object[,]),
+                typeof(string[,]),
+                typeof(Guid[,]),
+                typeof(DateTime[,]),
+                typeof(int[,]),
+                typeof(Guid?[,]),
+                typeof(DateTime?[,]),
+                typeof(int?[,]),
+                typeof(IReadOnlyCollection<object>[,]),
+                typeof(IReadOnlyCollection<string>[,]),
+                typeof(IReadOnlyCollection<Guid>[,]),
+                typeof(IReadOnlyCollection<DateTime>[,]),
+                typeof(IReadOnlyCollection<int>[,]),
+                typeof(List<object>[,]),
+                typeof(List<string>[,]),
+                typeof(List<Guid>[,]),
+                typeof(List<DateTime>[,]),
+                typeof(List<int>[,]),
+                typeof(object[,][]),
+                typeof(string[,][]),
+                typeof(Guid[,][]),
+                typeof(DateTime[,][]),
+                typeof(int[,][]),
+                typeof(Guid?[,][]),
+                typeof(DateTime?[,][]),
+                typeof(int?[,][]),
+                typeof(IReadOnlyCollection<object>[,][]),
+                typeof(IReadOnlyCollection<string>[,][]),
+                typeof(IReadOnlyCollection<Guid>[,][]),
+                typeof(IReadOnlyCollection<DateTime>[,][]),
+                typeof(IReadOnlyCollection<int>[,][]),
+                typeof(List<object>[,][]),
+                typeof(List<string>[,][]),
+                typeof(List<Guid>[,][]),
+                typeof(List<DateTime>[,][]),
+                typeof(List<int>[,][]),
+                typeof(object).MakeArrayType(1),
+                typeof(string).MakeArrayType(1),
+                typeof(Guid).MakeArrayType(1),
+                typeof(DateTime).MakeArrayType(1),
+                typeof(int).MakeArrayType(1),
+                typeof(Guid?).MakeArrayType(1),
+                typeof(DateTime?).MakeArrayType(1),
+                typeof(int?).MakeArrayType(1),
+                typeof(IReadOnlyCollection<object>).MakeArrayType(1),
+                typeof(IReadOnlyCollection<string>).MakeArrayType(1),
+                typeof(IReadOnlyCollection<Guid>).MakeArrayType(1),
+                typeof(IReadOnlyCollection<DateTime>).MakeArrayType(1),
+                typeof(IReadOnlyCollection<int>).MakeArrayType(1),
+                typeof(List<object>).MakeArrayType(1),
+                typeof(List<string>).MakeArrayType(1),
+                typeof(List<Guid>).MakeArrayType(1),
+                typeof(List<DateTime>).MakeArrayType(1),
+                typeof(List<int>).MakeArrayType(1),
+                typeof(object[]).MakeArrayType(1),
+                typeof(string[]).MakeArrayType(1),
+                typeof(Guid[]).MakeArrayType(1),
+                typeof(DateTime[]).MakeArrayType(1),
+                typeof(int[]).MakeArrayType(1),
+                typeof(Guid?[]).MakeArrayType(1),
+                typeof(DateTime?[]).MakeArrayType(1),
+                typeof(int?[]).MakeArrayType(1),
+                typeof(IReadOnlyCollection<object>[]).MakeArrayType(1),
+                typeof(IReadOnlyCollection<string>[]).MakeArrayType(1),
+                typeof(IReadOnlyCollection<Guid>[]).MakeArrayType(1),
+                typeof(IReadOnlyCollection<DateTime>[]).MakeArrayType(1),
+                typeof(IReadOnlyCollection<int>[]).MakeArrayType(1),
+                typeof(List<object>[]).MakeArrayType(1),
+                typeof(List<string>[]).MakeArrayType(1),
+                typeof(List<Guid>[]).MakeArrayType(1),
+                typeof(List<DateTime>[]).MakeArrayType(1),
+                typeof(List<int>[]).MakeArrayType(1),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.GetArrayKind()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(ArrayKind.MultiDimensional);
+        }
+
+        [Fact]
         public static void GetClosedEnumerableElementType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
