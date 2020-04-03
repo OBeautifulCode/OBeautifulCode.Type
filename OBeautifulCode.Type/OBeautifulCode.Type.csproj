@@ -58,6 +58,7 @@
     <Compile Include="FrameworkMissingInterfaces\Comparable\RelativeSortOrder.cs" />
     <Compile Include="FrameworkMissingInterfaces\Comparable\IComparableForRelativeSortOrder{T}.cs" />
     <Compile Include="FrameworkMissingInterfaces\IHashable.cs" />
+    <Compile Include="FrameworkMissingInterfaces\IImplementNullObjectPattern.cs" />
     <Compile Include="FrameworkMissingInterfaces\IStringRepresentable.cs" />
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByGuid.cs" />
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByString.cs" />
