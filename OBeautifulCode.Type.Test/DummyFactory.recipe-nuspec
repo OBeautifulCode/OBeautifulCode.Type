@@ -8,6 +8,7 @@
     <dependencies>
       <dependency id="OBeautifulCode.Type" version="$version$" />
       <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.126" />
+      <dependency id="OBeautifulCode.Math.Recipes.ThreadSafeRandom" version="1.0.75" />
     </dependencies>
   </metadata>
   <files>
