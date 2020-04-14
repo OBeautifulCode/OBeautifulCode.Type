@@ -419,4 +419,41 @@ namespace OBeautifulCode.Type.Recipes.Test
     public class OrphanedGenericClass<TOrphaned>
     {
     }
+
+    public class NoDefaultConstructorClass
+    {
+        public NoDefaultConstructorClass(int value)
+        {
+        }
+    }
+
+    public abstract class AbstractClassWithPublicParameterlessConstructor
+    {
+        public AbstractClassWithPublicParameterlessConstructor()
+        {
+        }
+    }
+
+    public class ChildOfAbstractClassWithPublicParameterlessConstructor : AbstractClassWithPublicParameterlessConstructor
+    {
+        public ChildOfAbstractClassWithPublicParameterlessConstructor(int value)
+            : base()
+        {
+        }
+    }
+
+    public abstract class AbstractClassWithProtectedParameterlessConstructor
+    {
+        protected AbstractClassWithProtectedParameterlessConstructor()
+        {
+        }
+    }
+
+    public class ChildOfAbstractClassWithProtectedParameterlessConstructor : AbstractClassWithProtectedParameterlessConstructor
+    {
+        public ChildOfAbstractClassWithProtectedParameterlessConstructor(int value)
+            : base()
+        {
+        }
+    }
 }
