@@ -424,14 +424,14 @@ namespace OBeautifulCode.Type.Recipes.Test
     {
         public NoDefaultConstructorClass(int value)
         {
+            this.Value = value;
         }
+
+        public int Value { get; }
     }
 
     public abstract class AbstractClassWithPublicParameterlessConstructor
     {
-        public AbstractClassWithPublicParameterlessConstructor()
-        {
-        }
     }
 
     public class ChildOfAbstractClassWithPublicParameterlessConstructor : AbstractClassWithPublicParameterlessConstructor
@@ -439,7 +439,10 @@ namespace OBeautifulCode.Type.Recipes.Test
         public ChildOfAbstractClassWithPublicParameterlessConstructor(int value)
             : base()
         {
+            this.Value = value;
         }
+
+        public int Value { get; }
     }
 
     public abstract class AbstractClassWithProtectedParameterlessConstructor
@@ -454,6 +457,9 @@ namespace OBeautifulCode.Type.Recipes.Test
         public ChildOfAbstractClassWithProtectedParameterlessConstructor(int value)
             : base()
         {
+            this.Value = value;
         }
+
+        public int Value { get; }
     }
 }
