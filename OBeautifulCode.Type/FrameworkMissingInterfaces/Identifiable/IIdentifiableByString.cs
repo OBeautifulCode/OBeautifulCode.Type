@@ -10,7 +10,7 @@ namespace OBeautifulCode.Type
     /// Represents an object that has a <see cref="string"/> unique identifier.
     /// </summary>
     // ReSharper disable once UnusedMember.Global
-    public interface IIdentifiableByString : IIdentifiable<string>
+    public interface IIdentifiableByString : IIdentifiableBy<string>
     {
     }
 }

@@ -12,7 +12,7 @@ namespace OBeautifulCode.Type
     /// Represents an object that has a <see cref="Guid"/> unique identifier.
     /// </summary>
     // ReSharper disable once UnusedMember.Global
-    public interface IIdentifiableByGuid : IIdentifiable<Guid>
+    public interface IIdentifiableByGuid : IIdentifiableBy<Guid>
     {
     }
 }
