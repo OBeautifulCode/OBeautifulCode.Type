@@ -9,15 +9,10 @@ namespace OBeautifulCode.Type
     using System;
 
     /// <summary>
-    /// Represents an object that has a GUID unique identifier.
+    /// Represents an object that has a <see cref="Guid"/> unique identifier.
     /// </summary>
     // ReSharper disable once UnusedMember.Global
-    public interface IIdentifiableByGuid : IIdentifiable
+    public interface IIdentifiableByGuid : IIdentifiable<Guid>
     {
-        /// <summary>
-        /// Gets or sets the unique identifier.
-        /// </summary>
-        // ReSharper disable once UnusedMember.Global
-        Guid Id { get; set; }
     }
 }
