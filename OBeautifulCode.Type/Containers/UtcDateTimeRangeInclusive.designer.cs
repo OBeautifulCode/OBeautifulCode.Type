@@ -12,6 +12,7 @@ namespace OBeautifulCode.Type
     /// <summary>
     /// Represents a range of <see cref="DateTime"/>, inclusive of the endpoints.
     /// </summary>
+    [Serializable]
     public partial class UtcDateTimeRangeInclusive
     {
         /// <summary>
