@@ -1421,6 +1421,67 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void IsClosedGenericType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsClosedGenericType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsClosedGenericType___Should_return_false___When_parameter_type_is_not_closed_generic_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedArrayTypes)
+                .Concat(
+                    new[]
+                    {
+                        typeof(IEnumerable),
+                        typeof(object),
+                        typeof(TestClass),
+                        typeof(TestClassWithNestedClass.NestedInTestClass),
+                    })
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsClosedGenericType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsClosedGenericType___Should_return_true___When_parameter_type_is_a_closed_generic_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(
+                    new[]
+                    {
+                        typeof(IReadOnlyList<string>),
+                        typeof(IReadOnlyDictionary<IReadOnlyDictionary<Guid[], int?>, IList<IList<short>>[]>),
+                        typeof(Dictionary<int, string>),
+                        typeof(DerivedGenericClass<int>),
+                    })
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsClosedGenericType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
         public static void IsClosedNonAnonymousClassType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
@@ -1482,7 +1543,6 @@ namespace OBeautifulCode.Type.Recipes.Test
         public static void IsClosedNullableType___Should_return_false___When_parameter_type_is_not_closed_nullable_type()
         {
             // Arrange
-            typeof(int?).GetGenericTypeDefinition().IsClosedNullableType();
             var types = new Type[0]
                 .Concat(TestTypes.OpenTypes)
                 .Concat(TestTypes.ClosedTypes)
@@ -1957,6 +2017,71 @@ namespace OBeautifulCode.Type.Recipes.Test
 
             // Act
             var actuals = types.Select(_ => _.IsClosedSystemUnorderedCollectionType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public static void IsSystemType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsSystemType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsSystemType___Should_return_false___When_parameter_type_is_not_system_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(
+                    new[]
+                    {
+                        typeof(INonComparable),
+                        typeof(TestClass),
+                        typeof(TestClassWithNestedClass.NestedInTestClass),
+                        typeof(DerivedGenericClass<int>),
+                        typeof(DerivedGenericClass<>).BaseType,
+                        typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType,
+                    })
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsSystemType___Should_return_true___When_parameter_type_is_system_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedInterfaceTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(TestTypes.ClosedArrayTypes)
+                .Concat(TestTypes.OpenArrayTypes)
+                .Concat(TestTypes.OpenInterfaceTypesWithoutGenericTypeDefinitionTypes)
+                .Concat(TestTypes.GenericParameterTypes)
+                .Concat(
+                    new[]
+                    {
+                        typeof(object),
+                        typeof(Dictionary<int, string>),
+                        typeof(List<>).MakeGenericType(typeof(List<>)),
+                    })
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);
