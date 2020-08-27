@@ -759,14 +759,7 @@ namespace OBeautifulCode.Type.Recipes
                 return false;
             }
 
-            if (!type.IsGenericType)
-            {
-                return false;
-            }
-
-            var genericTypeDefinition = type.GetGenericTypeDefinition();
-
-            var result = SystemCollectionGenericTypeDefinitions.Contains(genericTypeDefinition);
+            var result = type.IsSystemCollectionType();
 
             return result;
         }
@@ -794,14 +787,7 @@ namespace OBeautifulCode.Type.Recipes
                 return false;
             }
 
-            if (!type.IsGenericType)
-            {
-                return false;
-            }
-
-            var genericTypeDefinition = type.GetGenericTypeDefinition();
-
-            var result = SystemDictionaryGenericTypeDefinitions.Contains(genericTypeDefinition);
+            var result = type.IsSystemDictionaryType();
 
             return result;
         }
@@ -827,14 +813,7 @@ namespace OBeautifulCode.Type.Recipes
                 return false;
             }
 
-            if (!type.IsGenericType)
-            {
-                return false;
-            }
-
-            var genericTypeDefinition = type.GetGenericTypeDefinition();
-
-            var result = genericTypeDefinition == EnumerableInterfaceGenericTypeDefinition;
+            var result = type.IsSystemEnumerableType();
 
             return result;
         }
@@ -862,14 +841,7 @@ namespace OBeautifulCode.Type.Recipes
                 return false;
             }
 
-            if (!type.IsGenericType)
-            {
-                return false;
-            }
-
-            var genericTypeDefinition = type.GetGenericTypeDefinition();
-
-            var result = SystemOrderedCollectionGenericTypeDefinitions.Contains(genericTypeDefinition);
+            var result = type.IsSystemOrderedCollectionType();
 
             return result;
         }
@@ -897,14 +869,7 @@ namespace OBeautifulCode.Type.Recipes
                 return false;
             }
 
-            if (!type.IsGenericType)
-            {
-                return false;
-            }
-
-            var genericTypeDefinition = type.GetGenericTypeDefinition();
-
-            var result = SystemUnorderedCollectionGenericTypeDefinitions.Contains(genericTypeDefinition);
+            var result = type.IsSystemUnorderedCollectionType();
 
             return result;
         }
@@ -931,6 +896,154 @@ namespace OBeautifulCode.Type.Recipes
             }
 
             var result = type.IsArray || type.IsGenericParameter || (type.Namespace?.StartsWith(nameof(System), StringComparison.Ordinal) ?? false);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if the specified type is an open or closed version of one of the
+        /// following <see cref="System"/> Collection generic type definitions:
+        /// <see cref="SystemCollectionGenericTypeDefinitions"/>.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// true if the specified type is a closed <see cref="System"/> collection type; otherwise false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static bool IsSystemCollectionType(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
+
+            var result = SystemCollectionGenericTypeDefinitions.Contains(genericTypeDefinition);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if the specified type is an open or closed version one of one of the
+        /// following <see cref="System"/> Dictionary generic type definitions:
+        /// <see cref="SystemDictionaryGenericTypeDefinitions"/>.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// true if the specified type is a closed <see cref="System"/> dictionary type; otherwise false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static bool IsSystemDictionaryType(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
+
+            var result = SystemDictionaryGenericTypeDefinitions.Contains(genericTypeDefinition);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if the specified type is an open or closed <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// true if the specified type is a closed <see cref="IEnumerable{T}"/>; otherwise false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static bool IsSystemEnumerableType(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
+
+            var result = genericTypeDefinition == EnumerableInterfaceGenericTypeDefinition;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if the specified type is an open or closed version of one of the
+        /// following ordered <see cref="System"/> Collection generic type definitions:
+        /// <see cref="SystemOrderedCollectionGenericTypeDefinitions"/>.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// true if the specified type is a closed, ordered <see cref="System"/> Collection type; otherwise false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static bool IsSystemOrderedCollectionType(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
+
+            var result = SystemOrderedCollectionGenericTypeDefinitions.Contains(genericTypeDefinition);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if the specified type is an open or closed version of one of the
+        /// following unordered <see cref="System"/> Collection generic type definitions:
+        /// <see cref="SystemUnorderedCollectionGenericTypeDefinitions"/>.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// true if the specified type is a closed, unordered <see cref="System"/> Collection type; otherwise false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static bool IsSystemUnorderedCollectionType(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
+
+            var result = SystemUnorderedCollectionGenericTypeDefinitions.Contains(genericTypeDefinition);
 
             return result;
         }

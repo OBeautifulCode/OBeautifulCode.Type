@@ -2088,6 +2088,483 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void IsSystemCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsSystemCollectionType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsSystemCollectionType___Should_return_false___When_parameter_type_is_not_a_System_Collection_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.GenericTypeDefinitions)
+                .Except(new[] { typeof(Collection<>), typeof(ICollection<>), typeof(ReadOnlyCollection<>), typeof(IReadOnlyCollection<>), typeof(List<>), typeof(IList<>), typeof(IReadOnlyList<>) })
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(List<>).MakeArrayType(),
+                    typeof(DerivedGenericClass<>).BaseType,
+                    typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType,
+                    typeof(BaseGenericClass<,>).GetGenericArguments()[0],
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<>),
+                    typeof(IEnumerable<string>),
+                    typeof(IDictionary<string, string>),
+                    typeof(IReadOnlyDictionary<string, string>),
+                    typeof(Dictionary<string, string>),
+                    typeof(ReadOnlyDictionary<string, string>),
+                    typeof(ConcurrentDictionary<string, string>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericClassDictionary),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemCollectionType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsSystemCollectionType___Should_return_true___When_parameter_type_is_a_System_Collection_type()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(List<>).MakeGenericType(typeof(List<>)),
+                typeof(GenericClassList<>).BaseType,
+                typeof(IReadOnlyCollection<>).MakeGenericType(typeof(IReadOnlyCollection<>)),
+                typeof(Collection<>),
+                typeof(ICollection<>),
+                typeof(ReadOnlyCollection<>),
+                typeof(IReadOnlyCollection<>),
+                typeof(List<>),
+                typeof(IList<>),
+                typeof(IReadOnlyList<>),
+                typeof(Collection<string>),
+                typeof(ICollection<string>),
+                typeof(ReadOnlyCollection<string>),
+                typeof(IReadOnlyCollection<string>),
+                typeof(List<string>),
+                typeof(IList<string>),
+                typeof(IReadOnlyList<string>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemCollectionType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public static void IsSystemDictionaryType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsSystemDictionaryType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsSystemDictionaryType___Should_return_false___When_parameter_type_is_not_a_System_Dictionary_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Except(new[] { typeof(Dictionary<,>), typeof(IDictionary<,>), typeof(ReadOnlyDictionary<,>), typeof(IReadOnlyDictionary<,>), typeof(ConcurrentDictionary<,>) })
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(Collection<>),
+                    typeof(ICollection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<>),
+                    typeof(IEnumerable<string>),
+                    typeof(IEnumerable<KeyValuePair<string, string>>),
+                    typeof(Collection<Guid>),
+                    typeof(ICollection<bool>),
+                    typeof(ReadOnlyCollection<DateTime>),
+                    typeof(IReadOnlyCollection<TimeSpan>),
+                    typeof(List<TestClass>),
+                    typeof(IList<int?>),
+                    typeof(IReadOnlyList<int[]>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericClassDictionary),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemDictionaryType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsSystemDictionaryType___Should_return_true___When_parameter_type_is_a_System_Dictionary_type()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(Dictionary<,>),
+                typeof(IDictionary<,>),
+                typeof(ReadOnlyDictionary<,>),
+                typeof(IReadOnlyDictionary<,>),
+                typeof(ConcurrentDictionary<,>),
+                typeof(Dictionary<string, string>),
+                typeof(IDictionary<string, string>),
+                typeof(ReadOnlyDictionary<string, string>),
+                typeof(IReadOnlyDictionary<string, string>),
+                typeof(ConcurrentDictionary<string, string>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemDictionaryType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public static void IsSystemEnumerableType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsSystemEnumerableType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsSystemEnumerableType___Should_return_false___When_parameter_type_is_not_an_Enumerable_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(Collection<>),
+                    typeof(ICollection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IDictionary<string, string>),
+                    typeof(IReadOnlyDictionary<string, string>),
+                    typeof(Dictionary<string, string>),
+                    typeof(ReadOnlyDictionary<string, string>),
+                    typeof(ConcurrentDictionary<string, string>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericClassDictionary),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                    typeof(ICollection<string>),
+                    typeof(IReadOnlyCollection<string>),
+                    typeof(Collection<string>),
+                    typeof(ReadOnlyCollection<string>),
+                    typeof(List<string>),
+                    typeof(IList<string>),
+                    typeof(IReadOnlyList<string>),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemEnumerableType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsSystemEnumerableType___Should_return_true___When_parameter_type_is_an_ordered_System_Collection_type()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(IEnumerable<>),
+                typeof(IEnumerable<string>),
+                typeof(IEnumerable<int>),
+                typeof(IEnumerable<TestClass>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemEnumerableType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public static void IsSystemOrderedCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsSystemOrderedCollectionType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsSystemOrderedCollectionType___Should_return_false___When_parameter_type_is_not_an_ordered_System_Collection_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.GenericTypeDefinitions)
+                .Except(new[] { typeof(Collection<>), typeof(ReadOnlyCollection<>), typeof(List<>), typeof(IList<>), typeof(IReadOnlyList<>) })
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(List<>).MakeArrayType(),
+                    typeof(DerivedGenericClass<>).BaseType,
+                    typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType,
+                    typeof(BaseGenericClass<,>).GetGenericArguments()[0],
+                    typeof(ICollection<>),
+                    typeof(IReadOnlyCollection<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<>),
+                    typeof(IEnumerable<string>),
+                    typeof(IDictionary<string, string>),
+                    typeof(IReadOnlyDictionary<string, string>),
+                    typeof(Dictionary<string, string>),
+                    typeof(ReadOnlyDictionary<string, string>),
+                    typeof(ConcurrentDictionary<string, string>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericClassDictionary),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                    typeof(ICollection<string>),
+                    typeof(IReadOnlyCollection<string>),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemOrderedCollectionType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsSystemOrderedCollectionType___Should_return_true___When_parameter_type_is_an_ordered_System_Collection_type()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(List<>).MakeGenericType(typeof(List<>)),
+                typeof(GenericClassList<>).BaseType,
+                typeof(Collection<>),
+                typeof(ReadOnlyCollection<>),
+                typeof(List<>),
+                typeof(IList<>),
+                typeof(IReadOnlyList<>),
+                typeof(Collection<string>),
+                typeof(ReadOnlyCollection<string>),
+                typeof(List<string>),
+                typeof(IList<string>),
+                typeof(IReadOnlyList<string>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemOrderedCollectionType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public static void IsSystemUnorderedCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsSystemUnorderedCollectionType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsSystemUnorderedCollectionType___Should_return_false___When_parameter_type_is_not_an_unordered_System_Collection_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.GenericTypeDefinitions)
+                .Except(new[] { typeof(ICollection<>), typeof(IReadOnlyCollection<>) })
+                .Concat(TestTypes.ClosedValueTupleTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(List<>).MakeArrayType(),
+                    typeof(DerivedGenericClass<>).BaseType,
+                    typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType,
+                    typeof(BaseGenericClass<,>).GetGenericArguments()[0],
+                    typeof(List<>).MakeGenericType(typeof(List<>)),
+                    typeof(GenericClassList<>).BaseType,
+                    typeof(Collection<>),
+                    typeof(ReadOnlyCollection<>),
+                    typeof(List<>),
+                    typeof(IList<>),
+                    typeof(IReadOnlyList<>),
+                    typeof(Dictionary<,>),
+                    typeof(IDictionary<,>),
+                    typeof(ReadOnlyDictionary<,>),
+                    typeof(IReadOnlyDictionary<,>),
+                    typeof(ConcurrentDictionary<,>),
+                    typeof(TestClass),
+                    typeof(IComparable),
+                    typeof(IComparable<string>),
+                    typeof(IEnumerable),
+                    typeof(IEnumerable<>),
+                    typeof(IEnumerable<string>),
+                    typeof(IDictionary<string, string>),
+                    typeof(IReadOnlyDictionary<string, string>),
+                    typeof(Dictionary<string, string>),
+                    typeof(ReadOnlyDictionary<string, string>),
+                    typeof(ConcurrentDictionary<string, string>),
+                    typeof(BaseClassIList<string>),
+                    typeof(DerivedClassIList<DateTime?>),
+                    typeof(GenericClassList<Guid?>),
+                    typeof(NonGenericClassCollection),
+                    typeof(IGenericIReadOnlyCollection<bool>),
+                    typeof(INonGenericIReadOnlyCollection),
+                    typeof(BaseClassIDictionary<DateTime, string>),
+                    typeof(DerivedClassIDictionary<TestClass, int>),
+                    typeof(GenericClassDictionary<TimeSpan, bool?>),
+                    typeof(NonGenericClassDictionary),
+                    typeof(IGenericIReadOnlyDictionary<string, TestClass>),
+                    typeof(INonGenericIReadOnlyDictionary),
+                    typeof(Collection<string>),
+                    typeof(ReadOnlyCollection<string>),
+                    typeof(List<string>),
+                    typeof(IList<string>),
+                    typeof(IReadOnlyList<string>),
+                })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemUnorderedCollectionType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsSystemUnorderedCollectionType___Should_return_true___When_parameter_type_is_an_unordered_System_Collection_type()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(IReadOnlyCollection<>).MakeGenericType(typeof(IReadOnlyCollection<>)),
+                typeof(ICollection<>),
+                typeof(IReadOnlyCollection<>),
+                typeof(ICollection<string>),
+                typeof(IReadOnlyCollection<string>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemUnorderedCollectionType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
         public static void ToStringCompilable___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
