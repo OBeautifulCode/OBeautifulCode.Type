@@ -2529,5 +2529,211 @@ namespace OBeautifulCode.Type.Recipes.Test
             // Assert
             typesAndExpected.Select(_ => _.Expected).Should().Equal(actuals);
         }
+
+        [Fact]
+        public static void ToStringXmlDoc___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.ToStringXmlDoc(null, throwIfNoCompatibleStringExists: A.Dummy<bool>(), A.Dummy<ToStringXmlDocOptions>()));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void ToStringXmlDoc___Should_throw_NotSupportedException___When_parameter_throwIfNoCompatibleStringExists_is_true_and_parameter_type_is_an_anonymous_type()
+        {
+            // Arrange
+            var innerAnonymousObject = new { InnerAnonymous = 6 };
+            var innerAnonymousTypeName = new Regex("AnonymousType\\d*").Match(innerAnonymousObject.GetType().Name);
+
+            var anonymousObject = new { Anonymous = true, Inner = innerAnonymousObject };
+            var anonymousTypeName = new Regex("AnonymousType\\d*").Match(anonymousObject.GetType().Name);
+
+            var types = new[]
+            {
+                new { Anonymous = true }.GetType(),
+                anonymousObject.GetType(),
+                anonymousObject.GetType().GetGenericTypeDefinition(),
+            };
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(() => _.ToStringXmlDoc(throwIfNoCompatibleStringExists: true))).ToList();
+
+            // Assert
+            actuals.Should().AllBeOfType<NotSupportedException>();
+            actuals.Select(_ => _.Message.Should().Be("Anonymous types are not supported.")).ToList();
+        }
+
+        [Fact]
+        public static void ToStringXmlDoc___Should_return_null___When_parameter_throwIfNoCompatibleStringExists_is_false_and_parameter_type_is_an_anonymous_type()
+        {
+            // Arrange
+            var innerAnonymousObject = new { InnerAnonymous = 6 };
+            var innerAnonymousTypeName = new Regex("AnonymousType\\d*").Match(innerAnonymousObject.GetType().Name);
+
+            var anonymousObject = new { Anonymous = true, Inner = innerAnonymousObject };
+            var anonymousTypeName = new Regex("AnonymousType\\d*").Match(anonymousObject.GetType().Name);
+
+            var types = new[]
+            {
+                new { Anonymous = true }.GetType(),
+                anonymousObject.GetType(),
+                anonymousObject.GetType().GetGenericTypeDefinition(),
+            };
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(() => _.ToStringXmlDoc(throwIfNoCompatibleStringExists: false))).ToList();
+
+            // Assert
+            actuals.Select(_ => _.Should().BeNull()).ToList();
+        }
+
+        [Fact]
+        public static void ToStringXmlDoc___Should_throw_NotSupportedException___When_parameter_throwIfNoCompatibleStringExists_is_true_and_type_is_a_generic_parameter()
+        {
+            // Arrange
+            var types = new[]
+            {
+                // IsGenericType: False
+                // IsGenericTypeDefinition: False
+                // ContainsGenericParameters: True
+                // IsGenericParameter: True
+                typeof(BaseGenericClass<,>).GetGenericArguments()[0],
+            };
+
+            // Act
+            var actuals = types.Select(_ => Record.Exception(() => _.ToStringXmlDoc(throwIfNoCompatibleStringExists: true))).ToList();
+
+            // Assert
+            actuals.Should().AllBeOfType<NotSupportedException>();
+            actuals.Select(_ => _.Message.Should().Be("Generic parameters not supported.")).ToList();
+        }
+
+        [Fact]
+        public static void ToStringXmlDoc___Should_return_null___When_parameter_throwIfNoCompatibleStringExists_is_false_and_type_is_a_generic_parameter()
+        {
+            // Arrange
+            var types = new[]
+            {
+                // IsGenericType: False
+                // IsGenericTypeDefinition: False
+                // ContainsGenericParameters: True
+                // IsGenericParameter: True
+                typeof(BaseGenericClass<,>).GetGenericArguments()[0],
+            };
+
+            // Act
+            // ReSharper disable once ConvertClosureToMethodGroup
+            var actuals = types.Select(_ => Record.Exception(() => _.ToStringXmlDoc(throwIfNoCompatibleStringExists: false))).ToList();
+
+            // Assert
+            actuals.Select(_ => _.Should().BeNull()).ToList();
+        }
+
+        [Fact]
+        public static void ToStringXmlDoc___Should_return_xml_doc_compatible_representation_of_the_specified_type___When_parameter_options_is_None()
+        {
+            // Arrange
+            var typesAndExpected = new[]
+            {
+                // value tuple:
+                new { Type = (first: "one", second: 7).GetType(), Expected = "ValueTuple{String, Int32}" },
+
+                // generic open constructed types:
+                new { Type = typeof(DerivedGenericClass<>).BaseType, Expected = "BaseGenericClass{String, TDerived}" },
+                new { Type = typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType, Expected = "OrphanedGenericClass{DerivedGenericClass}" },
+
+                // generic type definitions:
+                new { Type = typeof(IList<>), Expected = "IList{T}" },
+                new { Type = typeof(List<>), Expected = "List{T}" },
+                new { Type = typeof(IReadOnlyDictionary<,>), Expected = "IReadOnlyDictionary{TKey, TValue}" },
+                new { Type = typeof(DerivedGenericClass<>), Expected = "DerivedGenericClass{TDerived}" },
+
+                // other types
+                new { Type = new DerivedGenericClass<int>[0].GetType(), Expected = "Array" },
+
+                new { Type = typeof(DerivedGenericClass<>.NestedInDerivedGeneric), Expected = "DerivedGenericClass{TDerived}.NestedInDerivedGeneric" },
+                new { Type = typeof(string), Expected = "string" },
+                new { Type = typeof(int), Expected = "int" },
+                new { Type = typeof(int?), Expected = "Nullable{Int32}" },
+                new { Type = typeof(Guid), Expected = "Guid" },
+                new { Type = typeof(Guid?), Expected = "Nullable{Guid}" },
+                new { Type = typeof(TestClass), Expected = "TestClass" },
+
+                new { Type = typeof(TestClassWithNestedClass.NestedInTestClass), Expected = "TestClassWithNestedClass.NestedInTestClass" },
+                new { Type = typeof(IReadOnlyDictionary<string, int?>), Expected = "IReadOnlyDictionary{String, Nullable}" },
+                new { Type = typeof(IReadOnlyDictionary<string, Guid?>), Expected = "IReadOnlyDictionary{String, Nullable}" },
+                new { Type = typeof(string[]), Expected = "Array" },
+                new { Type = typeof(int?[]), Expected = "Array" },
+                new { Type = typeof(TestClass[]), Expected = "Array" },
+                new { Type = typeof(Guid?[]), Expected = "Array" },
+                new { Type = typeof(IList<int?[]>), Expected = "IList{Array}" },
+                new { Type = typeof(IReadOnlyDictionary<TestClass, bool?>[]), Expected = "Array" },
+                new { Type = typeof(IReadOnlyDictionary<bool[], TestClass>), Expected = "IReadOnlyDictionary{Array, TestClass}" },
+                new { Type = typeof(IReadOnlyDictionary<TestClass, bool[]>), Expected = "IReadOnlyDictionary{TestClass, Array}" },
+                new { Type = typeof(IReadOnlyDictionary<IReadOnlyDictionary<Guid[], int?>, IList<IList<short>>>), Expected = "IReadOnlyDictionary{IReadOnlyDictionary, IList}" },
+            };
+
+            // Act
+            var actuals = typesAndExpected.Select(_ => _.Type.ToStringXmlDoc(throwIfNoCompatibleStringExists: true, ToStringXmlDocOptions.None)).ToList();
+
+            // Assert
+            typesAndExpected.Select(_ => _.Expected).Should().Equal(actuals);
+        }
+
+        [Fact]
+        public static void ToStringXmlDoc___Should_return_xml_doc_compatible_representation_of_the_specified_type_with_namespaces_included___When_parameter_options_is_IncludeNamespace()
+        {
+            // Arrange
+            var typesAndExpected = new[]
+            {
+                // value tuple:
+                new { Type = (first: "one", second: 7).GetType(), Expected = "System.ValueTuple{String, Int32}" },
+
+                // generic open constructed types:
+                new { Type = typeof(DerivedGenericClass<>).BaseType, Expected = "OBeautifulCode.Type.Recipes.Test.BaseGenericClass{String, TDerived}" },
+                new { Type = typeof(DerivedGenericClass<>).GetField(nameof(DerivedGenericClass<string>.DerivedGenericClassField)).FieldType, Expected = "OBeautifulCode.Type.Recipes.Test.OrphanedGenericClass{DerivedGenericClass}" },
+
+                // generic type definitions:
+                new { Type = typeof(IList<>), Expected = "System.Collections.Generic.IList{T}" },
+                new { Type = typeof(List<>), Expected = "System.Collections.Generic.List{T}" },
+                new { Type = typeof(IReadOnlyDictionary<,>), Expected = "System.Collections.Generic.IReadOnlyDictionary{TKey, TValue}" },
+                new { Type = typeof(DerivedGenericClass<>), Expected = "OBeautifulCode.Type.Recipes.Test.DerivedGenericClass{TDerived}" },
+
+                // other types
+                new { Type = new DerivedGenericClass<int>[0].GetType(), Expected = "System.Array" },
+
+                new { Type = typeof(DerivedGenericClass<>.NestedInDerivedGeneric), Expected = "OBeautifulCode.Type.Recipes.Test.DerivedGenericClass{TDerived}.NestedInDerivedGeneric" },
+                new { Type = typeof(string), Expected = "string" },
+                new { Type = typeof(int), Expected = "int" },
+                new { Type = typeof(int?), Expected = "System.Nullable{Int32}" },
+                new { Type = typeof(Guid), Expected = "System.Guid" },
+                new { Type = typeof(Guid?), Expected = "System.Nullable{Guid}" },
+                new { Type = typeof(TestClass), Expected = "OBeautifulCode.Type.Recipes.Test.TestClass" },
+
+                new { Type = typeof(TestClassWithNestedClass.NestedInTestClass), Expected = "OBeautifulCode.Type.Recipes.Test.TestClassWithNestedClass.NestedInTestClass" },
+                new { Type = typeof(IReadOnlyDictionary<string, int?>), Expected = "System.Collections.Generic.IReadOnlyDictionary{String, Nullable}" },
+                new { Type = typeof(IReadOnlyDictionary<string, Guid?>), Expected = "System.Collections.Generic.IReadOnlyDictionary{String, Nullable}" },
+                new { Type = typeof(string[]), Expected = "System.Array" },
+                new { Type = typeof(int?[]), Expected = "System.Array" },
+                new { Type = typeof(TestClass[]), Expected = "System.Array" },
+                new { Type = typeof(Guid?[]), Expected = "System.Array" },
+                new { Type = typeof(IList<int?[]>), Expected = "System.Collections.Generic.IList{Array}" },
+                new { Type = typeof(IReadOnlyDictionary<TestClass, bool?>[]), Expected = "System.Array" },
+                new { Type = typeof(IReadOnlyDictionary<bool[], TestClass>), Expected = "System.Collections.Generic.IReadOnlyDictionary{Array, TestClass}" },
+                new { Type = typeof(IReadOnlyDictionary<TestClass, bool[]>), Expected = "System.Collections.Generic.IReadOnlyDictionary{TestClass, Array}" },
+                new { Type = typeof(IReadOnlyDictionary<IReadOnlyDictionary<Guid[], int?>, IList<IList<short>>>), Expected = "System.Collections.Generic.IReadOnlyDictionary{IReadOnlyDictionary, IList}" },
+            };
+
+            // Act
+            var actuals = typesAndExpected.Select(_ => _.Type.ToStringXmlDoc(throwIfNoCompatibleStringExists: true, ToStringXmlDocOptions.IncludeNamespace)).ToList();
+
+            var test = actuals.Aggregate((curr, running) => curr + Environment.NewLine + running);
+
+            // Assert
+            typesAndExpected.Select(_ => _.Expected).Should().Equal(actuals);
+        }
     }
 }
