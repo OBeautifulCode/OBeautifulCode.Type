@@ -2546,10 +2546,8 @@ namespace OBeautifulCode.Type.Recipes.Test
         {
             // Arrange
             var innerAnonymousObject = new { InnerAnonymous = 6 };
-            var innerAnonymousTypeName = new Regex("AnonymousType\\d*").Match(innerAnonymousObject.GetType().Name);
 
             var anonymousObject = new { Anonymous = true, Inner = innerAnonymousObject };
-            var anonymousTypeName = new Regex("AnonymousType\\d*").Match(anonymousObject.GetType().Name);
 
             var types = new[]
             {
@@ -2571,10 +2569,8 @@ namespace OBeautifulCode.Type.Recipes.Test
         {
             // Arrange
             var innerAnonymousObject = new { InnerAnonymous = 6 };
-            var innerAnonymousTypeName = new Regex("AnonymousType\\d*").Match(innerAnonymousObject.GetType().Name);
 
             var anonymousObject = new { Anonymous = true, Inner = innerAnonymousObject };
-            var anonymousTypeName = new Regex("AnonymousType\\d*").Match(anonymousObject.GetType().Name);
 
             var types = new[]
             {
@@ -2729,8 +2725,6 @@ namespace OBeautifulCode.Type.Recipes.Test
 
             // Act
             var actuals = typesAndExpected.Select(_ => _.Type.ToStringXmlDoc(throwIfNoCompatibleStringExists: true, ToStringXmlDocOptions.IncludeNamespace)).ToList();
-
-            var test = actuals.Aggregate((curr, running) => curr + Environment.NewLine + running);
 
             // Assert
             typesAndExpected.Select(_ => _.Expected).Should().Equal(actuals);
