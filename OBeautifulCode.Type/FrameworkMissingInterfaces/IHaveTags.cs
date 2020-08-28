@@ -14,12 +14,12 @@ namespace OBeautifulCode.Type
     public interface IHaveTags
     {
         /// <summary>
-        /// Gets or sets tags as key/value pairs of strings.
+        /// Gets tags as key/value pairs of strings.
         /// </summary>
         /// <remarks>
         /// null is valid value.  If the tags have a single dimension/no grouping concept,
         /// then they can be specified as the keys with entirely null values.
         /// </remarks>
-        IReadOnlyDictionary<string, string> Tags { get; set; }
+        IReadOnlyDictionary<string, string> Tags { get; }
     }
 }
