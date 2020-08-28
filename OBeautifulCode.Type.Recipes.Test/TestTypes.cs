@@ -462,4 +462,10 @@ namespace OBeautifulCode.Type.Recipes.Test
 
         public int Value { get; }
     }
+
+    public class GenericClassWithNullableProperty<T>
+        where T : struct
+    {
+        public T? Value { get; set; }
+    }
 }

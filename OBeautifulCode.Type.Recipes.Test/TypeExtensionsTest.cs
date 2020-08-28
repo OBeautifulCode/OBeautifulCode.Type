@@ -1547,6 +1547,11 @@ namespace OBeautifulCode.Type.Recipes.Test
                 .Concat(TestTypes.OpenTypes)
                 .Concat(TestTypes.ClosedTypes)
                 .Except(TestTypes.ClosedNullableTypes)
+                .Concat(new[]
+                {
+                    typeof(Nullable<>),
+                    typeof(GenericClassWithNullableProperty<>).GetProperty("Value").PropertyType,
+                })
                 .ToList();
 
             // Act
@@ -2017,6 +2022,54 @@ namespace OBeautifulCode.Type.Recipes.Test
 
             // Act
             var actuals = types.Select(_ => _.IsClosedSystemUnorderedCollectionType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public static void IsNullableType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsNullableType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsNullableType___Should_return_false___When_parameter_type_is_not_a_nullable_type()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Except(new[] { typeof(Nullable<>) })
+                .Concat(TestTypes.ClosedTypes)
+                .Except(TestTypes.ClosedNullableTypes)
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsNullableType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsNullableType___Should_return_true___When_parameter_type_is_a_nullable_type()
+        {
+            // Arrange
+            var types = TestTypes.ClosedNullableTypes
+                .Concat(new[]
+                {
+                    typeof(GenericClassWithNullableProperty<>).GetProperty("Value").PropertyType,
+                    typeof(Nullable<>),
+                })
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsNullableType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);

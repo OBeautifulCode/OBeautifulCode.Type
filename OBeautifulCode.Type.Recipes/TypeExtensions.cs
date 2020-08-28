@@ -717,7 +717,6 @@ namespace OBeautifulCode.Type.Recipes
         /// <summary>
         /// Determines if the specified type is a closed <see cref="Nullable{T}"/> type.
         /// </summary>
-        /// <remarks>Adapted from: <a href="https://stackoverflow.com/a/41281601/356790" />.</remarks>
         /// <param name="type">The type.</param>
         /// <returns>
         /// true if the specified type is a closed <see cref="Nullable{T}"/> type, otherwise false.
@@ -731,7 +730,12 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(type));
             }
 
-            var result = Nullable.GetUnderlyingType(type) != null;
+            if (type.ContainsGenericParameters)
+            {
+                return false;
+            }
+
+            var result = type.IsNullableType();
 
             return result;
         }
@@ -870,6 +874,28 @@ namespace OBeautifulCode.Type.Recipes
             }
 
             var result = type.IsSystemUnorderedCollectionType();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if the specified type is an open or closed <see cref="Nullable{T}"/> type.
+        /// </summary>
+        /// <remarks>Adapted from: <a href="https://stackoverflow.com/a/41281601/356790" />.</remarks>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// true if the specified type is an open or closed <see cref="Nullable{T}"/> type, otherwise false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static bool IsNullableType(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            var result = (type == typeof(Nullable<>)) || (Nullable.GetUnderlyingType(type) != null);
 
             return result;
         }
