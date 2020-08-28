@@ -14,9 +14,9 @@ namespace OBeautifulCode.Type
     public interface IIdentifiableBy<T> : IIdentifiable
     {
         /// <summary>
-        /// Gets or sets the unique identifier.
+        /// Gets the unique identifier.
         /// </summary>
         // ReSharper disable once UnusedMember.Global
-        T Id { get; set; }
+        T Id { get; }
     }
 }
