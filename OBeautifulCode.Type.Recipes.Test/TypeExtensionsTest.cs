@@ -1269,10 +1269,10 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsAssignableToNull___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        public static void IsClosedTypeAssignableToNull___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => TypeExtensions.IsAssignableToNull(null));
+            var actual = Record.Exception(() => TypeExtensions.IsClosedTypeAssignableToNull(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -1280,24 +1280,20 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsAssignableToNull___Should_throw_NotSupportedException___When_parameter_type_an_open_type()
+        public static void IsClosedTypeAssignableToNull___Should_return_false___When_parameter_type_an_open_type()
         {
             // Arrange
             var types = TestTypes.OpenTypes;
 
             // Act
-            var actuals = types.Select(_ => Record.Exception(() => _.IsAssignableToNull()));
+            var actuals = types.Select(_ => _.IsClosedTypeAssignableToNull());
 
             // Assert
-            foreach (var actual in actuals)
-            {
-                actual.Should().BeOfType<NotSupportedException>();
-                actual.Message.Should().Contain("Parameter 'type' is an open type; open types are not supported for that parameter");
-            }
+            actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsAssignableToNull___Should_return_false___When_parameter_type_is_not_assignable_to_null()
+        public static void IsClosedTypeAssignableToNull___Should_return_false___When_parameter_type_is_not_assignable_to_null()
         {
             // Arrange
             var types = new[]
@@ -1309,14 +1305,14 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsAssignableToNull()).ToList();
+            var actuals = types.Select(_ => _.IsClosedTypeAssignableToNull()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(false);
         }
 
         [Fact]
-        public static void IsAssignableToNull___Should_return_true___When_parameter_type_is_assignable_to_null()
+        public static void IsClosedTypeAssignableToNull___Should_return_true___When_parameter_type_is_assignable_to_null()
         {
             // Arrange
             var types = new[]
@@ -1332,7 +1328,7 @@ namespace OBeautifulCode.Type.Recipes.Test
             };
 
             // Act
-            var actuals = types.Select(_ => _.IsAssignableToNull()).ToList();
+            var actuals = types.Select(_ => _.IsClosedTypeAssignableToNull()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);
@@ -2612,6 +2608,65 @@ namespace OBeautifulCode.Type.Recipes.Test
 
             // Act
             var actuals = types.Select(_ => _.IsSystemUnorderedCollectionType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public static void IsTypeAssignableToNull___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsTypeAssignableToNull(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsTypeAssignableToNull___Should_return_false___When_parameter_type_is_not_assignable_to_null()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(int),
+                typeof(Guid),
+                typeof(bool),
+                typeof(DateTime),
+                typeof(GenericClassWithNullableProperty<>).GetGenericArguments().First(),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsTypeAssignableToNull()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsTypeAssignableToNull___Should_return_true___When_parameter_type_is_assignable_to_null()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.OpenTypes)
+                .Except(TestTypes.ClosedValueTupleTypes.Select(_ => _.GetGenericTypeDefinition()))
+                .Concat(
+                    new[]
+                    {
+                        typeof(int?),
+                        typeof(Guid?),
+                        typeof(bool?),
+                        typeof(DateTime?),
+                        typeof(string),
+                        typeof(List<string>),
+                        typeof(TestClass),
+                        typeof(DerivedClassIDictionary<string, string>),
+                        typeof(Nullable<>),
+                    });
+
+            // Act
+            var actuals = types.Select(_ => _.IsTypeAssignableToNull()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);
