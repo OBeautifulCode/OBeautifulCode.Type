@@ -701,8 +701,8 @@ namespace OBeautifulCode.Type.Recipes
 
             var result =
                 type.IsClass
-                && (!type.IsClosedAnonymousType())
-                && (!type.ContainsGenericParameters);
+                && (!type.ContainsGenericParameters)
+                && (!type.IsAnonymousType());
 
             return result;
         }
