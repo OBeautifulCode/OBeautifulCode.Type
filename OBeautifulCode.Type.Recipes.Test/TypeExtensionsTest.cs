@@ -2673,6 +2673,83 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void MakeGenericTypeOrNull___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.MakeGenericTypeOrNull(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void MakeGenericTypeOrNull___Should_return_null___When_type_cannot_be_created()
+        {
+            // Arrange
+            var types1 = new Type[0]
+                .Concat(TestTypes.ClosedTypes)
+                .Concat(TestTypes.OpenTypes)
+                .ToList();
+
+            var types2 = new[]
+            {
+                typeof(IReadOnlyDictionary<,>),
+                typeof(Dictionary<,>),
+            };
+
+            var types3 = new[]
+            {
+                typeof(IReadOnlyDictionary<string, string>),
+                typeof(Dictionary<string, string>),
+            };
+
+            var types4 = new[]
+            {
+                typeof(Nullable<>),
+            };
+
+            // Act
+            var actuals1 = types1.Select(_ => _.MakeGenericTypeOrNull()).ToList();
+            var actuals2a = types2.Select(_ => _.MakeGenericTypeOrNull(typeof(string))).ToList();
+            var actuals2b = types2.Select(_ => _.MakeGenericTypeOrNull(typeof(string), typeof(string), typeof(string))).ToList();
+            var actuals3 = types3.Select(_ => _.MakeGenericTypeOrNull(typeof(string), typeof(string))).ToList();
+            var actuals4a = types4.Select(_ => _.MakeGenericTypeOrNull(typeof(string))).ToList();
+            var actuals4b = types4.Select(_ => _.MakeGenericTypeOrNull(null)).ToList();
+
+            // Assert
+            actuals1.Should().AllBeEquivalentTo((Type)null);
+            actuals2a.Should().AllBeEquivalentTo((Type)null);
+            actuals2b.Should().AllBeEquivalentTo((Type)null);
+            actuals3.Should().AllBeEquivalentTo((Type)null);
+            actuals4a.Should().AllBeEquivalentTo((Type)null);
+            actuals4b.Should().AllBeEquivalentTo((Type)null);
+        }
+
+        [Fact]
+        public static void MakeGenericTypeOrNull___Should_return_constructed_generic_type___When_type_can_be_created()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(IReadOnlyDictionary<,>),
+                typeof(Dictionary<,>),
+            };
+
+            var expected = new[]
+            {
+                typeof(IReadOnlyDictionary<int, string>),
+                typeof(Dictionary<int, string>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.MakeGenericTypeOrNull(typeof(int), typeof(string))).ToList();
+
+            // Assert
+            actuals.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
         public static void ToStringCompilable___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
@@ -3313,6 +3390,119 @@ namespace OBeautifulCode.Type.Recipes.Test
 
             // Assert
             typesAndExpected.Select(_ => _.Expected).Should().Equal(actuals);
+        }
+
+        [Fact]
+        public static void TryMakeGenericType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.TryMakeGenericType(null, out Type result));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void TryMakeGenericType___Should_return_false_and_set_genericType_to_null___When_type_cannot_be_created()
+        {
+            // Arrange
+            var types1 = new Type[0]
+                .Concat(TestTypes.ClosedTypes)
+                .Concat(TestTypes.OpenTypes)
+                .ToList();
+
+            var types2 = new[]
+            {
+                typeof(IReadOnlyDictionary<,>),
+                typeof(Dictionary<,>),
+            };
+
+            var types3 = new[]
+            {
+                typeof(IReadOnlyDictionary<string, string>),
+                typeof(Dictionary<string, string>),
+            };
+
+            var types4 = new[]
+            {
+                typeof(Nullable<>),
+            };
+
+            // Act, Assert
+            foreach (var type in types1)
+            {
+                var actual = type.TryMakeGenericType(out Type genericType);
+
+                actual.Should().BeFalse();
+                genericType.Should().BeNull();
+            }
+
+            foreach (var type in types2)
+            {
+                var actual = type.TryMakeGenericType(out Type genericType, typeof(string));
+
+                actual.Should().BeFalse();
+                genericType.Should().BeNull();
+            }
+
+            foreach (var type in types2)
+            {
+                var actual = type.TryMakeGenericType(out Type genericType, typeof(string), typeof(string), typeof(string));
+
+                actual.Should().BeFalse();
+                genericType.Should().BeNull();
+            }
+
+            foreach (var type in types3)
+            {
+                var actual = type.TryMakeGenericType(out Type genericType, typeof(string), typeof(string));
+
+                actual.Should().BeFalse();
+                genericType.Should().BeNull();
+            }
+
+            foreach (var type in types4)
+            {
+                var actual = type.TryMakeGenericType(out Type genericType, typeof(string));
+
+                actual.Should().BeFalse();
+                genericType.Should().BeNull();
+            }
+
+            foreach (var type in types4)
+            {
+                var actual = type.TryMakeGenericType(out Type genericType, null);
+
+                actual.Should().BeFalse();
+                genericType.Should().BeNull();
+            }
+        }
+
+        [Fact]
+        public static void TryMakeGenericType___Should_return_true_and_set_genericType_to_constructed_type___When_type_can_be_created()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(IReadOnlyDictionary<,>),
+                typeof(Dictionary<,>),
+            };
+
+            var expected = new[]
+            {
+                typeof(IReadOnlyDictionary<int, string>),
+                typeof(Dictionary<int, string>),
+            };
+
+            // Act, Assert
+            for (var x = 0; x < types.Length; x++)
+            {
+                var actual = types[x].TryMakeGenericType(out Type genericType, typeof(int), typeof(string));
+
+                actual.Should().BeTrue();
+                genericType.Should().Be(expected[x]);
+            }
         }
     }
 }

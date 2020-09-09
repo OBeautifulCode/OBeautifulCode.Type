@@ -1092,6 +1092,42 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
+        /// Substitutes the elements of an array of types for the type parameters of the current
+        /// generic type definition and returns a <see cref="Type"/> object representing the resulting constructed type
+        /// or null if the operation cannot be performed.
+        /// </summary>
+        /// <param name="type">The generic type definition.</param>
+        /// <param name="typeArguments">An array of types to be substituted for the type parameters of <paramref name="type"/>.</param>
+        /// <returns>
+        /// A <see cref="Type"/> representing the constructed type formed by substituting the
+        /// elements of <paramref name="typeArguments"/> for the type parameters of <paramref name="type"/> or null
+        /// if the operation cannot be performed.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static Type MakeGenericTypeOrNull(
+            this Type type,
+            params Type[] typeArguments)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            Type result;
+
+            try
+            {
+                result = type.MakeGenericType(typeArguments);
+            }
+            catch (Exception)
+            {
+                result = null;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets a compilable, readability-optimized string representation of the specified type.
         /// </summary>
         /// <remarks>
@@ -1367,6 +1403,34 @@ namespace OBeautifulCode.Type.Recipes
                     result = result.Replace("<>f__", string.Empty);
                 }
             }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Substitutes the elements of an array of types for the type parameters of the current
+        /// generic type definition and returns a <see cref="Type"/> object representing the resulting constructed type.
+        /// </summary>
+        /// <param name="type">The generic type definition.</param>
+        /// <param name="genericType">A <see cref="Type"/> representing the constructed type formed by substituting the elements of <paramref name="typeArguments"/> for the type parameters of <paramref name="type"/> or null if the operation cannot be performed.</param>
+        /// <param name="typeArguments">An array of types to be substituted for the type parameters of <paramref name="type"/>.</param>
+        /// <returns>
+        /// true if the type was successfully constructed; otherwise, false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static bool TryMakeGenericType(
+            this Type type,
+            out Type genericType,
+            params Type[] typeArguments)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            genericType = type.MakeGenericTypeOrNull(typeArguments);
+
+            var result = genericType != null;
 
             return result;
         }
