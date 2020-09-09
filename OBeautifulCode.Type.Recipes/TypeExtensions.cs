@@ -9,6 +9,7 @@
 
 namespace OBeautifulCode.Type.Recipes
 {
+    using OBeautifulCode.Type.Recipes.Internal;
     using System;
     using System.CodeDom;
     using System.CodeDom.Compiler;
@@ -16,6 +17,7 @@ namespace OBeautifulCode.Type.Recipes
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
@@ -1418,6 +1420,7 @@ namespace OBeautifulCode.Type.Recipes
         /// true if the type was successfully constructed; otherwise, false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "1#", Justification = ObcSuppressBecause.CA1021_AvoidOutParameters_OutParameterRequiredForTryMethod)]
         public static bool TryMakeGenericType(
             this Type type,
             out Type genericType,
