@@ -60,6 +60,7 @@
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByInteger.cs" />
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableBy{T}.cs" />
     <Compile Include="FrameworkMissingInterfaces\IHashable.cs" />
+    <Compile Include="FrameworkMissingInterfaces\IHaveTimestampUtc.cs" />
     <Compile Include="FrameworkMissingInterfaces\IHaveTags.cs" />
     <Compile Include="FrameworkMissingInterfaces\IImplementNullObjectPattern.cs" />
     <Compile Include="FrameworkMissingInterfaces\IStringRepresentable.cs" />
