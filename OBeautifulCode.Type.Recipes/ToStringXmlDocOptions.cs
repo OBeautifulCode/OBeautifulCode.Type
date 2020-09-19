@@ -16,6 +16,7 @@ namespace OBeautifulCode.Type.Recipes
     /// </summary>
     [Flags]
 #if !OBeautifulCodeTypeSolution
+    [GeneratedCode("OBeautifulCode.Type.Recipes", "See package version number")]
     internal
 #else
     public
