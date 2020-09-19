@@ -28,7 +28,7 @@ namespace OBeautifulCode.Type.Test
     internal
 #else
     public
-#endif 
+#endif
     abstract class DefaultTypeDummyFactory : IDummyFactory
     {
         public DefaultTypeDummyFactory()

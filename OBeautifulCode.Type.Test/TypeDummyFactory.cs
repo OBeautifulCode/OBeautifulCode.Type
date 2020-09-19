@@ -10,9 +10,7 @@
 namespace OBeautifulCode.Type.Test
 {
     using global::System;
-    using global::System.CodeDom.Compiler;
     using global::System.Collections.Generic;
-    using global::System.Diagnostics.CodeAnalysis;
     using global::System.Linq;
 
     using FakeItEasy;
@@ -24,12 +22,12 @@ namespace OBeautifulCode.Type.Test
     /// A Dummy Factory for types in <see cref="OBeautifulCode.Type"/>.
     /// </summary>
 #if !OBeautifulCodeTypeSolution
-    [ExcludeFromCodeCoverage]
-    [GeneratedCode("OBeautifulCode.Type.Test", "See package version number")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Type.Test", "See package version number")]
     internal
 #else
     public
-#endif 
+#endif
     class TypeDummyFactory : DefaultTypeDummyFactory
     {
         private static readonly IReadOnlyList<Type> LoadedTypes =
