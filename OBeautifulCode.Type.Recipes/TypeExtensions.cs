@@ -25,7 +25,7 @@ namespace OBeautifulCode.Type.Recipes
 
     using OBeautifulCode.CodeAnalysis.Recipes;
 
-    using static System.FormattableString;
+    using static global::System.FormattableString;
 
     /// <summary>
     /// Extension methods on type <see cref="Type"/>.
