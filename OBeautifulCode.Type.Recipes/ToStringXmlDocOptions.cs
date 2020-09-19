@@ -10,6 +10,7 @@
 namespace OBeautifulCode.Type.Recipes
 {
     using global::System;
+    using global::System.CodeDom.Compiler;
 
     /// <summary>
     /// Options for generating a XML doc compatible string representation of a type.
