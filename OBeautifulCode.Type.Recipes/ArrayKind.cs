@@ -9,8 +9,6 @@
 
 namespace OBeautifulCode.Type.Recipes
 {
-    using global::System.CodeDom.Compiler;
-
     /// <summary>
     /// Specifies the kind of array.
     /// </summary>
@@ -18,7 +16,7 @@ namespace OBeautifulCode.Type.Recipes
     /// See <a href="https://stackoverflow.com/questions/60859850/how-to-determine-if-rank-1-array-is-a-vector-or-multidimensional-array?noredirect=1#comment107679655_60859850"/>.
     /// </remarks>
 #if !OBeautifulCodeTypeSolution
-    [GeneratedCode("OBeautifulCode.Type.Recipes", "See package version number")]
+    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Type.Recipes", "See package version number")]
     internal
 #else
     public
