@@ -10,7 +10,7 @@
 namespace OBeautifulCode.Type.Recipes
 {
     using global::System;
-    
+
     /// <summary>
     /// Options for generating a readability-optimized string representation of a type.
     /// </summary>
