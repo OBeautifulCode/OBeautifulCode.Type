@@ -9,7 +9,7 @@ namespace OBeautifulCode.Type
     using System;
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Type.Internal;
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Represents the contract of a model object.

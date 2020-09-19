@@ -13,7 +13,7 @@ namespace OBeautifulCode.Type
     /// <summary>
     /// Represents a range of <see cref="DateTime"/>, inclusive of the endpoints.
     /// </summary>
-    public partial class UtcDateTimeRangeInclusive : IModel<UtcDateTimeRangeInclusive>, IDeclareToStringMethod
+    public partial class UtcDateTimeRangeInclusive : IModelViaCodeGen, IDeclareToStringMethod
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UtcDateTimeRangeInclusive"/> class.

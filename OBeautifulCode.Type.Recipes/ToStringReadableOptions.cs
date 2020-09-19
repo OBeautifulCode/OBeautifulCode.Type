@@ -9,18 +9,18 @@
 
 namespace OBeautifulCode.Type.Recipes
 {
-    using System;
+    using global::System;
 
     /// <summary>
     /// Options for generating a readability-optimized string representation of a type.
     /// </summary>
     [Flags]
-#if !OBeautifulCodeTypeRecipesProject
+#if !OBeautifulCodeTypeSolution
     internal
 #else
     public
 #endif
-        enum ToStringReadableOptions
+    enum ToStringReadableOptions
     {
         /// <summary>
         /// None (default).

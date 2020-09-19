@@ -8,7 +8,7 @@ namespace OBeautifulCode.Type
 {
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Type.Internal;
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Represents an object that is expected to be an

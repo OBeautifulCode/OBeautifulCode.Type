@@ -8,7 +8,7 @@ namespace OBeautifulCode.Type
 {
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Type.Internal;
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Interface to express usage of the Null Object Pattern (like an empty implementation of the contract it honors).

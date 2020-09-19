@@ -8,7 +8,7 @@ namespace OBeautifulCode.Type
 {
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Type.Internal;
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Creates a hash code for an instance of the object.

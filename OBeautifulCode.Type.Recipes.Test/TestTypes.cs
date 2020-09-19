@@ -13,7 +13,7 @@ namespace OBeautifulCode.Type.Recipes.Test
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
-    using OBeautifulCode.Type.Recipes.Test.Internal;
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     public static class TestTypes
     {

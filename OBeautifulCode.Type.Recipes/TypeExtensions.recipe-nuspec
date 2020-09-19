@@ -5,9 +5,11 @@
     <description>Extension methods on Type.</description>
     <tags>type extensions</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Type/master/OBeautifulCode.Type.Recipes/nuget-icon.png</iconUrl>
+    <dependencies>
+      <dependency id="OBeautifulCode.CodeAnalysis.Recipes.SuppressBecause" version="1.0.6" />
+    </dependencies>
   </metadata>
   <files>
-    <file src=".analyzers\SuppressBecause.cs" target="content\net462\.recipes\OBeautifulCode.Type\SuppressBecause.cs" />
     <file src="ArrayKind.cs" target="content\net462\.recipes\OBeautifulCode.Type\ArrayKind.cs" />
     <file src="TypeExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <file src="ToStringReadableOptions.cs" target="content\net462\.recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
