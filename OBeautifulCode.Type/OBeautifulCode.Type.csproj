@@ -65,6 +65,7 @@
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByGuid.cs" />
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByString.cs" />
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiable.cs" />
+    <Compile Include="ModelDefinitions\FakeModel{T}.cs" />
     <Compile Include="ModelDefinitions\IModel.cs" />
     <Compile Include="ModelDefinitions\IModel{T}.cs" />
     <Compile Include="FrameworkMissingInterfaces\Cloneable\IDeepCloneable{T}.cs" />
