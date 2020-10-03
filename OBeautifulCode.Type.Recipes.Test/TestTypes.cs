@@ -15,6 +15,8 @@ namespace OBeautifulCode.Type.Recipes.Test
 
     using OBeautifulCode.CodeAnalysis.Recipes;
 
+#pragma warning disable SA1201 // Elements should appear in the correct order
+
     public static class TestTypes
     {
         public static IReadOnlyCollection<Type> ClosedValueTupleTypes => new[]
@@ -218,7 +220,6 @@ namespace OBeautifulCode.Type.Recipes.Test
     {
     }
 
-    #pragma warning disable SA1201 // Elements should appear in the correct order
     public interface INonGenericIReadOnlyCollection : IReadOnlyCollection<string>
     {
     }
@@ -226,7 +227,6 @@ namespace OBeautifulCode.Type.Recipes.Test
     public interface IGenericIReadOnlyCollection<T> : IReadOnlyCollection<T>
     {
     }
-#pragma warning restore SA1201 // Elements should appear in the correct order
 
     public class BaseClassIDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
@@ -316,7 +316,6 @@ namespace OBeautifulCode.Type.Recipes.Test
     {
     }
 
-#pragma warning disable SA1201 // Elements should appear in the correct order
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = ObcSuppressBecause.CA1710_IdentifiersShouldHaveCorrectSuffix_NameDirectlyExtendedOrImplementedTypeAddedAsSuffixForTestsWhereTypeIsPrimaryConcern)]
     [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Justification = ObcSuppressBecause.CA1711_IdentifiersShouldNotHaveIncorrectSuffix_TypeNameAddedAsSuffixForTestsWhereTypeIsPrimaryConcern)]
     public interface IGenericIReadOnlyDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>
@@ -328,8 +327,6 @@ namespace OBeautifulCode.Type.Recipes.Test
     public interface INonGenericIReadOnlyDictionary : IReadOnlyDictionary<int, DateTime>
     {
     }
-
-    #pragma warning restore SA1201 // Elements should appear in the correct order
 
     public class NonComparableClass
     {
@@ -344,7 +341,6 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
     }
 
-    #pragma warning disable SA1201 // Elements should appear in the correct order
     public interface INonComparable
     {
     }
@@ -360,8 +356,6 @@ namespace OBeautifulCode.Type.Recipes.Test
     public interface ICustomComparable : IComparable
     {
     }
-
-#pragma warning restore SA1201 // Elements should appear in the correct order
 
     [SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = ObcSuppressBecause.CA1036_OverrideMethodsOnComparableTypes_TypeCreatedForTestsThatRequireComparableTypeButDoNotUseTypeToPerformComparisons)]
     public class CustomGenericComparableClass : IComparable<CustomGenericComparableClass>
@@ -468,4 +462,28 @@ namespace OBeautifulCode.Type.Recipes.Test
     {
         public T? Value { get; set; }
     }
+
+    public enum PublicEnum
+    {
+        One,
+
+        Two,
+    }
+
+    internal enum InternalEnum
+    {
+        One,
+
+        Two,
+    }
+
+    public interface IPublicInterface
+    {
+    }
+
+    internal interface IInternalInterface
+    {
+    }
+
+#pragma warning restore SA1201 // Elements should appear in the correct order
 }

@@ -115,6 +115,7 @@
     <Compile Include="TestTypes.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AssemblyExtensionsTest.cs" />
     <Compile Include="TypeExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>OBeautifulCode.Type.Recipes.AssemblyExtensions</id>
+    <description>Type-related extension methods on Assembly.</description>
+    <tags>assembly extensions</tags>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Type/master/OBeautifulCode.Type.Recipes/nuget-icon.png</iconUrl>
+    <dependencies>
+      <dependency id="OBeautifulCode.CodeAnalysis.Recipes.SuppressBecause" version="1.0.7" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="AssemblyExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Type\AssemblyExtensions.cs" />
+  </files>
+</package>
