@@ -463,6 +463,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         public T? Value { get; set; }
     }
 
+    [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Justification = ObcSuppressBecause.CA1711_IdentifiersShouldNotHaveIncorrectSuffix_TypeNameAddedAsSuffixForTestsWhereTypeIsPrimaryConcern)]
     public enum PublicEnum
     {
         One,
@@ -470,6 +471,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         Two,
     }
 
+    [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Justification = ObcSuppressBecause.CA1711_IdentifiersShouldNotHaveIncorrectSuffix_TypeNameAddedAsSuffixForTestsWhereTypeIsPrimaryConcern)]
     internal enum InternalEnum
     {
         One,
