@@ -9,7 +9,7 @@
       <dependency id="OBeautifulCode.Type" version="$version$" />
       <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.129" />
       <dependency id="OBeautifulCode.Math.Recipes.ThreadSafeRandom" version="1.0.76" />
-      <dependency id="OBeautifulCode.CodeAnalysis.Recipes.SuppressBecause" version="1.0.7" />
+      <dependency id="OBeautifulCode.CodeAnalysis.Recipes.SuppressBecause" version="1.0.8" />
     </dependencies>
   </metadata>
   <files>
