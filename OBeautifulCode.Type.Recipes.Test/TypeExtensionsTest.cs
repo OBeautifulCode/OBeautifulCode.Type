@@ -916,6 +916,64 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void HasBaseType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.HasBaseType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void HasBaseType___Should_return_false___When_base_type_is_not_object()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(
+                    new[]
+                    {
+                        typeof(object),
+                    })
+                .Concat(TestTypes.ClosedInterfaceTypes)
+                .Concat(TestTypes.OpenInterfaceTypesWithoutGenericTypeDefinitionTypes)
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.HasBaseType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void HasBaseType___Should_return_true___When_base_type_is_object()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(
+                    new[]
+                    {
+                        typeof(NonGenericClassDictionary),
+                        typeof(PublicEnum),
+                        typeof(TestClass),
+                        typeof(Dictionary<int, string>),
+                    })
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNullableTypes)
+                .Concat(TestTypes.ClosedArrayTypes)
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.HasBaseType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
         public static void HasObjectAsBaseType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
