@@ -51,6 +51,7 @@
     <Compile Include="ToStringReadableOptions.cs" />
     <Compile Include="ArrayKind.cs" />
     <Compile Include="AssemblyExtensions.cs" />
+    <Compile Include="DeepCloneExtensions.cs" />
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
