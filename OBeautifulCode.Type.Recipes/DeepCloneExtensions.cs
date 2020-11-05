@@ -33,6 +33,7 @@ namespace OBeautifulCode.Type.Recipes
         /// <returns>
         /// A deep clone of the specified value.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
         [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads", Justification = ObcSuppressBecause.CA_ALL_NotApplicable)]
         public static string DeepClone(
             this string value)
@@ -58,6 +59,7 @@ namespace OBeautifulCode.Type.Recipes
         /// <returns>
         /// A deep clone of the specified value.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
         public static Version DeepClone(
             this Version value)
         {
@@ -78,6 +80,7 @@ namespace OBeautifulCode.Type.Recipes
         /// <returns>
         /// A deep clone of the specified value.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
         public static Uri DeepClone(
             this Uri value)
         {
