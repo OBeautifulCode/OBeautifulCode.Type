@@ -42,6 +42,10 @@ namespace OBeautifulCode.Type.Recipes
                 throw new ArgumentNullException(nameof(value));
             }
 
+            // string should be cloned using it's existing interface.
+            // note that this just returns the same reference, it doesn't result in a new reference
+            // the ToString() is needed because Clone() returns an Object.
+            // https://stackoverflow.com/questions/3465377/whats-the-use-of-string-clone
             var result = value.Clone().ToString();
 
             return result;
