@@ -18,6 +18,20 @@ namespace OBeautifulCode.Type.Recipes.Test
     public static class DeepCloneExtensionsTest
     {
         [Fact]
+        public static void DeepClone_String___Should_throw_ArgumentNullException___When_parameter_value_is_null()
+        {
+            // Arrange
+            string value = null;
+
+            // Act
+            var actual = Record.Exception(() => value.DeepClone());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("value");
+        }
+
+        [Fact]
         public static void DeepClone_String___Should_deep_clone_String___When_called()
         {
             // Arrange
@@ -34,6 +48,20 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void DeepClone_Version___Should_throw_ArgumentNullException___When_parameter_value_is_null()
+        {
+            // Arrange
+            Version value = null;
+
+            // Act
+            var actual = Record.Exception(() => value.DeepClone());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("value");
+        }
+
+        [Fact]
         public static void DeepClone_Version___Should_deep_clone_Version___When_called()
         {
             // Arrange
@@ -45,6 +73,20 @@ namespace OBeautifulCode.Type.Recipes.Test
             // Assert
             actual.AsTest().Must().BeEqualTo(expected);
             actual.AsTest().Must().NotBeSameReferenceAs(expected);
+        }
+
+        [Fact]
+        public static void DeepClone_Uri___Should_throw_ArgumentNullException___When_parameter_value_is_null()
+        {
+            // Arrange
+            Uri value = null;
+
+            // Act
+            var actual = Record.Exception(() => value.DeepClone());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("value");
         }
 
         [Fact]
