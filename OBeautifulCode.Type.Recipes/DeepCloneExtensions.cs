@@ -10,6 +10,9 @@
 namespace OBeautifulCode.Type.Recipes
 {
     using global::System;
+    using global::System.Diagnostics.CodeAnalysis;
+
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Extension methods to deep clone various types.
@@ -24,12 +27,13 @@ namespace OBeautifulCode.Type.Recipes
     static class DeepCloneExtensions
     {
         /// <summary>
-        /// Deep clones a <see cref="String"/> value.
+        /// Deep clones a <see cref="string"/> value.
         /// </summary>
         /// <param name="value">The value to deep clone.</param>
         /// <returns>
         /// A deep clone of the specified value.
         /// </returns>
+        [SuppressMessage("Microsoft.Design", "CA1057:StringUriOverloadsCallSystemUriOverloads", Justification = ObcSuppressBecause.CA_ALL_NotApplicable)]
         public static string DeepClone(
             this string value)
         {

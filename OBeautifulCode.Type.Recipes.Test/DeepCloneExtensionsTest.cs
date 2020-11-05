@@ -18,7 +18,7 @@ namespace OBeautifulCode.Type.Recipes.Test
     public static class DeepCloneExtensionsTest
     {
         [Fact]
-        public static void DeepClone_String___Should_deep_clone_a_String___When_called()
+        public static void DeepClone_String___Should_deep_clone_String___When_called()
         {
             // Arrange
             var expected = A.Dummy<string>();
@@ -34,7 +34,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void DeepClone_Version___Should_deep_clone_a_Version___When_called()
+        public static void DeepClone_Version___Should_deep_clone_Version___When_called()
         {
             // Arrange
             var expected = A.Dummy<Version>();
@@ -48,7 +48,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void DeepClone_Uri___Should_deep_clone_a_uri___When_called()
+        public static void DeepClone_Uri___Should_deep_clone_Uri___When_called()
         {
             // Arrange
             var expected = new[]
