@@ -82,6 +82,9 @@ namespace OBeautifulCode.Type
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
+        public object DeepCloneObject() => this.DeepClone();
+
+        /// <inheritdoc />
         public UtcDateTimeRangeInclusive DeepClone()
         {
             var result = new UtcDateTimeRangeInclusive(

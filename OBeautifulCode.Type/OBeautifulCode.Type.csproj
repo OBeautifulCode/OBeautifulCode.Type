@@ -53,6 +53,7 @@
     <Compile Include="DeclaredMethods\IDeclareEqualsMethod{T}.cs" />
     <Compile Include="DeclaredMethods\IDeclareCompareToForRelativeSortOrderMethod{T}.cs" />
     <Compile Include="DeclaredMethods\IDeclareDeepCloneMethod{T}.cs" />
+    <Compile Include="FrameworkMissingInterfaces\Cloneable\IDeepCloneable.cs" />
     <Compile Include="FrameworkMissingInterfaces\Comparable\RelativeSortOrder.cs" />
     <Compile Include="FrameworkMissingInterfaces\Comparable\IComparableForRelativeSortOrder{T}.cs" />
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByInteger.cs" />
