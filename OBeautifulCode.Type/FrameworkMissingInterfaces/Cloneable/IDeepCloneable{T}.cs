@@ -6,6 +6,8 @@
 
 namespace OBeautifulCode.Type
 {
+    using System;
+
     /// <summary>
     /// Supports deep cloning, which creates a new instance of a class that is equal to
     /// a reference instance, but where the two instances do not share any memory between
@@ -13,7 +15,7 @@ namespace OBeautifulCode.Type
     /// </summary>
     /// <typeparam name="T">The type of object to clone.</typeparam>
     // ReSharper disable once TypeParameterCanBeVariant
-    public interface IDeepCloneable<T> : IDeepCloneable
+    public interface IDeepCloneable<T> : ICloneable
     {
         /// <summary>
         /// Creates a new object that is a deep clone of this instance.
