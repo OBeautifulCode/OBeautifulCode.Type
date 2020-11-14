@@ -787,6 +787,66 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void GetGenericTypeDefinitionOrSpecifiedType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.GetGenericTypeDefinitionOrSpecifiedType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void GetGenericTypeDefinitionOrSpecifiedType___Should_return_specified_type___When_type_is_not_generic()
+        {
+            // Arrange
+            var expected = new Type[0]
+                .Concat(TestTypes.ClosedTypes)
+                .Concat(TestTypes.OpenTypes)
+                .Where(_ => !_.IsGenericType)
+                .ToList();
+
+            // Act
+            var actual = expected.Select(_ => _.GetGenericTypeDefinitionOrSpecifiedType());
+
+            // Assert
+            actual.Should().Equal(expected);
+        }
+
+        [Fact]
+        public static void GetGenericTypeDefinitionOrSpecifiedType___Should_return_specified_type___When_type_is_a_generic_type_definition()
+        {
+            // Arrange
+            var expected = TestTypes.GenericTypeDefinitions;
+
+            // Act
+            var actual = expected.Select(_ => _.GetGenericTypeDefinitionOrSpecifiedType());
+
+            // Assert
+            actual.Should().Equal(expected);
+        }
+
+        [Fact]
+        public static void GetGenericTypeDefinitionOrSpecifiedType___Should_return_generic_type_definition___When_type_is_generic_but_not_generic_type_definition()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedTypes)
+                .Concat(TestTypes.OpenTypes)
+                .Where(_ => _.IsGenericType && (!_.IsGenericTypeDefinition))
+                .ToList();
+
+            var expected = types.Select(_ => _.GetGenericTypeDefinition()).ToList();
+
+            // Act
+            var actual = types.Select(_ => _.GetGenericTypeDefinitionOrSpecifiedType());
+
+            // Assert
+            actual.Should().Equal(expected);
+        }
+
+        [Fact]
         public static void GetInheritancePath___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
