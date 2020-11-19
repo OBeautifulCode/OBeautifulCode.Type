@@ -6,6 +6,10 @@
 
 namespace OBeautifulCode.Type
 {
+    using System.Diagnostics.CodeAnalysis;
+
+    using OBeautifulCode.CodeAnalysis.Recipes;
+
     /// <summary>
     /// Specifies the kind of encoding.
     /// </summary>
@@ -52,6 +56,7 @@ namespace OBeautifulCode.Type
         /// <summary>
         /// The encoding for the Western European (ISO-8559-1) format.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Iso", Justification = ObcSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
         WesternEuropeanIso,
     }
 }
