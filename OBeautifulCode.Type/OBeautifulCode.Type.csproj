@@ -53,6 +53,8 @@
     <Compile Include="DeclaredMethods\IDeclareEqualsMethod{T}.cs" />
     <Compile Include="DeclaredMethods\IDeclareCompareToForRelativeSortOrderMethod{T}.cs" />
     <Compile Include="DeclaredMethods\IDeclareDeepCloneMethod{T}.cs" />
+    <Compile Include="Extensions\EncodingExtensions.cs" />
+    <Compile Include="Enums\EncodingKind.cs" />
     <Compile Include="FrameworkMissingInterfaces\Comparable\RelativeSortOrder.cs" />
     <Compile Include="FrameworkMissingInterfaces\Comparable\IComparableForRelativeSortOrder{T}.cs" />
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByInteger.cs" />
@@ -100,6 +102,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.134\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.134\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
