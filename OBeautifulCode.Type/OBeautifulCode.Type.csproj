@@ -59,6 +59,7 @@
     <Compile Include="FrameworkMissingInterfaces\Comparable\IComparableForRelativeSortOrder{T}.cs" />
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByInteger.cs" />
     <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableBy{T}.cs" />
+    <Compile Include="FrameworkMissingInterfaces\IObject.cs" />
     <Compile Include="FrameworkMissingInterfaces\IHashable.cs" />
     <Compile Include="FrameworkMissingInterfaces\IHaveTimestampUtc.cs" />
     <Compile Include="FrameworkMissingInterfaces\IHaveTags.cs" />
