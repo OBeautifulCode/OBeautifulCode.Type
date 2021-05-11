@@ -111,7 +111,6 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\EqualityExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
-    <Compile Include="DeepCloneExtensionsTest.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
     <Compile Include="TestTypes.cs" />
     <Compile Include="GlobalSuppressions.cs" />

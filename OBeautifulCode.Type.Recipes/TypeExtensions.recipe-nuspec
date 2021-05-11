@@ -11,7 +11,6 @@
   </metadata>
   <files>
     <file src="ArrayKind.cs" target="content\net462\.recipes\OBeautifulCode.Type\ArrayKind.cs" />
-    <file src="DeepCloneExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Type\DeepCloneExtensions.cs" />
     <file src="TypeExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <file src="ToStringReadableOptions.cs" target="content\net462\.recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <file src="ToStringXmlDocOptions.cs" target="content\net462\.recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
