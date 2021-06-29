@@ -20,6 +20,6 @@ namespace OBeautifulCode.Type
         /// null is valid value.  If the tags have a single dimension/no grouping concept,
         /// then they can be specified as the keys with entirely null values.
         /// </remarks>
-        IReadOnlyDictionary<string, string> Tags { get; }
+        IReadOnlyCollection<KeyValuePair<string, string>> Tags { get; }
     }
 }
