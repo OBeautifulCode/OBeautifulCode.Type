@@ -44,46 +44,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".recipes\OBeautifulCode.CodeAnalysis\ObcSuppressBecause.cs" />
-    <Compile Include="Containers\UtcDateTimeRangeInclusive.cs" />
-    <Compile Include="Containers\UtcDateTimeRangeInclusive.designer.cs">
+    <Compile Include="Models\UtcDateTimeRangeInclusive.cs" />
+    <Compile Include="Models\UtcDateTimeRangeInclusive.designer.cs">
       <DependentUpon>UtcDateTimeRangeInclusive.cs</DependentUpon>
     </Compile>
-    <Compile Include="DeclaredMethods\IDeclareToStringMethod.cs" />
-    <Compile Include="DeclaredMethods\IDeclareGetHashCodeMethod.cs" />
-    <Compile Include="DeclaredMethods\IDeclareEqualsMethod{T}.cs" />
-    <Compile Include="DeclaredMethods\IDeclareCompareToForRelativeSortOrderMethod{T}.cs" />
-    <Compile Include="DeclaredMethods\IDeclareDeepCloneMethod{T}.cs" />
+    <Compile Include="Interfaces\Behavior\CodeGen\IDeclareToStringMethod.cs" />
+    <Compile Include="Interfaces\Behavior\CodeGen\IDeclareGetHashCodeMethod.cs" />
+    <Compile Include="Interfaces\Behavior\CodeGen\IDeclareEqualsMethod{T}.cs" />
+    <Compile Include="Interfaces\Behavior\CodeGen\IDeclareCompareToForRelativeSortOrderMethod{T}.cs" />
+    <Compile Include="Interfaces\Behavior\CodeGen\IDeclareDeepCloneMethod{T}.cs" />
     <Compile Include="Extensions\EncodingExtensions.cs" />
     <Compile Include="Enums\EncodingKind.cs" />
-    <Compile Include="FrameworkMissingInterfaces\Comparable\RelativeSortOrder.cs" />
-    <Compile Include="FrameworkMissingInterfaces\Comparable\IComparableForRelativeSortOrder{T}.cs" />
-    <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByInteger.cs" />
-    <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableBy{T}.cs" />
-    <Compile Include="FrameworkMissingInterfaces\IObject.cs" />
-    <Compile Include="FrameworkMissingInterfaces\IHashable.cs" />
-    <Compile Include="FrameworkMissingInterfaces\IHaveTimestampUtc.cs" />
-    <Compile Include="FrameworkMissingInterfaces\IHaveTags.cs" />
-    <Compile Include="FrameworkMissingInterfaces\IImplementNullObjectPattern.cs" />
-    <Compile Include="FrameworkMissingInterfaces\IStringRepresentable.cs" />
-    <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByGuid.cs" />
-    <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiableByString.cs" />
-    <Compile Include="FrameworkMissingInterfaces\Identifiable\IIdentifiable.cs" />
-    <Compile Include="ModelDefinitions\FakeModel{T}.cs" />
-    <Compile Include="ModelDefinitions\IModel.cs" />
-    <Compile Include="ModelDefinitions\IModel{T}.cs" />
-    <Compile Include="FrameworkMissingInterfaces\Cloneable\IDeepCloneable{T}.cs" />
-    <Compile Include="FrameworkMissingInterfaces\Cloneable\IShallowCloneable{T}.cs" />
+    <Compile Include="Enums\RelativeSortOrder.cs" />
+    <Compile Include="Interfaces\Behavior\IComparableForRelativeSortOrder{T}.cs" />
+    <Compile Include="Interfaces\Property\Identifiable\IIdentifiableByInteger.cs" />
+    <Compile Include="Interfaces\Property\Identifiable\IIdentifiableBy{T}.cs" />
+    <Compile Include="Interfaces\Classification\IObject.cs" />
+    <Compile Include="Interfaces\Behavior\IHashable.cs" />
+    <Compile Include="Interfaces\Property\IHaveTimestampUtc.cs" />
+    <Compile Include="Interfaces\Property\IHaveTags.cs" />
+    <Compile Include="Interfaces\Classification\IImplementNullObjectPattern.cs" />
+    <Compile Include="Interfaces\Behavior\IStringRepresentable.cs" />
+    <Compile Include="Interfaces\Property\Identifiable\IIdentifiableByGuid.cs" />
+    <Compile Include="Interfaces\Property\Identifiable\IIdentifiableByString.cs" />
+    <Compile Include="Interfaces\Property\Identifiable\IIdentifiable.cs" />
+    <Compile Include="Models\FakeModel{T}.cs" />
+    <Compile Include="Interfaces\Behavior\Model\IModel.cs" />
+    <Compile Include="Interfaces\Behavior\Model\IModel{T}.cs" />
+    <Compile Include="Interfaces\Behavior\Cloneable\IDeepCloneable{T}.cs" />
+    <Compile Include="Interfaces\Behavior\Cloneable\IShallowCloneable{T}.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
-    <Compile Include="ViaCodeGen\IComparableViaCodeGen.cs" />
-    <Compile Include="ViaCodeGen\IForsakeDeepCloneWithVariantsViaCodeGen.cs" />
-    <Compile Include="ViaCodeGen\IHashableViaCodeGen.cs" />
-    <Compile Include="ViaCodeGen\IForsakeInheritedModelViaCodeGen.cs" />
-    <Compile Include="ViaCodeGen\IStringRepresentableViaCodeGen.cs" />
-    <Compile Include="ViaCodeGen\IEquatableViaCodeGen.cs" />
-    <Compile Include="ViaCodeGen\IDeepCloneableViaCodeGen.cs" />
-    <Compile Include="ViaCodeGen\IModelViaCodeGen.cs" />
+    <Compile Include="Interfaces\Classification\CodeGen\IComparableViaCodeGen.cs" />
+    <Compile Include="Interfaces\Classification\CodeGen\IForsakeDeepCloneWithVariantsViaCodeGen.cs" />
+    <Compile Include="Interfaces\Classification\CodeGen\IHashableViaCodeGen.cs" />
+    <Compile Include="Interfaces\Classification\CodeGen\IForsakeInheritedModelViaCodeGen.cs" />
+    <Compile Include="Interfaces\Classification\CodeGen\IStringRepresentableViaCodeGen.cs" />
+    <Compile Include="Interfaces\Classification\CodeGen\IEquatableViaCodeGen.cs" />
+    <Compile Include="Interfaces\Classification\CodeGen\IDeepCloneableViaCodeGen.cs" />
+    <Compile Include="Interfaces\Classification\CodeGen\IModelViaCodeGen.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />
@@ -103,6 +103,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -163,8 +163,8 @@
     <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Method.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Property.cs" />
     <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
-    <Compile Include="Containers\UtcDateTimeRangeInclusiveTest.cs" />
-    <Compile Include="Containers\UtcDateTimeRangeInclusiveTest.designer.cs">
+    <Compile Include="Models\UtcDateTimeRangeInclusiveTest.cs" />
+    <Compile Include="Models\UtcDateTimeRangeInclusiveTest.designer.cs">
       <DependentUpon>UtcDateTimeRangeInclusiveTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\EncodingExtensionsTest.cs" />
