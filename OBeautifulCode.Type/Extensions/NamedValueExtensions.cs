@@ -152,6 +152,11 @@ namespace OBeautifulCode.Type
                 throw new ArgumentNullException(nameof(source));
             }
 
+            if (source.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(source)} contains a null element."));
+            }
+
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
@@ -160,11 +165,6 @@ namespace OBeautifulCode.Type
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException(Invariant($"{nameof(name)} is white space."));
-            }
-
-            if (source.Any(_ => _ == null))
-            {
-                throw new ArgumentException(Invariant($"{nameof(source)} contains a null element."));
             }
 
             var result = source.Single(_ => _.Name == name).Value;

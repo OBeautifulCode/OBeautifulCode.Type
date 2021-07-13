@@ -163,6 +163,7 @@
     <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Method.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Property.cs" />
     <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
+    <Compile Include="Extensions\NamedValueExtensionsTest.cs" />
     <Compile Include="Models\Event\EventBaseTest.cs" />
     <Compile Include="Models\Event\EventBaseTest.designer.cs">
       <DependentUpon>EventBaseTest.cs</DependentUpon>
