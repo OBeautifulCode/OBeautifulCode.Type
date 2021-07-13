@@ -46,12 +46,23 @@ namespace OBeautifulCode.Type.Recipes.Test
             typeof(DerivedGenericClass<int>),
         };
 
-        public static IReadOnlyCollection<Type> ClosedStructTypes => new[]
+        public static IReadOnlyCollection<Type> ClosedNonGenericStructTypes => new[]
         {
             typeof(int),
             typeof(DateTime),
             typeof(Guid),
         };
+
+        public static IReadOnlyCollection<Type> ClosedGenericStructTypes => new[]
+        {
+            typeof(KeyValuePair<object, int>),
+            typeof(KeyValuePair<int, object>),
+        };
+
+        public static IReadOnlyCollection<Type> ClosedStructTypes => new Type[0]
+            .Concat(ClosedNonGenericStructTypes)
+            .Concat(ClosedGenericStructTypes)
+            .ToArray();
 
         public static IReadOnlyCollection<Type> ClosedNullableTypes => new[]
         {
@@ -122,6 +133,11 @@ namespace OBeautifulCode.Type.Recipes.Test
         public static IReadOnlyCollection<Type> OpenTypes => new Type[0]
             .Concat(OpenTypesWithoutGenericTypeDefinitionTypes)
             .Concat(GenericTypeDefinitions)
+            .ToArray();
+
+        public static IReadOnlyCollection<Type> AllTypes => new Type[0]
+            .Concat(OpenTypes)
+            .Concat(ClosedTypes)
             .ToArray();
     }
 

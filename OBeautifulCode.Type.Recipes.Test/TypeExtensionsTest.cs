@@ -1609,7 +1609,7 @@ namespace OBeautifulCode.Type.Recipes.Test
             // Arrange
             var types = new Type[0]
                 .Concat(TestTypes.OpenTypes)
-                .Concat(TestTypes.ClosedStructTypes)
+                .Concat(TestTypes.ClosedNonGenericStructTypes)
                 .Concat(TestTypes.ClosedArrayTypes)
                 .Concat(
                     new[]
@@ -2014,6 +2014,54 @@ namespace OBeautifulCode.Type.Recipes.Test
 
             // Act
             var actuals = types.Select(_ => _.IsClosedSystemEnumerableType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
+        public static void IsClosedSystemKeyValuePairType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsClosedSystemKeyValuePairType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsClosedSystemKeyValuePairType___Should_return_false___When_parameter_type_is_not_a_closed_KeyValuePair()
+        {
+            // Arrange
+            var types = TestTypes.AllTypes
+                .Where(_ => !_.Name.StartsWith("KeyValuePair"))
+                .Concat(
+                    new[]
+                    {
+                        typeof(KeyValuePair<,>),
+                    })
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => _.IsClosedSystemKeyValuePairType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsClosedSystemEnumerableType___Should_return_true___When_parameter_type_is_a_closed_KeyValuePair()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(KeyValuePair<string, object>),
+                typeof(KeyValuePair<object, string>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsClosedSystemKeyValuePairType()).ToList();
 
             // Assert
             actuals.Should().AllBeEquivalentTo(true);
@@ -2595,6 +2643,50 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void IsSystemKeyValuePairType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsSystemKeyValuePairType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsSystemKeyValuePairType___Should_return_false___When_parameter_type_is_not_a_System_KeyValuePair()
+        {
+            // Arrange
+            var types = TestTypes.AllTypes
+                .Where(_ => !_.Name.StartsWith("KeyValuePair"))
+                .ToArray();
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemKeyValuePairType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsSystemKeyValuePairType___Should_return_true___When_parameter_type_is_a_System_KeyValuePair()
+        {
+            // Arrange
+            var types = new[]
+            {
+                typeof(KeyValuePair<,>),
+                typeof(KeyValuePair<object, int>),
+                typeof(KeyValuePair<int, object>),
+            };
+
+            // Act
+            var actuals = types.Select(_ => _.IsSystemKeyValuePairType()).ToList();
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
         public static void IsSystemOrderedCollectionType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
@@ -2827,6 +2919,7 @@ namespace OBeautifulCode.Type.Recipes.Test
             var types = new Type[0]
                 .Concat(TestTypes.OpenTypes)
                 .Except(TestTypes.ClosedValueTupleTypes.Select(_ => _.GetGenericTypeDefinition()))
+                .Except(TestTypes.ClosedGenericStructTypes.Select(_ => _.GetGenericTypeDefinition()))
                 .Concat(
                     new[]
                     {
