@@ -70,7 +70,7 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\NullableDateTimeEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ObjectEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
-    <Compile Include="Extensions\NamedValueExtensions.cs" />
+    <Compile Include="Logic\Extensions\NamedValueExtensions.cs" />
     <Compile Include="Interfaces\Classification\Event\IEvent{TId}.cs" />
     <Compile Include="Interfaces\Classification\Event\IEvent.cs" />
     <Compile Include="Interfaces\Classification\Operation\IOperation.cs" />
@@ -85,52 +85,52 @@
     <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncAndAsyncVoidProtocol{TOperation}.cs" />
     <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncVoidProtocol{TOperation}.cs" />
     <Compile Include="Interfaces\Property\IHaveDetails.cs" />
-    <Compile Include="Models\Event\EventBase.cs" />
-    <Compile Include="Models\Event\EventBase.designer.cs">
+    <Compile Include="Models\Events\EventBase.cs" />
+    <Compile Include="Models\Events\EventBase.designer.cs">
       <DependentUpon>EventBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Event\EventBase{TId}.cs" />
-    <Compile Include="Models\Event\EventBase{TId}.designer.cs">
+    <Compile Include="Models\Events\EventBase{TId}.cs" />
+    <Compile Include="Models\Events\EventBase{TId}.designer.cs">
       <DependentUpon>EventBase{TId}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TId,TOperation}.cs" />
-    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TId,TOperation}.designer.cs">
+    <Compile Include="Models\Events\Concrete\ExecuteOpRequestedEvent{TId,TOperation}.cs" />
+    <Compile Include="Models\Events\Concrete\ExecuteOpRequestedEvent{TId,TOperation}.designer.cs">
       <DependentUpon>ExecuteOpRequestedEvent{TId,TOperation}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TOperation}.cs" />
-    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TOperation}.designer.cs">
+    <Compile Include="Models\Events\Concrete\ExecuteOpRequestedEvent{TOperation}.cs" />
+    <Compile Include="Models\Events\Concrete\ExecuteOpRequestedEvent{TOperation}.designer.cs">
       <DependentUpon>ExecuteOpRequestedEvent{TOperation}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Event\Concrete\NullEvent.cs" />
-    <Compile Include="Models\Event\Concrete\NullEvent.designer.cs">
+    <Compile Include="Models\Events\Concrete\NullEvent.cs" />
+    <Compile Include="Models\Events\Concrete\NullEvent.designer.cs">
       <DependentUpon>NullEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Event\Concrete\NullEvent{TId}.cs" />
-    <Compile Include="Models\Event\Concrete\NullEvent{TId}.designer.cs">
+    <Compile Include="Models\Events\Concrete\NullEvent{TId}.cs" />
+    <Compile Include="Models\Events\Concrete\NullEvent{TId}.designer.cs">
       <DependentUpon>NullEvent{TId}.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\NamedValue{TValue}.cs" />
     <Compile Include="Models\NamedValue{TValue}.designer.cs">
       <DependentUpon>NamedValue{TValue}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operation\Concrete\NullReturningOp{TReturn}.cs" />
-    <Compile Include="Models\Operation\Concrete\NullReturningOp{TReturn}.designer.cs">
+    <Compile Include="Models\Operations\Concrete\NullReturningOp{TReturn}.cs" />
+    <Compile Include="Models\Operations\Concrete\NullReturningOp{TReturn}.designer.cs">
       <DependentUpon>NullReturningOp{TReturn}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operation\Concrete\NullVoidOp.cs" />
-    <Compile Include="Models\Operation\Concrete\NullVoidOp.designer.cs">
+    <Compile Include="Models\Operations\Concrete\NullVoidOp.cs" />
+    <Compile Include="Models\Operations\Concrete\NullVoidOp.designer.cs">
       <DependentUpon>NullVoidOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operation\OperationBase.cs" />
-    <Compile Include="Models\Operation\OperationBase.designer.cs">
+    <Compile Include="Models\Operations\OperationBase.cs" />
+    <Compile Include="Models\Operations\OperationBase.designer.cs">
       <DependentUpon>OperationBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operation\ReturningOperationBase{TReturn}.cs" />
-    <Compile Include="Models\Operation\ReturningOperationBase{TReturn}.designer.cs">
+    <Compile Include="Models\Operations\ReturningOperationBase{TReturn}.cs" />
+    <Compile Include="Models\Operations\ReturningOperationBase{TReturn}.designer.cs">
       <DependentUpon>ReturningOperationBase{TReturn}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operation\VoidOperationBase.cs" />
-    <Compile Include="Models\Operation\VoidOperationBase.designer.cs">
+    <Compile Include="Models\Operations\VoidOperationBase.cs" />
+    <Compile Include="Models\Operations\VoidOperationBase.designer.cs">
       <DependentUpon>VoidOperationBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\UtcDateTimeRangeInclusive.cs" />
@@ -142,7 +142,7 @@
     <Compile Include="Interfaces\Behavior\CodeGen\IDeclareEqualsMethod{T}.cs" />
     <Compile Include="Interfaces\Behavior\CodeGen\IDeclareCompareToForRelativeSortOrderMethod{T}.cs" />
     <Compile Include="Interfaces\Behavior\CodeGen\IDeclareDeepCloneMethod{T}.cs" />
-    <Compile Include="Extensions\EncodingExtensions.cs" />
+    <Compile Include="Logic\Extensions\EncodingExtensions.cs" />
     <Compile Include="Enums\EncodingKind.cs" />
     <Compile Include="Enums\RelativeSortOrder.cs" />
     <Compile Include="Interfaces\Behavior\IComparableForRelativeSortOrder{T}.cs" />
@@ -192,7 +192,9 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Logic\Protocols\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
