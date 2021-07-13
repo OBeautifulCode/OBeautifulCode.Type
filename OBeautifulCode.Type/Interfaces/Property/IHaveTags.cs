@@ -9,17 +9,18 @@ namespace OBeautifulCode.Type
     using System.Collections.Generic;
 
     /// <summary>
-    /// Represents an object that can be tagged using key/value pairs of strings.
+    /// Represents an object that can be tagged using named strings.
     /// </summary>
     public interface IHaveTags
     {
         /// <summary>
-        /// Gets tags as key/value pairs of strings.
+        /// Gets the tags as named strings.
         /// </summary>
         /// <remarks>
-        /// null is valid value.  If the tags have a single dimension/no grouping concept,
-        /// then they can be specified as the keys with entirely null values.
+        /// null is valid value.
+        /// If the tags have a single dimension/no grouping concept,
+        /// then they can be specified as the names with null values.
         /// </remarks>
-        IReadOnlyCollection<KeyValuePair<string, string>> Tags { get; }
+        IReadOnlyCollection<NamedValue<string>> Tags { get; }
     }
 }

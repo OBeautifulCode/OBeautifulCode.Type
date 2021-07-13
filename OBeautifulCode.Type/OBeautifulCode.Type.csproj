@@ -70,6 +70,7 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\NullableDateTimeEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ObjectEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
+    <Compile Include="Extensions\NamedValueExtensions.cs" />
     <Compile Include="Interfaces\Classification\Event\IEvent{TId}.cs" />
     <Compile Include="Interfaces\Classification\Event\IEvent.cs" />
     <Compile Include="Interfaces\Classification\Operation\IOperation.cs" />
@@ -107,6 +108,10 @@
     <Compile Include="Models\Event\Concrete\NullEvent{TId}.cs" />
     <Compile Include="Models\Event\Concrete\NullEvent{TId}.designer.cs">
       <DependentUpon>NullEvent{TId}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NamedValue{TValue}.cs" />
+    <Compile Include="Models\NamedValue{TValue}.designer.cs">
+      <DependentUpon>NamedValue{TValue}.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Operation\Concrete\NullReturningOp{TReturn}.cs" />
     <Compile Include="Models\Operation\Concrete\NullReturningOp{TReturn}.designer.cs">
