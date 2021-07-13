@@ -2035,7 +2035,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         {
             // Arrange
             var types = TestTypes.AllTypes
-                .Where(_ => !_.Name.StartsWith("KeyValuePair"))
+                .Where(_ => !_.Name.StartsWith("KeyValuePair", StringComparison.OrdinalIgnoreCase))
                 .Concat(
                     new[]
                     {
@@ -2658,7 +2658,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         {
             // Arrange
             var types = TestTypes.AllTypes
-                .Where(_ => !_.Name.StartsWith("KeyValuePair"))
+                .Where(_ => !_.Name.StartsWith("KeyValuePair", StringComparison.OrdinalIgnoreCase))
                 .ToArray();
 
             // Act
