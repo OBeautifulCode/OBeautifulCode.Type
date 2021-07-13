@@ -52,7 +52,101 @@ namespace OBeautifulCode.Type.Test
 
         public TypeDummyFactory()
         {
-            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            //---------------------------------------------------------------
+            // REMOVE WHEN WE CAN CODE GEN AND THIS MOVES INTO DESIGNER
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(ExecuteOpRequestedEvent<Version, NullVoidOp>),
+                        typeof(ExecuteOpRequestedEvent<NullVoidOp>),
+                        typeof(NullEvent),
+                        typeof(NullEvent<Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (EventBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(ExecuteOpRequestedEvent<Version, NullVoidOp>),
+                        typeof(NullEvent<Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (EventBase<Version>)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(NullVoidOp),
+                        typeof(NullReturningOp<Version>),
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (OperationBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(NullVoidOp),
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (VoidOperationBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(NullReturningOp<Version>),
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (ReturningOperationBase<Version>)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            //---------------------------------------------------------------
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
             {
                 var startDateTime = A.Dummy<DateTime>();
 
@@ -94,6 +188,34 @@ namespace OBeautifulCode.Type.Test
 
                     return result;
                 });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NullEvent(
+                    A.Dummy<DateTime>().ToUniversalTime()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NullEvent<Version>(
+                    A.Dummy<Version>(),
+                    A.Dummy<DateTime>().ToUniversalTime()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExecuteOpRequestedEvent<NullVoidOp>(
+                    A.Dummy<NullVoidOp>(),
+                    A.Dummy<DateTime>().ToUniversalTime(),
+                    A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExecuteOpRequestedEvent<Version, NullReturningOp<Version>>(
+                    A.Dummy<Version>(),
+                    A.Dummy<NullReturningOp<Version>>(),
+                    A.Dummy<DateTime>().ToUniversalTime(),
+                    A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NullVoidOp());
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NullReturningOp<Version>());
         }
 
         private Type GetRandomClosedTypeInAppDomain()

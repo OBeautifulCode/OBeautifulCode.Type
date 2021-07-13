@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>OBeautifulCodeTypeSolution</DefineConstants>
+    <DefineConstants>OBeautifulCodeTypeSolution;OBeautifulCodeTypeProject</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -31,7 +31,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>OBeautifulCodeTypeSolution</DefineConstants>
+    <DefineConstants>OBeautifulCodeTypeSolution;OBeautifulCodeTypeProject</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -43,7 +43,91 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\OBeautifulCode.Type.Recipes\ArrayKind.cs">
+      <Link>.recipes\OBeautifulCode.Type\ArrayKind.cs</Link>
+    </Compile>
+    <Compile Include="..\OBeautifulCode.Type.Recipes\ToStringReadableOptions.cs">
+      <Link>.recipes\OBeautifulCode.Type\ToStringReadableOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\OBeautifulCode.Type.Recipes\ToStringXmlDocOptions.cs">
+      <Link>.recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\OBeautifulCode.Type.Recipes\TypeExtensions.cs">
+      <Link>.recipes\OBeautifulCode.Type\TypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include=".recipes\OBeautifulCode.Cloning\CloningExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeAnalysis\ObcSuppressBecause.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ByteArrayEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparerStrategy.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EqualityComparerHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EqualityExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\LambdaBackedEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\NativeMethods.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\NullableDateTimeEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ObjectEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
+    <Compile Include="Interfaces\Classification\Event\IEvent{TId}.cs" />
+    <Compile Include="Interfaces\Classification\Event\IEvent.cs" />
+    <Compile Include="Interfaces\Classification\Operation\IOperation.cs" />
+    <Compile Include="Interfaces\Classification\Operation\IReturningOperation{TReturn}.cs" />
+    <Compile Include="Interfaces\Classification\Operation\IVoidOperation.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\Specified\IAsyncReturningProtocol{TOperation,TReturn}.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\Specified\IAsyncVoidProtocol{TOperation}.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\IProtocol.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\IProtocol{TOperation}.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncReturningProtocol{TOperation,TReturn}.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncAndAsyncReturningProtocol{TOperation,TReturn}.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncAndAsyncVoidProtocol{TOperation}.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncVoidProtocol{TOperation}.cs" />
+    <Compile Include="Interfaces\Property\IHaveDetails.cs" />
+    <Compile Include="Models\Event\EventBase.cs" />
+    <Compile Include="Models\Event\EventBase.designer.cs">
+      <DependentUpon>EventBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event\EventBase{TId}.cs" />
+    <Compile Include="Models\Event\EventBase{TId}.designer.cs">
+      <DependentUpon>EventBase{TId}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TId,TOperation}.cs" />
+    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TId,TOperation}.designer.cs">
+      <DependentUpon>ExecuteOpRequestedEvent{TId,TOperation}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TOperation}.cs" />
+    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TOperation}.designer.cs">
+      <DependentUpon>ExecuteOpRequestedEvent{TOperation}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event\Concrete\NullEvent.cs" />
+    <Compile Include="Models\Event\Concrete\NullEvent.designer.cs">
+      <DependentUpon>NullEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event\Concrete\NullEvent{TId}.cs" />
+    <Compile Include="Models\Event\Concrete\NullEvent{TId}.designer.cs">
+      <DependentUpon>NullEvent{TId}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operation\Concrete\NullReturningOp{TReturn}.cs" />
+    <Compile Include="Models\Operation\Concrete\NullReturningOp{TReturn}.designer.cs">
+      <DependentUpon>NullReturningOp{TReturn}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operation\Concrete\NullVoidOp.cs" />
+    <Compile Include="Models\Operation\Concrete\NullVoidOp.designer.cs">
+      <DependentUpon>NullVoidOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operation\OperationBase.cs" />
+    <Compile Include="Models\Operation\OperationBase.designer.cs">
+      <DependentUpon>OperationBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operation\ReturningOperationBase{TReturn}.cs" />
+    <Compile Include="Models\Operation\ReturningOperationBase{TReturn}.designer.cs">
+      <DependentUpon>ReturningOperationBase{TReturn}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operation\VoidOperationBase.cs" />
+    <Compile Include="Models\Operation\VoidOperationBase.designer.cs">
+      <DependentUpon>VoidOperationBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\UtcDateTimeRangeInclusive.cs" />
     <Compile Include="Models\UtcDateTimeRangeInclusive.designer.cs">
       <DependentUpon>UtcDateTimeRangeInclusive.cs</DependentUpon>
@@ -57,17 +141,17 @@
     <Compile Include="Enums\EncodingKind.cs" />
     <Compile Include="Enums\RelativeSortOrder.cs" />
     <Compile Include="Interfaces\Behavior\IComparableForRelativeSortOrder{T}.cs" />
-    <Compile Include="Interfaces\Property\Identifiable\IIdentifiableByInteger.cs" />
-    <Compile Include="Interfaces\Property\Identifiable\IIdentifiableBy{T}.cs" />
+    <Compile Include="Interfaces\Property\Identifiable\Specified\IHaveIntId.cs" />
+    <Compile Include="Interfaces\Property\Identifiable\IHaveId{T}.cs" />
     <Compile Include="Interfaces\Classification\IObject.cs" />
     <Compile Include="Interfaces\Behavior\IHashable.cs" />
     <Compile Include="Interfaces\Property\IHaveTimestampUtc.cs" />
     <Compile Include="Interfaces\Property\IHaveTags.cs" />
     <Compile Include="Interfaces\Classification\IImplementNullObjectPattern.cs" />
     <Compile Include="Interfaces\Behavior\IStringRepresentable.cs" />
-    <Compile Include="Interfaces\Property\Identifiable\IIdentifiableByGuid.cs" />
-    <Compile Include="Interfaces\Property\Identifiable\IIdentifiableByString.cs" />
-    <Compile Include="Interfaces\Property\Identifiable\IIdentifiable.cs" />
+    <Compile Include="Interfaces\Property\Identifiable\Specified\IHaveGuidId.cs" />
+    <Compile Include="Interfaces\Property\Identifiable\Specified\IHaveStringId.cs" />
+    <Compile Include="Interfaces\Property\Identifiable\IHaveId.cs" />
     <Compile Include="Models\FakeModel{T}.cs" />
     <Compile Include="Interfaces\Behavior\Model\IModel.cs" />
     <Compile Include="Interfaces\Behavior\Model\IModel{T}.cs" />

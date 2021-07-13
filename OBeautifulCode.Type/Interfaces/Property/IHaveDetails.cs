@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IIdentifiableBy{T}.cs" company="OBeautifulCode">
+// <copyright file="IHaveDetails.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,16 +7,14 @@
 namespace OBeautifulCode.Type
 {
     /// <summary>
-    /// Represents an object that has a unique identifier.
+    /// Interface to declare having details or context on some action or event.
     /// </summary>
-    /// <typeparam name="T">The type of the unique identifier.</typeparam>
-    // ReSharper disable once UnusedMember.Global
-    public interface IIdentifiableBy<T> : IIdentifiable
+    public interface IHaveDetails
     {
         /// <summary>
-        /// Gets the unique identifier.
+        /// Gets the details.
         /// </summary>
-        // ReSharper disable once UnusedMember.Global
-        T Id { get; }
+        /// <value>The details.</value>
+        string Details { get; }
     }
 }

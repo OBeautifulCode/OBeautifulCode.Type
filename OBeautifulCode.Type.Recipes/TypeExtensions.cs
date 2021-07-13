@@ -41,7 +41,7 @@ namespace OBeautifulCode.Type.Recipes
     /// <a href="https://stackoverflow.com/questions/59144791/if-type-isgenericparameter-true-will-type-containsgenericparameters-true?noredirect=1#comment104515860_59144791" />.
     /// <a href="https://stackoverflow.com/questions/59141721/why-is-the-basetype-of-a-generic-type-definition-not-itself-a-generic-type-defin?noredirect=1#comment104515814_59141721" />.
     /// </remarks>
-#if !OBeautifulCodeTypeSolution
+#if !OBeautifulCodeTypeSolution || OBeautifulCodeTypeProject
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Type.Recipes", "See package version number")]
     internal

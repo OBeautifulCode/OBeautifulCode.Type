@@ -1,18 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IIdentifiableByGuid.cs" company="OBeautifulCode">
+// <copyright file="IHaveStringId.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace OBeautifulCode.Type
 {
-    using System;
-
     /// <summary>
-    /// Represents an object that has a <see cref="Guid"/> unique identifier.
+    /// Represents an object that has a <see cref="string"/> unique identifier.
     /// </summary>
     // ReSharper disable once UnusedMember.Global
-    public interface IIdentifiableByGuid : IIdentifiableBy<Guid>
+    public interface IHaveStringId : IHaveId<string>
     {
     }
 }

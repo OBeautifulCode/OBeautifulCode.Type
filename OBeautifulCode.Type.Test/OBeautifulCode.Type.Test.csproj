@@ -163,6 +163,50 @@
     <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Method.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Property.cs" />
     <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
+    <Compile Include="Models\Event\EventBaseTest.cs" />
+    <Compile Include="Models\Event\EventBaseTest.designer.cs">
+      <DependentUpon>EventBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event\EventBase{TId}Test.cs" />
+    <Compile Include="Models\Event\EventBase{TId}Test.designer.cs">
+      <DependentUpon>EventBase{TId}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TId,TOperation}Test.cs" />
+    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TId,TOperation}Test.designer.cs">
+      <DependentUpon>ExecuteOpRequestedEvent{TId,TOperation}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TOperation}Test.cs" />
+    <Compile Include="Models\Event\Concrete\ExecuteOpRequestedEvent{TOperation}Test.designer.cs">
+      <DependentUpon>ExecuteOpRequestedEvent{TOperation}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event\Concrete\NullEventTest.cs" />
+    <Compile Include="Models\Event\Concrete\NullEventTest.designer.cs">
+      <DependentUpon>NullEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event\Concrete\NullEvent{TId}Test.cs" />
+    <Compile Include="Models\Event\Concrete\NullEvent{TId}Test.designer.cs">
+      <DependentUpon>NullEvent{TId}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operation\Concrete\NullReturningOp{TReturn}Test.cs" />
+    <Compile Include="Models\Operation\Concrete\NullReturningOp{TReturn}Test.designer.cs">
+      <DependentUpon>NullReturningOp{TReturn}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operation\Concrete\NullVoidOpTest.cs" />
+    <Compile Include="Models\Operation\Concrete\NullVoidOpTest.designer.cs">
+      <DependentUpon>NullVoidOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operation\OperationBaseTest.cs" />
+    <Compile Include="Models\Operation\OperationBaseTest.designer.cs">
+      <DependentUpon>OperationBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operation\ReturningOperationBase{TReturn}Test.cs" />
+    <Compile Include="Models\Operation\ReturningOperationBase{TReturn}Test.designer.cs">
+      <DependentUpon>ReturningOperationBase{TReturn}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operation\VoidOperationBaseTest.cs" />
+    <Compile Include="Models\Operation\VoidOperationBaseTest.designer.cs">
+      <DependentUpon>VoidOperationBaseTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\UtcDateTimeRangeInclusiveTest.cs" />
     <Compile Include="Models\UtcDateTimeRangeInclusiveTest.designer.cs">
       <DependentUpon>UtcDateTimeRangeInclusiveTest.cs</DependentUpon>
@@ -208,6 +252,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
