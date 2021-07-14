@@ -54,6 +54,8 @@ namespace OBeautifulCode.Type.Test
         {
             //---------------------------------------------------------------
             // REMOVE WHEN WE CAN CODE GEN AND THIS MOVES INTO DESIGNER
+            
+            // EventBase
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
@@ -74,6 +76,7 @@ namespace OBeautifulCode.Type.Test
                     return result;
                 });
 
+            // EventBase<Version>
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
@@ -92,6 +95,7 @@ namespace OBeautifulCode.Type.Test
                     return result;
                 });
 
+            // IOperation
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
@@ -99,6 +103,27 @@ namespace OBeautifulCode.Type.Test
                     {
                         typeof(NullVoidOp),
                         typeof(NullReturningOp<Version>),
+                        typeof(GetProtocolOp),
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (IOperation)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            // OperationBase
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(NullVoidOp),
+                        typeof(NullReturningOp<Version>),
+                        typeof(GetProtocolOp),
                     };
 
                     var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
@@ -110,6 +135,7 @@ namespace OBeautifulCode.Type.Test
                     return result;
                 });
 
+            // VoidOperationBase
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
@@ -127,6 +153,7 @@ namespace OBeautifulCode.Type.Test
                     return result;
                 });
 
+            // ReturningOperationBase<Version>
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
@@ -210,12 +237,6 @@ namespace OBeautifulCode.Type.Test
                     A.Dummy<NullReturningOp<Version>>(),
                     A.Dummy<DateTime>().ToUniversalTime(),
                     A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new NullVoidOp());
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new NullReturningOp<Version>());
         }
 
         private Type GetRandomClosedTypeInAppDomain()

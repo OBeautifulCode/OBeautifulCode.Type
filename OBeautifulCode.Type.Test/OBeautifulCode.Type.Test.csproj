@@ -164,6 +164,7 @@
     <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Property.cs" />
     <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
     <Compile Include="Logic\Extensions\NamedValueExtensionsTest.cs" />
+    <Compile Include="Logic\Protocols\ProtocolFactoryTest.cs" />
     <Compile Include="Models\Events\EventBaseTest.cs" />
     <Compile Include="Models\Events\EventBaseTest.designer.cs">
       <DependentUpon>EventBaseTest.cs</DependentUpon>
@@ -191,6 +192,10 @@
     <Compile Include="Models\NamedValue{TValue}Test.cs" />
     <Compile Include="Models\NamedValue{TValue}Test.designer.cs">
       <DependentUpon>NamedValue{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operations\Concrete\GetProtocolOpTest.cs" />
+    <Compile Include="Models\Operations\Concrete\GetProtocolOpTest.designer.cs">
+      <DependentUpon>GetProtocolOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Operations\Concrete\NullReturningOp{TReturn}Test.cs" />
     <Compile Include="Models\Operations\Concrete\NullReturningOp{TReturn}Test.designer.cs">
