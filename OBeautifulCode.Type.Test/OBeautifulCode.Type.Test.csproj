@@ -194,6 +194,10 @@
     <Compile Include="Models\NamedValue{TValue}Test.designer.cs">
       <DependentUpon>NamedValue{TValue}Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Operations\Concrete\TestVoidOpTest.cs" />
+    <Compile Include="Models\Operations\Concrete\TestVoidOpTest.designer.cs">
+      <DependentUpon>TestVoidOpTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Operations\Concrete\GetProtocolOpTest.cs" />
     <Compile Include="Models\Operations\Concrete\GetProtocolOpTest.designer.cs">
       <DependentUpon>GetProtocolOpTest.cs</DependentUpon>

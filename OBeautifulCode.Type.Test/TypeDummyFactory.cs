@@ -52,126 +52,7 @@ namespace OBeautifulCode.Type.Test
 
         public TypeDummyFactory()
         {
-            //---------------------------------------------------------------
-            // REMOVE WHEN WE CAN CODE GEN AND THIS MOVES INTO DESIGNER
-            
-            // EventBase
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(ExecuteOpRequestedEvent<Version, NullVoidOp>),
-                        typeof(ExecuteOpRequestedEvent<NullVoidOp>),
-                        typeof(NullEvent),
-                        typeof(NullEvent<Version>)
-                    };
-
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
-
-                    var randomType = availableTypes[randomIndex];
-
-                    var result = (EventBase)AD.ummy(randomType);
-
-                    return result;
-                });
-
-            // EventBase<Version>
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(ExecuteOpRequestedEvent<Version, NullVoidOp>),
-                        typeof(NullEvent<Version>)
-                    };
-
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
-
-                    var randomType = availableTypes[randomIndex];
-
-                    var result = (EventBase<Version>)AD.ummy(randomType);
-
-                    return result;
-                });
-
-            // IOperation
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(NullVoidOp),
-                        typeof(NullReturningOp<Version>),
-                        typeof(GetProtocolOp),
-                    };
-
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
-
-                    var randomType = availableTypes[randomIndex];
-
-                    var result = (IOperation)AD.ummy(randomType);
-
-                    return result;
-                });
-
-            // OperationBase
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(NullVoidOp),
-                        typeof(NullReturningOp<Version>),
-                        typeof(GetProtocolOp),
-                    };
-
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
-
-                    var randomType = availableTypes[randomIndex];
-
-                    var result = (OperationBase)AD.ummy(randomType);
-
-                    return result;
-                });
-
-            // VoidOperationBase
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(NullVoidOp),
-                    };
-
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
-
-                    var randomType = availableTypes[randomIndex];
-
-                    var result = (VoidOperationBase)AD.ummy(randomType);
-
-                    return result;
-                });
-
-            // ReturningOperationBase<Version>
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(NullReturningOp<Version>),
-                    };
-
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
-
-                    var randomType = availableTypes[randomIndex];
-
-                    var result = (ReturningOperationBase<Version>)AD.ummy(randomType);
-
-                    return result;
-                });
-
-            //---------------------------------------------------------------
+            // UtcDateTimeRangeInclusive
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
             {
@@ -184,6 +65,7 @@ namespace OBeautifulCode.Type.Test
                 return result;
             });
 
+            // Type
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
@@ -216,25 +98,38 @@ namespace OBeautifulCode.Type.Test
                     return result;
                 });
 
+            // IOperation
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var result = (IOperation)A.Dummy<OperationBase>();
+
+                    return result;
+                });
+
+            // NullEvent
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NullEvent(
                     A.Dummy<DateTime>().ToUniversalTime()));
 
+            // NullEvent<Version>
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NullEvent<Version>(
                     A.Dummy<Version>(),
                     A.Dummy<DateTime>().ToUniversalTime()));
 
+            // ExecuteOpRequestedEvent<GetProtocolOp>
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ExecuteOpRequestedEvent<NullVoidOp>(
-                    A.Dummy<NullVoidOp>(),
+                () => new ExecuteOpRequestedEvent<GetProtocolOp>(
+                    A.Dummy<GetProtocolOp>(),
                     A.Dummy<DateTime>().ToUniversalTime(),
                     A.Dummy<string>()));
 
+            // ExecuteOpRequestedEvent<Version, GetProtocolOp>
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ExecuteOpRequestedEvent<Version, NullReturningOp<Version>>(
+                () => new ExecuteOpRequestedEvent<Version, GetProtocolOp>(
                     A.Dummy<Version>(),
-                    A.Dummy<NullReturningOp<Version>>(),
+                    A.Dummy<GetProtocolOp>(),
                     A.Dummy<DateTime>().ToUniversalTime(),
                     A.Dummy<string>()));
         }

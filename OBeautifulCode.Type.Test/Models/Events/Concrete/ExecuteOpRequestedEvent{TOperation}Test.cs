@@ -33,14 +33,14 @@ namespace OBeautifulCode.Type.Test
                .RemoveAllScenarios()
                .AddScenario(
                     () =>
-                        new ConstructorArgumentValidationTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                        new ConstructorArgumentValidationTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                         {
                             Name = "constructor should throw ArgumentNullException when parameter 'operation' is null scenario",
                             ConstructionFunc = () =>
                                                {
-                                                   var referenceObject = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                                                   var referenceObject = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                                                   var result = new ExecuteOpRequestedEvent<NullVoidOp>(
+                                                   var result = new ExecuteOpRequestedEvent<GetProtocolOp>(
                                                        null,
                                                        referenceObject.TimestampUtc,
                                                        referenceObject.Details);

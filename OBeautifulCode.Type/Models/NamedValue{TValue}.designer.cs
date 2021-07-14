@@ -17,7 +17,6 @@ namespace OBeautifulCode.Type
 
     using global::OBeautifulCode.Cloning.Recipes;
     using global::OBeautifulCode.Equality.Recipes;
-    using global::OBeautifulCode.Type;
     using global::OBeautifulCode.Type.Recipes;
 
     using static global::System.FormattableString;
@@ -163,7 +162,7 @@ namespace OBeautifulCode.Type
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Value = {this.Value?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.Type.{this.GetType().ToStringReadable()}: Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Value = {this.Value?.ToString() ?? "<null>"}.");
 
             return result;
         }

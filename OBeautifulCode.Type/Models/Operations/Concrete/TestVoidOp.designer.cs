@@ -22,15 +22,15 @@ namespace OBeautifulCode.Type
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class NullEvent : IModel<NullEvent>
+    public partial class TestVoidOp : IModel<TestVoidOp>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="NullEvent"/> are equal.
+        /// Determines whether two objects of type <see cref="TestVoidOp"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(NullEvent left, NullEvent right)
+        public static bool operator ==(TestVoidOp left, TestVoidOp right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace OBeautifulCode.Type
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="NullEvent"/> are not equal.
+        /// Determines whether two objects of type <see cref="TestVoidOp"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(NullEvent left, NullEvent right) => !(left == right);
+        public static bool operator !=(TestVoidOp left, TestVoidOp right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(NullEvent other)
+        public bool Equals(TestVoidOp other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -68,23 +68,27 @@ namespace OBeautifulCode.Type
                 return false;
             }
 
-            var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc);
+            var result = this.Details.IsEqualTo(other.Details, StringComparer.Ordinal);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as NullEvent);
+        public override bool Equals(object obj) => this == (obj as TestVoidOp);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.TimestampUtc)
+            .Hash(this.Details)
             .Value;
 
         /// <inheritdoc />
-        public new NullEvent DeepClone() => (NullEvent)this.DeepCloneInternal();
+        public new TestVoidOp DeepClone() => (TestVoidOp)this.DeepCloneInternal();
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Details" />.
+        /// </summary>
+        /// <param name="details">The new <see cref="Details" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="TestVoidOp" /> using the specified <paramref name="details" /> for <see cref="Details" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -102,20 +106,20 @@ namespace OBeautifulCode.Type
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override EventBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
+        public TestVoidOp DeepCloneWithDetails(string details)
         {
-            var result = new NullEvent(
-                                 timestampUtc);
+            var result = new TestVoidOp(
+                                 details);
 
             return result;
         }
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override EventBase DeepCloneInternal()
+        protected override OperationBase DeepCloneInternal()
         {
-            var result = new NullEvent(
-                                 this.TimestampUtc.DeepClone());
+            var result = new TestVoidOp(
+                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -124,7 +128,7 @@ namespace OBeautifulCode.Type
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.Type.NullEvent: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.Type.TestVoidOp: Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

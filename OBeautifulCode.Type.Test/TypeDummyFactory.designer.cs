@@ -17,6 +17,7 @@ namespace OBeautifulCode.Type.Test
 
     using global::OBeautifulCode.AutoFakeItEasy;
     using global::OBeautifulCode.Math.Recipes;
+    using global::OBeautifulCode.Type;
 
     /// <summary>
     /// The default (code generated) Dummy Factory.
@@ -33,6 +34,140 @@ namespace OBeautifulCode.Type.Test
     {
         public DefaultTypeDummyFactory()
         {
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new GetProtocolOp(
+                                 A.Dummy<IOperation>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(ExecuteOpRequestedEvent<Version, GetProtocolOp>),
+                        typeof(ExecuteOpRequestedEvent<GetProtocolOp>),
+                        typeof(NullEvent),
+                        typeof(NullEvent<Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (EventBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(ExecuteOpRequestedEvent<Version, GetProtocolOp>),
+                        typeof(NullEvent<Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (EventBase<Version>)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExecuteOpRequestedEvent<Version, GetProtocolOp>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<GetProtocolOp>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExecuteOpRequestedEvent<GetProtocolOp>(
+                                 A.Dummy<GetProtocolOp>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NullEvent(
+                                 A.Dummy<DateTime>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NullEvent<Version>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<DateTime>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NamedValue<Version>(
+                                 A.Dummy<string>(),
+                                 A.Dummy<Version>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NullReturningOp<Version>());
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new TestVoidOp(
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NullVoidOp());
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(GetProtocolOp),
+                        typeof(NullReturningOp<Version>),
+                        typeof(TestVoidOp),
+                        typeof(NullVoidOp)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (OperationBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(NullReturningOp<Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (ReturningOperationBase<Version>)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(TestVoidOp),
+                        typeof(NullVoidOp)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (VoidOperationBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new UtcDateTimeRangeInclusive(
                                  A.Dummy<DateTime>(),

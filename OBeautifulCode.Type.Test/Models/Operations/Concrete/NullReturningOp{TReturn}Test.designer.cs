@@ -24,7 +24,6 @@ namespace OBeautifulCode.Type.Test
     using global::OBeautifulCode.Equality.Recipes;
     using global::OBeautifulCode.Math.Recipes;
     using global::OBeautifulCode.Reflection.Recipes;
-    using global::OBeautifulCode.Type;
 
     using global::Xunit;
 
@@ -73,6 +72,8 @@ namespace OBeautifulCode.Type.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<GetProtocolOp>(),
+                        A.Dummy<TestVoidOp>(),
                         A.Dummy<NullVoidOp>(),
                     },
                 });

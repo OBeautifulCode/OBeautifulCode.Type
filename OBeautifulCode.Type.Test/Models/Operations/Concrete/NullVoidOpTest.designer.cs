@@ -24,7 +24,6 @@ namespace OBeautifulCode.Type.Test
     using global::OBeautifulCode.Equality.Recipes;
     using global::OBeautifulCode.Math.Recipes;
     using global::OBeautifulCode.Reflection.Recipes;
-    using global::OBeautifulCode.Type;
 
     using global::Xunit;
 
@@ -73,7 +72,9 @@ namespace OBeautifulCode.Type.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<GetProtocolOp>(),
                         A.Dummy<NullReturningOp<Version>>(),
+                        A.Dummy<TestVoidOp>(),
                     },
                 });
 
@@ -285,9 +286,9 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-#pragma warning disable CS1718 // Comparison made to same variable
+                    #pragma warning disable CS1718 // Comparison made to same variable
                     var actual = scenario.ReferenceObject == scenario.ReferenceObject;
-#pragma warning restore CS1718 // Comparison made to same variable
+                    #pragma warning restore CS1718 // Comparison made to same variable
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -465,9 +466,9 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-#pragma warning disable CS1718 // Comparison made to same variable
+                    #pragma warning disable CS1718 // Comparison made to same variable
                     var actual = scenario.ReferenceObject != scenario.ReferenceObject;
-#pragma warning restore CS1718 // Comparison made to same variable
+                    #pragma warning restore CS1718 // Comparison made to same variable
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);

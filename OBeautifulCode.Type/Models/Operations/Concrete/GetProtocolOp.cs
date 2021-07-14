@@ -11,7 +11,7 @@ namespace OBeautifulCode.Type
     /// <summary>
     /// Gets the protocol to use for a specified <see cref="IOperation"/> object.
     /// </summary>
-    public partial class GetProtocolOp : IReturningOperation<IProtocol>, IModelViaCodeGen
+    public partial class GetProtocolOp : ReturningOperationBase<IProtocol>, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetProtocolOp"/> class.

@@ -29,103 +29,117 @@ namespace OBeautifulCode.Type.Test
 
     using static global::System.FormattableString;
 
-    public static partial class GetProtocolOpTest
+    public static partial class TestVoidOpTest
     {
-        private static readonly StringRepresentationTestScenarios<GetProtocolOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<GetProtocolOp>()
+        private static readonly StringRepresentationTestScenarios<TestVoidOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<TestVoidOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<GetProtocolOp>
+                new StringRepresentationTestScenario<TestVoidOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<GetProtocolOp>();
+                        var systemUnderTest = A.Dummy<TestVoidOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<GetProtocolOp>
+                        var result = new SystemUnderTestExpectedStringRepresentation<TestVoidOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.Type.GetProtocolOp: Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.Type.TestVoidOp: Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<GetProtocolOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<GetProtocolOp>()
+        private static readonly ConstructorArgumentValidationTestScenarios<TestVoidOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<TestVoidOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<GetProtocolOp>
+                new ConstructorArgumentValidationTestScenario<TestVoidOp>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'operation' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var result = new GetProtocolOp(
+                        var result = new TestVoidOp(
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "operation", },
+                    ExpectedExceptionMessageContains = new[] { "details", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<TestVoidOp>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var result = new TestVoidOp(
+                                             Invariant($"  {Environment.NewLine}  "));
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "details", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<GetProtocolOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<GetProtocolOp>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<TestVoidOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<TestVoidOp>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<GetProtocolOp>
+                new ConstructorPropertyAssignmentTestScenario<TestVoidOp>
                 {
-                    Name = "Operation should return same 'operation' parameter passed to constructor when getting",
+                    Name = "Details should return same 'details' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<GetProtocolOp>();
+                        var referenceObject = A.Dummy<TestVoidOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<GetProtocolOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<TestVoidOp>
                         {
-                            SystemUnderTest = new GetProtocolOp(
-                                                      referenceObject.Operation),
-                            ExpectedPropertyValue = referenceObject.Operation,
+                            SystemUnderTest = new TestVoidOp(
+                                                      referenceObject.Details),
+                            ExpectedPropertyValue = referenceObject.Details,
                         };
 
                         return result;
                     },
-                    PropertyName = "Operation",
+                    PropertyName = "Details",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<GetProtocolOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<GetProtocolOp>()
+        private static readonly DeepCloneWithTestScenarios<TestVoidOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<TestVoidOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<GetProtocolOp>
+                new DeepCloneWithTestScenario<TestVoidOp>
                 {
-                    Name = "DeepCloneWithOperation should deep clone object and replace Operation with the provided operation",
-                    WithPropertyName = "Operation",
+                    Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
+                    WithPropertyName = "Details",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<GetProtocolOp>();
+                        var systemUnderTest = A.Dummy<TestVoidOp>();
 
-                        var referenceObject = A.Dummy<GetProtocolOp>().ThatIs(_ => !systemUnderTest.Operation.IsEqualTo(_.Operation));
+                        var referenceObject = A.Dummy<TestVoidOp>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<GetProtocolOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<TestVoidOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Operation,
+                            DeepCloneWithValue = referenceObject.Details,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly GetProtocolOp ReferenceObjectForEquatableTestScenarios = A.Dummy<GetProtocolOp>();
+        private static readonly TestVoidOp ReferenceObjectForEquatableTestScenarios = A.Dummy<TestVoidOp>();
 
-        private static readonly EquatableTestScenarios<GetProtocolOp> EquatableTestScenarios = new EquatableTestScenarios<GetProtocolOp>()
+        private static readonly EquatableTestScenarios<TestVoidOp> EquatableTestScenarios = new EquatableTestScenarios<TestVoidOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<GetProtocolOp>
+                new EquatableTestScenario<TestVoidOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new GetProtocolOp[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new TestVoidOp[]
                     {
-                        new GetProtocolOp(
-                                ReferenceObjectForEquatableTestScenarios.Operation),
+                        new TestVoidOp(
+                                ReferenceObjectForEquatableTestScenarios.Details),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new GetProtocolOp[]
+                    ObjectsThatAreNotEqualToReferenceObject = new TestVoidOp[]
                     {
-                        new GetProtocolOp(
-                                A.Dummy<GetProtocolOp>().Whose(_ => !_.Operation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Operation)).Operation),
+                        new TestVoidOp(
+                                A.Dummy<TestVoidOp>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -134,8 +148,8 @@ namespace OBeautifulCode.Type.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<GetProtocolOp>(),
                         A.Dummy<NullReturningOp<Version>>(),
-                        A.Dummy<TestVoidOp>(),
                         A.Dummy<NullVoidOp>(),
                     },
                 });
@@ -158,10 +172,10 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void GetProtocolOp___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void TestVoidOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(GetProtocolOp);
+                var type = typeof(TestVoidOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -319,10 +333,10 @@ namespace OBeautifulCode.Type.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<GetProtocolOp>();
+                var systemUnderTest = A.Dummy<TestVoidOp>();
 
                 // Act
-                var actual = (GetProtocolOp)systemUnderTest.Clone();
+                var actual = (TestVoidOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -346,7 +360,7 @@ namespace OBeautifulCode.Type.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<GetProtocolOp>();
+                var systemUnderTest = A.Dummy<TestVoidOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -354,18 +368,6 @@ namespace OBeautifulCode.Type.Test
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
-
-                if (systemUnderTest.Operation == null)
-                {
-                    actual.Operation.AsTest().Must().BeNull();
-                }
-                else if (!actual.Operation.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.Operation.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Operation);
-                }
             }
 
             [Fact]
@@ -384,7 +386,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Operation" };
+                var propertyNames = new string[] { "Details" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -397,12 +399,12 @@ namespace OBeautifulCode.Type.Test
                     }
 
                     // Act
-                    var actual = (GetProtocolOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (TestVoidOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(GetProtocolOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(TestVoidOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -464,8 +466,8 @@ namespace OBeautifulCode.Type.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                GetProtocolOp systemUnderTest1 = null;
-                GetProtocolOp systemUnderTest2 = null;
+                TestVoidOp systemUnderTest1 = null;
+                TestVoidOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -495,7 +497,7 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    GetProtocolOp systemUnderTest = null;
+                    TestVoidOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -644,8 +646,8 @@ namespace OBeautifulCode.Type.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                GetProtocolOp systemUnderTest1 = null;
-                GetProtocolOp systemUnderTest2 = null;
+                TestVoidOp systemUnderTest1 = null;
+                TestVoidOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -675,7 +677,7 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    GetProtocolOp systemUnderTest = null;
+                    TestVoidOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -964,17 +966,17 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_VoidOperationBase___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ReturningOperationBase<IProtocol> systemUnderTest = null;
+                    VoidOperationBase systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<IProtocol>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((VoidOperationBase)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -995,14 +997,14 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_VoidOperationBase___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<IProtocol>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((VoidOperationBase)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1023,14 +1025,14 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_VoidOperationBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IProtocol>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1051,14 +1053,14 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_VoidOperationBase___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IProtocol>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1079,14 +1081,14 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_VoidOperationBase___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IProtocol>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((VoidOperationBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1107,14 +1109,14 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_GetProtocolOp___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_TestVoidOp___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    GetProtocolOp systemUnderTest = null;
+                    TestVoidOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1138,7 +1140,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_GetProtocolOp___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_TestVoidOp___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1166,7 +1168,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_GetProtocolOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_TestVoidOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1194,7 +1196,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_GetProtocolOp___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_TestVoidOp___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1222,7 +1224,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_GetProtocolOp___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_TestVoidOp___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

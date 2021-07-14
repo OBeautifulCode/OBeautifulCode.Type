@@ -17,7 +17,6 @@ namespace OBeautifulCode.Type
 
     using global::OBeautifulCode.Cloning.Recipes;
     using global::OBeautifulCode.Equality.Recipes;
-    using global::OBeautifulCode.Type;
     using global::OBeautifulCode.Type.Recipes;
 
     using static global::System.FormattableString;
@@ -83,16 +82,7 @@ namespace OBeautifulCode.Type
             .Value;
 
         /// <inheritdoc />
-        public object Clone() => this.DeepClone();
-
-        /// <inheritdoc />
-        public GetProtocolOp DeepClone()
-        {
-            var result = new GetProtocolOp(
-                                 this.Operation?.DeepClone());
-
-            return result;
-        }
+        public new GetProtocolOp DeepClone() => (GetProtocolOp)this.DeepCloneInternal();
 
         /// <summary>
         /// Deep clones this object with a new <see cref="Operation" />.
@@ -126,9 +116,19 @@ namespace OBeautifulCode.Type
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        protected override OperationBase DeepCloneInternal()
+        {
+            var result = new GetProtocolOp(
+                                 this.Operation?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.GetProtocolOp: Operation = {this.Operation?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.Type.GetProtocolOp: Operation = {this.Operation?.ToString() ?? "<null>"}.");
 
             return result;
         }

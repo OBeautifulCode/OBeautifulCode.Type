@@ -24,7 +24,6 @@ namespace OBeautifulCode.Type.Test
     using global::OBeautifulCode.Equality.Recipes;
     using global::OBeautifulCode.Math.Recipes;
     using global::OBeautifulCode.Reflection.Recipes;
-    using global::OBeautifulCode.Type;
 
     using global::Xunit;
 
@@ -44,7 +43,7 @@ namespace OBeautifulCode.Type.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<NamedValue<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.NamedValue<Version>: Name = {systemUnderTest.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Value = {systemUnderTest.Value?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.Type.NamedValue<Version>: Name = {systemUnderTest.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Value = {systemUnderTest.Value?.ToString() ?? "<null>"}."),
                         };
 
                         return result;

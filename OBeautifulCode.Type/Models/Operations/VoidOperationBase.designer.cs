@@ -17,7 +17,6 @@ namespace OBeautifulCode.Type
 
     using global::OBeautifulCode.Cloning.Recipes;
     using global::OBeautifulCode.Equality.Recipes;
-    using global::OBeautifulCode.Type;
     using global::OBeautifulCode.Type.Recipes;
 
     using static global::System.FormattableString;

@@ -24,7 +24,6 @@ namespace OBeautifulCode.Type.Test
     using global::OBeautifulCode.Equality.Recipes;
     using global::OBeautifulCode.Math.Recipes;
     using global::OBeautifulCode.Reflection.Recipes;
-    using global::OBeautifulCode.Type;
 
     using global::Xunit;
 

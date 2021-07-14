@@ -24,7 +24,6 @@ namespace OBeautifulCode.Type.Test
     using global::OBeautifulCode.Equality.Recipes;
     using global::OBeautifulCode.Math.Recipes;
     using global::OBeautifulCode.Reflection.Recipes;
-    using global::OBeautifulCode.Type;
 
     using global::Xunit;
 
@@ -32,35 +31,35 @@ namespace OBeautifulCode.Type.Test
 
     public static partial class ExecuteOpRequestedEventTOperationTest
     {
-        private static readonly StringRepresentationTestScenarios<ExecuteOpRequestedEvent<NullVoidOp>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ExecuteOpRequestedEvent<NullVoidOp>>()
+        private static readonly StringRepresentationTestScenarios<ExecuteOpRequestedEvent<GetProtocolOp>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ExecuteOpRequestedEvent<GetProtocolOp>>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new StringRepresentationTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                        var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<ExecuteOpRequestedEvent<NullVoidOp>>
+                        var result = new SystemUnderTestExpectedStringRepresentation<ExecuteOpRequestedEvent<GetProtocolOp>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.Type.ExecuteOpRequestedEvent<NullVoidOp>: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.Type.ExecuteOpRequestedEvent<GetProtocolOp>: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<ExecuteOpRequestedEvent<NullVoidOp>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ExecuteOpRequestedEvent<NullVoidOp>>()
+        private static readonly ConstructorArgumentValidationTestScenarios<ExecuteOpRequestedEvent<GetProtocolOp>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ExecuteOpRequestedEvent<GetProtocolOp>>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new ConstructorArgumentValidationTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'operation' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                        var result = new ExecuteOpRequestedEvent<NullVoidOp>(
+                        var result = new ExecuteOpRequestedEvent<GetProtocolOp>(
                                              null,
                                              referenceObject.TimestampUtc,
                                              referenceObject.Details);
@@ -71,14 +70,14 @@ namespace OBeautifulCode.Type.Test
                     ExpectedExceptionMessageContains = new[] { "operation", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new ConstructorArgumentValidationTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                        var result = new ExecuteOpRequestedEvent<NullVoidOp>(
+                        var result = new ExecuteOpRequestedEvent<GetProtocolOp>(
                                              referenceObject.Operation,
                                              referenceObject.TimestampUtc,
                                              null);
@@ -89,14 +88,14 @@ namespace OBeautifulCode.Type.Test
                     ExpectedExceptionMessageContains = new[] { "details", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new ConstructorArgumentValidationTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                        var result = new ExecuteOpRequestedEvent<NullVoidOp>(
+                        var result = new ExecuteOpRequestedEvent<GetProtocolOp>(
                                              referenceObject.Operation,
                                              referenceObject.TimestampUtc,
                                              Invariant($"  {Environment.NewLine}  "));
@@ -107,18 +106,18 @@ namespace OBeautifulCode.Type.Test
                     ExpectedExceptionMessageContains = new[] { "details", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<ExecuteOpRequestedEvent<NullVoidOp>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ExecuteOpRequestedEvent<NullVoidOp>>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<ExecuteOpRequestedEvent<GetProtocolOp>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ExecuteOpRequestedEvent<GetProtocolOp>>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new ConstructorPropertyAssignmentTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "Operation should return same 'operation' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecuteOpRequestedEvent<NullVoidOp>>
+                        var result = new SystemUnderTestExpectedPropertyValue<ExecuteOpRequestedEvent<GetProtocolOp>>
                         {
-                            SystemUnderTest = new ExecuteOpRequestedEvent<NullVoidOp>(
+                            SystemUnderTest = new ExecuteOpRequestedEvent<GetProtocolOp>(
                                                       referenceObject.Operation,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.Details),
@@ -130,16 +129,16 @@ namespace OBeautifulCode.Type.Test
                     PropertyName = "Operation",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new ConstructorPropertyAssignmentTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "TimestampUtc should return same 'timestampUtc' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecuteOpRequestedEvent<NullVoidOp>>
+                        var result = new SystemUnderTestExpectedPropertyValue<ExecuteOpRequestedEvent<GetProtocolOp>>
                         {
-                            SystemUnderTest = new ExecuteOpRequestedEvent<NullVoidOp>(
+                            SystemUnderTest = new ExecuteOpRequestedEvent<GetProtocolOp>(
                                                       referenceObject.Operation,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.Details),
@@ -151,16 +150,16 @@ namespace OBeautifulCode.Type.Test
                     PropertyName = "TimestampUtc",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new ConstructorPropertyAssignmentTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "Details should return same 'details' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecuteOpRequestedEvent<NullVoidOp>>
+                        var result = new SystemUnderTestExpectedPropertyValue<ExecuteOpRequestedEvent<GetProtocolOp>>
                         {
-                            SystemUnderTest = new ExecuteOpRequestedEvent<NullVoidOp>(
+                            SystemUnderTest = new ExecuteOpRequestedEvent<GetProtocolOp>(
                                                       referenceObject.Operation,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.Details),
@@ -172,19 +171,19 @@ namespace OBeautifulCode.Type.Test
                     PropertyName = "Details",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<ExecuteOpRequestedEvent<NullVoidOp>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ExecuteOpRequestedEvent<NullVoidOp>>()
+        private static readonly DeepCloneWithTestScenarios<ExecuteOpRequestedEvent<GetProtocolOp>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ExecuteOpRequestedEvent<GetProtocolOp>>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new DeepCloneWithTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "DeepCloneWithTimestampUtc should deep clone object and replace TimestampUtc with the provided timestampUtc",
                     WithPropertyName = "TimestampUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                        var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
+                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecuteOpRequestedEvent<NullVoidOp>>
+                        var result = new SystemUnderTestDeepCloneWithValue<ExecuteOpRequestedEvent<GetProtocolOp>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.TimestampUtc,
@@ -194,17 +193,17 @@ namespace OBeautifulCode.Type.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new DeepCloneWithTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "DeepCloneWithOperation should deep clone object and replace Operation with the provided operation",
                     WithPropertyName = "Operation",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                        var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>().ThatIs(_ => !systemUnderTest.Operation.IsEqualTo(_.Operation));
+                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>().ThatIs(_ => !systemUnderTest.Operation.IsEqualTo(_.Operation));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecuteOpRequestedEvent<NullVoidOp>>
+                        var result = new SystemUnderTestDeepCloneWithValue<ExecuteOpRequestedEvent<GetProtocolOp>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Operation,
@@ -214,17 +213,17 @@ namespace OBeautifulCode.Type.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new DeepCloneWithTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
                     WithPropertyName = "Details",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                        var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
+                        var referenceObject = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecuteOpRequestedEvent<NullVoidOp>>
+                        var result = new SystemUnderTestDeepCloneWithValue<ExecuteOpRequestedEvent<GetProtocolOp>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Details,
@@ -234,35 +233,35 @@ namespace OBeautifulCode.Type.Test
                     },
                 });
 
-        private static readonly ExecuteOpRequestedEvent<NullVoidOp> ReferenceObjectForEquatableTestScenarios = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+        private static readonly ExecuteOpRequestedEvent<GetProtocolOp> ReferenceObjectForEquatableTestScenarios = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
-        private static readonly EquatableTestScenarios<ExecuteOpRequestedEvent<NullVoidOp>> EquatableTestScenarios = new EquatableTestScenarios<ExecuteOpRequestedEvent<NullVoidOp>>()
+        private static readonly EquatableTestScenarios<ExecuteOpRequestedEvent<GetProtocolOp>> EquatableTestScenarios = new EquatableTestScenarios<ExecuteOpRequestedEvent<GetProtocolOp>>()
             .AddScenario(() =>
-                new EquatableTestScenario<ExecuteOpRequestedEvent<NullVoidOp>>
+                new EquatableTestScenario<ExecuteOpRequestedEvent<GetProtocolOp>>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ExecuteOpRequestedEvent<NullVoidOp>[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ExecuteOpRequestedEvent<GetProtocolOp>[]
                     {
-                        new ExecuteOpRequestedEvent<NullVoidOp>(
+                        new ExecuteOpRequestedEvent<GetProtocolOp>(
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new ExecuteOpRequestedEvent<NullVoidOp>[]
+                    ObjectsThatAreNotEqualToReferenceObject = new ExecuteOpRequestedEvent<GetProtocolOp>[]
                     {
-                        new ExecuteOpRequestedEvent<NullVoidOp>(
+                        new ExecuteOpRequestedEvent<GetProtocolOp>(
                                 ReferenceObjectForEquatableTestScenarios.Operation,
-                                A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
+                                A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.Details),
-                        new ExecuteOpRequestedEvent<NullVoidOp>(
-                                A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>().Whose(_ => !_.Operation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Operation)).Operation,
+                        new ExecuteOpRequestedEvent<GetProtocolOp>(
+                                A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>().Whose(_ => !_.Operation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Operation)).Operation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.Details),
-                        new ExecuteOpRequestedEvent<NullVoidOp>(
+                        new ExecuteOpRequestedEvent<GetProtocolOp>(
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
+                                A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -271,7 +270,7 @@ namespace OBeautifulCode.Type.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ExecuteOpRequestedEvent<Version, NullVoidOp>>(),
+                        A.Dummy<ExecuteOpRequestedEvent<Version, GetProtocolOp>>(),
                         A.Dummy<NullEvent>(),
                         A.Dummy<NullEvent<Version>>(),
                     },
@@ -298,7 +297,7 @@ namespace OBeautifulCode.Type.Test
             public static void ExecuteOpRequestedEvent___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(ExecuteOpRequestedEvent<NullVoidOp>);
+                var type = typeof(ExecuteOpRequestedEvent<GetProtocolOp>);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -456,10 +455,10 @@ namespace OBeautifulCode.Type.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
                 // Act
-                var actual = (ExecuteOpRequestedEvent<NullVoidOp>)systemUnderTest.Clone();
+                var actual = (ExecuteOpRequestedEvent<GetProtocolOp>)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -483,7 +482,7 @@ namespace OBeautifulCode.Type.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<NullVoidOp>>();
+                var systemUnderTest = A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -534,12 +533,12 @@ namespace OBeautifulCode.Type.Test
                     }
 
                     // Act
-                    var actual = (ExecuteOpRequestedEvent<NullVoidOp>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (ExecuteOpRequestedEvent<GetProtocolOp>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(ExecuteOpRequestedEvent<NullVoidOp>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(ExecuteOpRequestedEvent<GetProtocolOp>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -601,8 +600,8 @@ namespace OBeautifulCode.Type.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                ExecuteOpRequestedEvent<NullVoidOp> systemUnderTest1 = null;
-                ExecuteOpRequestedEvent<NullVoidOp> systemUnderTest2 = null;
+                ExecuteOpRequestedEvent<GetProtocolOp> systemUnderTest1 = null;
+                ExecuteOpRequestedEvent<GetProtocolOp> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -632,7 +631,7 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ExecuteOpRequestedEvent<NullVoidOp> systemUnderTest = null;
+                    ExecuteOpRequestedEvent<GetProtocolOp> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -781,8 +780,8 @@ namespace OBeautifulCode.Type.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                ExecuteOpRequestedEvent<NullVoidOp> systemUnderTest1 = null;
-                ExecuteOpRequestedEvent<NullVoidOp> systemUnderTest2 = null;
+                ExecuteOpRequestedEvent<GetProtocolOp> systemUnderTest1 = null;
+                ExecuteOpRequestedEvent<GetProtocolOp> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -812,7 +811,7 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ExecuteOpRequestedEvent<NullVoidOp> systemUnderTest = null;
+                    ExecuteOpRequestedEvent<GetProtocolOp> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1108,7 +1107,7 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ExecuteOpRequestedEvent<NullVoidOp> systemUnderTest = null;
+                    ExecuteOpRequestedEvent<GetProtocolOp> systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
