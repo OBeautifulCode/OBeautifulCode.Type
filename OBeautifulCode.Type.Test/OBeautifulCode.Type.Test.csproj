@@ -165,7 +165,7 @@
     <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\NamedValueExtensionsTest.cs" />
-    <Compile Include="Logic\Protocols\ProtocolFactoryTest.cs" />
+    <Compile Include="Logic\Protocols\Concrete\ProtocolFactoryTest.cs" />
     <Compile Include="Models\Events\EventBaseTest.cs" />
     <Compile Include="Models\Events\EventBaseTest.designer.cs">
       <DependentUpon>EventBaseTest.cs</DependentUpon>
