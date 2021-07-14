@@ -72,6 +72,7 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Execution\TaskExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Execution\TaskWaitingStrategy.cs" />
+    <Compile Include="Logic\Extensions\ProtocolExtensions.cs" />
     <Compile Include="Logic\Protocols\ProtocolFactory.cs" />
     <Compile Include="Models\Operations\Concrete\GetProtocolOp.cs" />
     <Compile Include="Models\Operations\Concrete\GetProtocolOp.designer.cs">
