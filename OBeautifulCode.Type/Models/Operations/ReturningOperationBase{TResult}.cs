@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReturningOperationBase{TReturn}.cs" company="OBeautifulCode">
+// <copyright file="ReturningOperationBase{TResult}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,11 +7,11 @@
 namespace OBeautifulCode.Type
 {
     /// <summary>
-    /// Base implementation of <see cref="IReturningOperation{TReturn}"/>.
+    /// Base implementation of <see cref="IReturningOperation{TResult}"/>.
     /// </summary>
-    /// <typeparam name="TReturn">The type of the object that the operation returns.</typeparam>
+    /// <typeparam name="TResult">The type returned when the operation is executed.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public abstract partial class ReturningOperationBase<TReturn> : OperationBase, IReturningOperation<TReturn>, IModelViaCodeGen
+    public abstract partial class ReturningOperationBase<TResult> : OperationBase, IReturningOperation<TResult>, IModelViaCodeGen
     {
     }
 }

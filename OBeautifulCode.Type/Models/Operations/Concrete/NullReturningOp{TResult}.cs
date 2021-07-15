@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NullReturningOp{TReturn}.cs" company="OBeautifulCode">
+// <copyright file="NullReturningOp{TResult}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,10 +7,10 @@
 namespace OBeautifulCode.Type
 {
     /// <summary>
-    /// Null object pattern implementation for <see cref="ReturningOperationBase{TReturn}"/>.
+    /// Null object pattern implementation for <see cref="ReturningOperationBase{TResult}"/>.
     /// </summary>
-    /// <typeparam name="TReturn">The type of the object that the operation returns.</typeparam>
-    public partial class NullReturningOp<TReturn> : ReturningOperationBase<TReturn>
+    /// <typeparam name="TResult">The type returned when the operation is executed.</typeparam>
+    public partial class NullReturningOp<TResult> : ReturningOperationBase<TResult>
     {
     }
 }

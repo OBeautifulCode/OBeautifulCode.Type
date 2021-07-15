@@ -202,9 +202,9 @@
     <Compile Include="Models\Operations\Concrete\GetProtocolOpTest.designer.cs">
       <DependentUpon>GetProtocolOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operations\Concrete\NullReturningOp{TReturn}Test.cs" />
-    <Compile Include="Models\Operations\Concrete\NullReturningOp{TReturn}Test.designer.cs">
-      <DependentUpon>NullReturningOp{TReturn}Test.cs</DependentUpon>
+    <Compile Include="Models\Operations\Concrete\NullReturningOp{TResult}Test.cs" />
+    <Compile Include="Models\Operations\Concrete\NullReturningOp{TResult}Test.designer.cs">
+      <DependentUpon>NullReturningOp{TResult}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Operations\Concrete\NullVoidOpTest.cs" />
     <Compile Include="Models\Operations\Concrete\NullVoidOpTest.designer.cs">
@@ -214,9 +214,9 @@
     <Compile Include="Models\Operations\OperationBaseTest.designer.cs">
       <DependentUpon>OperationBaseTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operations\ReturningOperationBase{TReturn}Test.cs" />
-    <Compile Include="Models\Operations\ReturningOperationBase{TReturn}Test.designer.cs">
-      <DependentUpon>ReturningOperationBase{TReturn}Test.cs</DependentUpon>
+    <Compile Include="Models\Operations\ReturningOperationBase{TResult}Test.cs" />
+    <Compile Include="Models\Operations\ReturningOperationBase{TResult}Test.designer.cs">
+      <DependentUpon>ReturningOperationBase{TResult}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Operations\VoidOperationBaseTest.cs" />
     <Compile Include="Models\Operations\VoidOperationBaseTest.designer.cs">

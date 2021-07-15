@@ -74,7 +74,7 @@
     <Compile Include=".recipes\OBeautifulCode.Execution\TaskWaitingStrategy.cs" />
     <Compile Include="Enums\VersionMatchStrategy.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensions.cs" />
-    <Compile Include="Logic\Protocols\Concrete\LambdaReturningProtocol{TOperation,TReturn}.cs" />
+    <Compile Include="Logic\Protocols\Concrete\LambdaReturningProtocol{TOperation,TResult}.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaVoidProtocol.cs" />
     <Compile Include="Logic\Protocols\Concrete\ProtocolFactory.cs" />
     <Compile Include="Models\Operations\Concrete\GetProtocolOp.cs" />
@@ -86,20 +86,20 @@
     <Compile Include="Interfaces\Classification\Event\IEvent{TId}.cs" />
     <Compile Include="Interfaces\Classification\Event\IEvent.cs" />
     <Compile Include="Interfaces\Classification\Operation\IOperation.cs" />
-    <Compile Include="Interfaces\Classification\Operation\IReturningOperation{TReturn}.cs" />
+    <Compile Include="Interfaces\Classification\Operation\IReturningOperation{TResult}.cs" />
     <Compile Include="Interfaces\Classification\Operation\IVoidOperation.cs" />
-    <Compile Include="Interfaces\Classification\Protocol\Specified\IAsyncReturningProtocol{TOperation,TReturn}.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\Specified\IAsyncReturningProtocol{TOperation,TResult}.cs" />
     <Compile Include="Interfaces\Classification\Protocol\Specified\IAsyncVoidProtocol{TOperation}.cs" />
     <Compile Include="Interfaces\Classification\Protocol\IProtocol.cs" />
     <Compile Include="Interfaces\Classification\Protocol\IProtocol{TOperation}.cs" />
-    <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncReturningProtocol{TOperation,TReturn}.cs" />
-    <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncAndAsyncReturningProtocol{TOperation,TReturn}.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncReturningProtocol{TOperation,TResult}.cs" />
+    <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncAndAsyncReturningProtocol{TOperation,TResult}.cs" />
     <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncAndAsyncVoidProtocol{TOperation}.cs" />
     <Compile Include="Interfaces\Classification\Protocol\Specified\ISyncVoidProtocol{TOperation}.cs" />
     <Compile Include="Interfaces\Property\IHaveDetails.cs" />
-    <Compile Include="Logic\Protocols\AsyncSpecificReturningProtocolBase{TOperation,TReturn}.cs" />
+    <Compile Include="Logic\Protocols\AsyncSpecificReturningProtocolBase{TOperation,TResult}.cs" />
     <Compile Include="Logic\Protocols\AsyncSpecificVoidProtocolBase{TOperation}.cs" />
-    <Compile Include="Logic\Protocols\SyncSpecificReturningProtocolBase{TOperation,TReturn}.cs" />
+    <Compile Include="Logic\Protocols\SyncSpecificReturningProtocolBase{TOperation,TResult}.cs" />
     <Compile Include="Logic\Protocols\SyncSpecificVoidProtocolBase{TOperation}.cs" />
     <Compile Include="Models\Events\EventBase.cs" />
     <Compile Include="Models\Events\EventBase.designer.cs">
@@ -129,9 +129,9 @@
     <Compile Include="Models\NamedValue{TValue}.designer.cs">
       <DependentUpon>NamedValue{TValue}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operations\Concrete\NullReturningOp{TReturn}.cs" />
-    <Compile Include="Models\Operations\Concrete\NullReturningOp{TReturn}.designer.cs">
-      <DependentUpon>NullReturningOp{TReturn}.cs</DependentUpon>
+    <Compile Include="Models\Operations\Concrete\NullReturningOp{TResult}.cs" />
+    <Compile Include="Models\Operations\Concrete\NullReturningOp{TResult}.designer.cs">
+      <DependentUpon>NullReturningOp{TResult}.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Operations\Concrete\TestVoidOp.cs" />
     <Compile Include="Models\Operations\Concrete\TestVoidOp.designer.cs">
@@ -145,9 +145,9 @@
     <Compile Include="Models\Operations\OperationBase.designer.cs">
       <DependentUpon>OperationBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operations\ReturningOperationBase{TReturn}.cs" />
-    <Compile Include="Models\Operations\ReturningOperationBase{TReturn}.designer.cs">
-      <DependentUpon>ReturningOperationBase{TReturn}.cs</DependentUpon>
+    <Compile Include="Models\Operations\ReturningOperationBase{TResult}.cs" />
+    <Compile Include="Models\Operations\ReturningOperationBase{TResult}.designer.cs">
+      <DependentUpon>ReturningOperationBase{TResult}.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Operations\VoidOperationBase.cs" />
     <Compile Include="Models\Operations\VoidOperationBase.designer.cs">

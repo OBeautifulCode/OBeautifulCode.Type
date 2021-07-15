@@ -26,7 +26,7 @@ namespace OBeautifulCode.Type
     /// The two implementors below differentiate operations that return versus those that don't.  When you inherit
     /// from one of these base classes, the nature of the operation from a return perspective should be evident and
     /// declarative because it prevents the consumer from defining a void operation where a returning operation is
-    /// actually required.  The TReturn in <see cref="ReturningOperationBase{TReturn}"/> is not used by the class itself
+    /// actually required.  The TResult in <see cref="ReturningOperationBase{TResult}"/> is not used by the class itself
     /// and is thus not enforced when the operation is being authored.  However, the
     /// <see cref="IProtocol{TOperation}"/> associated with the operation requires this generic parameter to define
     /// the signature of the method that can execute the operation.

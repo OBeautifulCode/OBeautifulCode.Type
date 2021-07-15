@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SyncSpecificReturningProtocolBase{TOperation,TReturn}.cs" company="OBeautifulCode">
+// <copyright file="SyncSpecificReturningProtocolBase{TOperation,TResult}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,19 +9,19 @@ namespace OBeautifulCode.Type
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Protocol that gives pass-through implementation for the asynchronous execution for <see cref="ISyncAndAsyncReturningProtocol{TOperation,TReturn}"/>.
+    /// Protocol that gives pass-through implementation for the asynchronous execution for <see cref="ISyncAndAsyncReturningProtocol{TOperation,TResult}"/>.
     /// </summary>
     /// <typeparam name="TOperation">Type of operation.</typeparam>
-    /// <typeparam name="TReturn">Type of return.</typeparam>
-    public abstract class SyncSpecificReturningProtocolBase<TOperation, TReturn> : ISyncAndAsyncReturningProtocol<TOperation, TReturn>
-        where TOperation : IReturningOperation<TReturn>
+    /// <typeparam name="TResult">The type returned when the operation is executed.</typeparam>
+    public abstract class SyncSpecificReturningProtocolBase<TOperation, TResult> : ISyncAndAsyncReturningProtocol<TOperation, TResult>
+        where TOperation : IReturningOperation<TResult>
     {
         /// <inheritdoc />
-        public abstract TReturn Execute(
+        public abstract TResult Execute(
             TOperation operation);
 
         /// <inheritdoc />
-        public async Task<TReturn> ExecuteAsync(
+        public async Task<TResult> ExecuteAsync(
             TOperation operation)
         {
             var syncResult = this.Execute(operation);

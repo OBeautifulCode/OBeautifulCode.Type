@@ -109,7 +109,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void ExecuteViaReflection_TReturn___Should_throw_ArgumentNullException___When_parameter_protocol_is_null()
+        public static void ExecuteViaReflection_TResult___Should_throw_ArgumentNullException___When_parameter_protocol_is_null()
         {
             // Arrange, Act
             var actual = Record.Exception(() => ProtocolExtensions.ExecuteViaReflection<int>(null, A.Dummy<IOperation>()));
@@ -120,7 +120,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void ExecuteViaReflection_TReturn___Should_throw_ArgumentNullException___When_parameter_operation_is_null()
+        public static void ExecuteViaReflection_TResult___Should_throw_ArgumentNullException___When_parameter_operation_is_null()
         {
             // Arrange, Act
             var actual = Record.Exception(() => A.Dummy<IProtocol>().ExecuteViaReflection<int>(null));
@@ -131,7 +131,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void ExecuteViaReflection_TReturn___Should_throw_ArgumentException___When_protocol_cannot_execute_operation()
+        public static void ExecuteViaReflection_TResult___Should_throw_ArgumentException___When_protocol_cannot_execute_operation()
         {
             // Arrange
             var operation = new DummyReturningOperation();
@@ -152,7 +152,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void ExecuteViaReflection_TReturn___Should_throw_ArgumentException___When_protocol_has_multiple_execute_methods_for_operation()
+        public static void ExecuteViaReflection_TResult___Should_throw_ArgumentException___When_protocol_has_multiple_execute_methods_for_operation()
         {
             // Arrange
             var operation = new ChildReturningOperation();
@@ -168,7 +168,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void ExecuteViaReflection_TReturn___Should_execute_the_operation___When_called()
+        public static void ExecuteViaReflection_TResult___Should_execute_the_operation___When_called()
         {
             // Arrange
             var operation1 = new SiblingOperation3
@@ -289,7 +289,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static async Task ExecuteViaReflectionAsync_TReturn___Should_throw_ArgumentNullException___When_parameter_protocol_is_null()
+        public static async Task ExecuteViaReflectionAsync_TResult___Should_throw_ArgumentNullException___When_parameter_protocol_is_null()
         {
             // Arrange, Act
             var actual = await Record.ExceptionAsync(() => ProtocolExtensions.ExecuteViaReflectionAsync<int>(null, A.Dummy<IOperation>()));
@@ -300,7 +300,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static async Task ExecuteViaReflectionAsync_TReturn___Should_throw_ArgumentNullException___When_parameter_operation_is_null()
+        public static async Task ExecuteViaReflectionAsync_TResult___Should_throw_ArgumentNullException___When_parameter_operation_is_null()
         {
             // Arrange, Act
             var actual = await Record.ExceptionAsync(() => A.Dummy<IProtocol>().ExecuteViaReflectionAsync<int>(null));
@@ -311,7 +311,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static async Task ExecuteViaReflectionAsync_TReturn___Should_throw_ArgumentException___When_protocol_cannot_execute_operation()
+        public static async Task ExecuteViaReflectionAsync_TResult___Should_throw_ArgumentException___When_protocol_cannot_execute_operation()
         {
             // Arrange
             var operation = new DummyReturningOperation();
@@ -332,7 +332,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static async Task ExecuteViaReflectionAsync_TReturn___Should_throw_ArgumentException___When_protocol_has_multiple_execute_methods_for_operation()
+        public static async Task ExecuteViaReflectionAsync_TResult___Should_throw_ArgumentException___When_protocol_has_multiple_execute_methods_for_operation()
         {
             // Arrange
             var operation = new ChildReturningOperation();
@@ -348,7 +348,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static async Task ExecuteViaReflectionAsync_TReturn___Should_execute_the_operation___When_called()
+        public static async Task ExecuteViaReflectionAsync_TResult___Should_execute_the_operation___When_called()
         {
             // Arrange
             var operation1 = new SiblingOperation3

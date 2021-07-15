@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LambdaReturningProtocol{TOperation,TReturn}.cs" company="OBeautifulCode">
+// <copyright file="LambdaReturningProtocol{TOperation,TResult}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,20 +15,20 @@ namespace OBeautifulCode.Type
     /// Protocolizes a returning lambda.
     /// </summary>
     /// <typeparam name="TOperation">Type of operation.</typeparam>
-    /// <typeparam name="TReturn">Type of the return.</typeparam>
-    public class LambdaReturningProtocol<TOperation, TReturn> : ISyncAndAsyncReturningProtocol<TOperation, TReturn>
-    where TOperation : IReturningOperation<TReturn>
+    /// <typeparam name="TResult">The type returned when the operation is executed.</typeparam>
+    public class LambdaReturningProtocol<TOperation, TResult> : ISyncAndAsyncReturningProtocol<TOperation, TResult>
+    where TOperation : IReturningOperation<TResult>
     {
-        private readonly Func<TOperation, TReturn> synchronousLambda;
+        private readonly Func<TOperation, TResult> synchronousLambda;
 
-        private readonly Func<TOperation, Task<TReturn>> asyncAsynchronousLambda;
+        private readonly Func<TOperation, Task<TResult>> asyncAsynchronousLambda;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LambdaReturningProtocol{TOperation,TReturn}"/> class.
+        /// Initializes a new instance of the <see cref="LambdaReturningProtocol{TOperation,TResult}"/> class.
         /// </summary>
         /// <param name="asynchronousLambda">The lambda to protocol the operation.</param>
         public LambdaReturningProtocol(
-            Func<TOperation, Task<TReturn>> asynchronousLambda)
+            Func<TOperation, Task<TResult>> asynchronousLambda)
         {
             if (asynchronousLambda == null)
             {
@@ -39,11 +39,11 @@ namespace OBeautifulCode.Type
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LambdaReturningProtocol{TOperation,TReturn}"/> class.
+        /// Initializes a new instance of the <see cref="LambdaReturningProtocol{TOperation,TResult}"/> class.
         /// </summary>
         /// <param name="synchronousLambda">The lambda to protocol the operation.</param>
         public LambdaReturningProtocol(
-            Func<TOperation, TReturn> synchronousLambda)
+            Func<TOperation, TResult> synchronousLambda)
         {
             if (synchronousLambda == null)
             {
@@ -54,13 +54,13 @@ namespace OBeautifulCode.Type
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LambdaReturningProtocol{TOperation,TReturn}"/> class.
+        /// Initializes a new instance of the <see cref="LambdaReturningProtocol{TOperation,TResult}"/> class.
         /// </summary>
         /// <param name="synchronousLambda">The synchronous lambda to protocol the operation.</param>
         /// <param name="asynchronousLambda">The asynchronous lambda to protocol the operation.</param>
         public LambdaReturningProtocol(
-            Func<TOperation, TReturn> synchronousLambda,
-            Func<TOperation, Task<TReturn>> asynchronousLambda)
+            Func<TOperation, TResult> synchronousLambda,
+            Func<TOperation, Task<TResult>> asynchronousLambda)
         {
             if (synchronousLambda == null)
             {
@@ -77,7 +77,7 @@ namespace OBeautifulCode.Type
         }
 
         /// <inheritdoc />
-        public TReturn Execute(
+        public TResult Execute(
             TOperation operation)
         {
             var result = this.synchronousLambda != null
@@ -88,7 +88,7 @@ namespace OBeautifulCode.Type
         }
 
         /// <inheritdoc />
-        public async Task<TReturn> ExecuteAsync(
+        public async Task<TResult> ExecuteAsync(
             TOperation operation)
         {
             var result = await (this.asyncAsynchronousLambda != null

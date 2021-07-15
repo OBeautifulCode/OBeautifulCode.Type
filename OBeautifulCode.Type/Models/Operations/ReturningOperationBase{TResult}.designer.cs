@@ -22,15 +22,15 @@ namespace OBeautifulCode.Type
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ReturningOperationBase<TReturn> : IModel<ReturningOperationBase<TReturn>>
+    public partial class ReturningOperationBase<TResult> : IModel<ReturningOperationBase<TResult>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ReturningOperationBase{TReturn}"/> are equal.
+        /// Determines whether two objects of type <see cref="ReturningOperationBase{TResult}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ReturningOperationBase<TReturn> left, ReturningOperationBase<TReturn> right)
+        public static bool operator ==(ReturningOperationBase<TResult> left, ReturningOperationBase<TResult> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace OBeautifulCode.Type
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ReturningOperationBase{TReturn}"/> are not equal.
+        /// Determines whether two objects of type <see cref="ReturningOperationBase{TResult}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ReturningOperationBase<TReturn> left, ReturningOperationBase<TReturn> right) => !(left == right);
+        public static bool operator !=(ReturningOperationBase<TResult> left, ReturningOperationBase<TResult> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ReturningOperationBase<TReturn> other) => this == other;
+        public bool Equals(ReturningOperationBase<TResult> other) => this == other;
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
@@ -73,7 +73,7 @@ namespace OBeautifulCode.Type
         }
 
         /// <inheritdoc />
-        public new ReturningOperationBase<TReturn> DeepClone() => (ReturningOperationBase<TReturn>)this.DeepCloneInternal();
+        public new ReturningOperationBase<TResult> DeepClone() => (ReturningOperationBase<TResult>)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]

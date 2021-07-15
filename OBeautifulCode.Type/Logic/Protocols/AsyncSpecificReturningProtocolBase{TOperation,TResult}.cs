@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AsyncSpecificReturningProtocolBase{TOperation,TReturn}.cs" company="OBeautifulCode">
+// <copyright file="AsyncSpecificReturningProtocolBase{TOperation,TResult}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,15 +11,15 @@ namespace OBeautifulCode.Type
     using OBeautifulCode.Execution.Recipes;
 
     /// <summary>
-    /// Protocol that gives pass-through implementation for the synchronous execution for <see cref="ISyncAndAsyncReturningProtocol{TOperation,TReturn}"/>.
+    /// Protocol that gives pass-through implementation for the synchronous execution for <see cref="ISyncAndAsyncReturningProtocol{TOperation,TResult}"/>.
     /// </summary>
     /// <typeparam name="TOperation">Type of operation.</typeparam>
-    /// <typeparam name="TReturn">Type of return.</typeparam>
-    public abstract class AsyncSpecificReturningProtocolBase<TOperation, TReturn> : ISyncAndAsyncReturningProtocol<TOperation, TReturn>
-        where TOperation : IReturningOperation<TReturn>
+    /// <typeparam name="TResult">The type returned when the operation is executed.</typeparam>
+    public abstract class AsyncSpecificReturningProtocolBase<TOperation, TResult> : ISyncAndAsyncReturningProtocol<TOperation, TResult>
+        where TOperation : IReturningOperation<TResult>
     {
         /// <inheritdoc />
-        public TReturn Execute(
+        public TResult Execute(
             TOperation operation)
         {
             var task = this.ExecuteAsync(operation);
@@ -30,7 +30,7 @@ namespace OBeautifulCode.Type
         }
 
         /// <inheritdoc />
-        public abstract Task<TReturn> ExecuteAsync(
+        public abstract Task<TResult> ExecuteAsync(
             TOperation operation);
     }
 }

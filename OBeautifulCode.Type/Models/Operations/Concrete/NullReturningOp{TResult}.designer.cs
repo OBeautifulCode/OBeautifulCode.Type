@@ -22,15 +22,15 @@ namespace OBeautifulCode.Type
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class NullReturningOp<TReturn> : IModel<NullReturningOp<TReturn>>
+    public partial class NullReturningOp<TResult> : IModel<NullReturningOp<TResult>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="NullReturningOp{TReturn}"/> are equal.
+        /// Determines whether two objects of type <see cref="NullReturningOp{TResult}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(NullReturningOp<TReturn> left, NullReturningOp<TReturn> right)
+        public static bool operator ==(NullReturningOp<TResult> left, NullReturningOp<TResult> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace OBeautifulCode.Type
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="NullReturningOp{TReturn}"/> are not equal.
+        /// Determines whether two objects of type <see cref="NullReturningOp{TResult}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(NullReturningOp<TReturn> left, NullReturningOp<TReturn> right) => !(left == right);
+        public static bool operator !=(NullReturningOp<TResult> left, NullReturningOp<TResult> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(NullReturningOp<TReturn> other)
+        public bool Equals(NullReturningOp<TResult> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -74,21 +74,21 @@ namespace OBeautifulCode.Type
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as NullReturningOp<TReturn>);
+        public override bool Equals(object obj) => this == (obj as NullReturningOp<TResult>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash("NullReturningOp<TReturn>")
+            .Hash("NullReturningOp<TResult>")
             .Value;
 
         /// <inheritdoc />
-        public new NullReturningOp<TReturn> DeepClone() => (NullReturningOp<TReturn>)this.DeepCloneInternal();
+        public new NullReturningOp<TResult> DeepClone() => (NullReturningOp<TResult>)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new NullReturningOp<TReturn>();
+            var result = new NullReturningOp<TResult>();
 
             return result;
         }

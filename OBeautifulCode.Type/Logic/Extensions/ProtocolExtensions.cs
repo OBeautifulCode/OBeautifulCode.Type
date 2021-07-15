@@ -102,13 +102,13 @@ namespace OBeautifulCode.Type
         /// This is generally used in conjunction with an <see cref="IProtocolFactory"/>
         /// which will ensure that the protocol coming out of the factory can in fact execute the specified operation.
         /// </remarks>
-        /// <typeparam name="TReturn">The type of return.</typeparam>
+        /// <typeparam name="TResult">The type returned when the operation is executed.</typeparam>
         /// <param name="protocol">The protocol.</param>
         /// <param name="operation">The operation.</param>
         /// <returns>
         /// The result of executing the specified operation using the specified protocol.
         /// </returns>
-        public static TReturn ExecuteViaReflection<TReturn>(
+        public static TResult ExecuteViaReflection<TResult>(
             this IProtocol protocol,
             IOperation operation)
         {
@@ -126,7 +126,7 @@ namespace OBeautifulCode.Type
 
             var operationType = operation.GetType();
 
-            var returnType = typeof(TReturn);
+            var returnType = typeof(TResult);
 
             var cacheKey = new Tuple<Type, Type, Type>(protocolType, operationType, returnType);
 
@@ -158,7 +158,7 @@ namespace OBeautifulCode.Type
             // ReSharper disable once CoVariantArrayConversion
             var invokeResult = methodInfo.Invoke(protocol, new[] { operation });
 
-            var result = (TReturn)invokeResult;
+            var result = (TResult)invokeResult;
 
             return result;
         }
@@ -239,13 +239,13 @@ namespace OBeautifulCode.Type
         /// This is generally used in conjunction with an <see cref="IProtocolFactory"/>
         /// which will ensure that the protocol coming out of the factory can in fact execute the specified operation.
         /// </remarks>
-        /// <typeparam name="TReturn">The type of return.</typeparam>
+        /// <typeparam name="TResult">The type returned when the operation is executed.</typeparam>
         /// <param name="protocol">The protocol.</param>
         /// <param name="operation">The operation.</param>
         /// <returns>
         /// The result of executing the specified operation using the specified protocol.
         /// </returns>
-        public static Task<TReturn> ExecuteViaReflectionAsync<TReturn>(
+        public static Task<TResult> ExecuteViaReflectionAsync<TResult>(
             this IProtocol protocol,
             IOperation operation)
         {
@@ -263,7 +263,7 @@ namespace OBeautifulCode.Type
 
             var operationType = operation.GetType();
 
-            var returnType = typeof(TReturn);
+            var returnType = typeof(TResult);
 
             var cacheKey = new Tuple<Type, Type, Type>(protocolType, operationType, returnType);
 
@@ -295,7 +295,7 @@ namespace OBeautifulCode.Type
             // ReSharper disable once CoVariantArrayConversion
             var invokeResult = methodInfo.Invoke(protocol, new[] { operation });
 
-            var result = (Task<TReturn>)invokeResult;
+            var result = (Task<TResult>)invokeResult;
 
             return result;
         }
