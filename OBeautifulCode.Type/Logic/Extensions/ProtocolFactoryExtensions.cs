@@ -7,9 +7,7 @@
 namespace OBeautifulCode.Type
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Threading.Tasks;
-    using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Extension methods related to <see cref="IProtocolFactory"/>.
