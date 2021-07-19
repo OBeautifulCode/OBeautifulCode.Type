@@ -29,7 +29,7 @@ namespace OBeautifulCode.Type
 
             if (missingProtocolStrategy == MissingProtocolStrategy.Unknown)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(missingProtocolStrategy)} is {nameof(MissingProtocolStrategy.Unknown)}.");
+                throw new ArgumentOutOfRangeException(nameof(missingProtocolStrategy), $"{nameof(missingProtocolStrategy)} is {nameof(MissingProtocolStrategy.Unknown)}.");
             }
 
             this.Operation = operation;
