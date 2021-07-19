@@ -72,11 +72,13 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Execution\TaskExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Execution\TaskWaitingStrategy.cs" />
+    <Compile Include="Enums\MissingProtocolStrategy.cs" />
     <Compile Include="Enums\VersionMatchStrategy.cs" />
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensions.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaReturningProtocol{TOperation,TResult}.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaVoidProtocol.cs" />
+    <Compile Include="Logic\Protocols\Concrete\ChainOfResponsibilityProtocolFactory.cs" />
     <Compile Include="Logic\Protocols\Concrete\ProtocolFactory.cs" />
     <Compile Include="Models\Operations\Concrete\GetProtocolOp.cs" />
     <Compile Include="Models\Operations\Concrete\GetProtocolOp.designer.cs">
