@@ -41,17 +41,17 @@ namespace OBeautifulCode.Type
             {
                 foreach (var protocolType in protocolTypeToGetProtocolFuncMap.Keys)
                 {
-                    this.RegisterProtocol(protocolType, protocolTypeToGetProtocolFuncMap[protocolType]);
+                    this.RegisterProtocolForSupportedOperations(protocolType, protocolTypeToGetProtocolFuncMap[protocolType]);
                 }
             }
         }
 
         /// <summary>
-        /// Registers a protocol with the factory.
+        /// Registers a protocol with the factory to be used for the operations supported by the protocol.
         /// </summary>
         /// <param name="protocolType">The protocol's type.  Use concrete types.  These protocols can execute multiple operations and those will be honored in the factory.</param>
         /// <param name="getProtocolFunc">A func that gets an instance of the protocol.</param>
-        public void RegisterProtocol(
+        public void RegisterProtocolForSupportedOperations(
             Type protocolType,
             Func<IProtocol> getProtocolFunc)
         {
@@ -100,7 +100,18 @@ namespace OBeautifulCode.Type
             // ReSharper disable once InconsistentlySynchronizedField
             if (!this.operationTypeToGetProtocolFuncMap.TryGetValue(operation.Operation.GetType(), out var getProtocolFunc))
             {
-                throw new InvalidOperationException(Invariant($"There is no protocol registered for the specified operation: '{operationType.ToStringReadable()}'."));
+                if (operation.MissingProtocolStrategy == MissingProtocolStrategy.Throw)
+                {
+                    throw new InvalidOperationException(Invariant($"There is no protocol registered for the specified operation: '{operationType.ToStringReadable()}'."));
+                }
+                else if (operation.MissingProtocolStrategy == MissingProtocolStrategy.ReturnNull)
+                {
+                    return null;
+                }
+                else
+                {
+                    throw new NotSupportedException(Invariant($"This {nameof(MissingProtocolStrategy)} is not supported: {operation.MissingProtocolStrategy}."));
+                }
             }
 
             var result = getProtocolFunc();

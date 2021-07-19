@@ -29,6 +29,22 @@ namespace OBeautifulCode.Type.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static GetProtocolOpTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<GetProtocolOp>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'missingProtocolStrategy' is MissingProtocolStrategy.Unknown",
+                        ConstructionFunc = () =>
+                        {
+                            var result = new GetProtocolOp(
+                                A.Dummy<IOperation>(),
+                                MissingProtocolStrategy.Unknown);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "missingProtocolStrategy", "Unknown" },
+                    });
         }
     }
 }

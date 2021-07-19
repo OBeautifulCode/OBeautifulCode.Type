@@ -21,13 +21,13 @@ namespace OBeautifulCode.Type.Test
     public static class ProtocolFactoryTest
     {
         [Fact]
-        public static void RegisterProtocol___Should_throw_ArgumentNullException___When_parameter_protocolType_is_null()
+        public static void RegisterProtocolForSupportedOperations___Should_throw_ArgumentNullException___When_parameter_protocolType_is_null()
         {
             // Arrange
             var systemUnderTest = new ProtocolFactory();
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.RegisterProtocol(null, A.Dummy<IProtocol>));
+            var actual = Record.Exception(() => systemUnderTest.RegisterProtocolForSupportedOperations(null, A.Dummy<IProtocol>));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
@@ -35,13 +35,13 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void RegisterProtocol___Should_throw_ArgumentException___When_parameter_protocolType_is_not_assignable_to_IProtocol()
+        public static void RegisterProtocolForSupportedOperations___Should_throw_ArgumentException___When_parameter_protocolType_is_not_assignable_to_IProtocol()
         {
             // Arrange
             var systemUnderTest = new ProtocolFactory();
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.RegisterProtocol(typeof(object), A.Dummy<IProtocol>));
+            var actual = Record.Exception(() => systemUnderTest.RegisterProtocolForSupportedOperations(typeof(object), A.Dummy<IProtocol>));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentException>();
@@ -49,13 +49,13 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void RegisterProtocol___Should_throw_ArgumentNullException___When_parameter_getProtocolFunc_is_null()
+        public static void RegisterProtocolForSupportedOperations___Should_throw_ArgumentNullException___When_parameter_getProtocolFunc_is_null()
         {
             // Arrange
             var systemUnderTest = new ProtocolFactory();
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.RegisterProtocol(A.Dummy<IProtocol>().GetType(), null));
+            var actual = Record.Exception(() => systemUnderTest.RegisterProtocolForSupportedOperations(A.Dummy<IProtocol>().GetType(), null));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
@@ -63,13 +63,13 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void RegisterProtocol___Should_throw_ArgumentException___When_protocol_does_not_execute_any_operations()
+        public static void RegisterProtocolForSupportedOperations___Should_throw_ArgumentException___When_protocol_does_not_execute_any_operations()
         {
             // Arrange
             var systemUnderTest = new ProtocolFactory();
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.RegisterProtocol(typeof(ProtocolWithNoOperations), A.Dummy<IProtocol>));
+            var actual = Record.Exception(() => systemUnderTest.RegisterProtocolForSupportedOperations(typeof(ProtocolWithNoOperations), A.Dummy<IProtocol>));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentException>();
@@ -77,15 +77,15 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void RegisterProtocol___Should_throw_ArgumentException___When_protocol_executes_an_operation_that_already_been_registered()
+        public static void RegisterProtocolForSupportedOperations___Should_throw_ArgumentException___When_protocol_executes_an_operation_that_already_been_registered()
         {
             // Arrange
             var systemUnderTest = new ProtocolFactory();
 
-            systemUnderTest.RegisterProtocol(typeof(SharedOperationProtocol1), () => new SharedOperationProtocol1());
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => new SharedOperationProtocol1());
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.RegisterProtocol(typeof(SharedOperationProtocol2), () => new SharedOperationProtocol2()));
+            var actual = Record.Exception(() => systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol2), () => new SharedOperationProtocol2()));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentException>();
@@ -107,12 +107,12 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void Execute___Should_throw_InvalidOperationException___When_there_is_no_protocol_registered_for_the_operation()
+        public static void Execute___Should_throw_InvalidOperationException___When_there_is_no_protocol_registered_for_the_operation_and_missingProtocolStrategy_is_Throw()
         {
             // Arrange
             var systemUnderTest = new ProtocolFactory();
 
-            var operation = new GetProtocolOp(new SharedOperation());
+            var operation = new GetProtocolOp(new SharedOperation(), MissingProtocolStrategy.Throw);
 
             // Act
             var actual = Record.Exception(() => systemUnderTest.Execute(operation));
@@ -123,12 +123,27 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
+        public static void Execute___Should_return_null___When_there_is_no_protocol_registered_for_the_operation_and_missingProtocolStrategy_is_ReturnNull()
+        {
+            // Arrange
+            var systemUnderTest = new ProtocolFactory();
+
+            var operation = new GetProtocolOp(new SharedOperation(), MissingProtocolStrategy.ReturnNull);
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeNull();
+        }
+
+        [Fact]
         public static void Execute___Should_throw_InvalidOperationException___When_getProtocolFunc_returns_null()
         {
             // Arrange
             var systemUnderTest = new ProtocolFactory();
 
-            systemUnderTest.RegisterProtocol(typeof(SharedOperationProtocol1), () => null);
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => null);
 
             var operation = new GetProtocolOp(new SharedOperation());
 
@@ -149,8 +164,8 @@ namespace OBeautifulCode.Type.Test
             IProtocol protocol1 = new SharedOperationProtocol1();
             IProtocol protocol2 = new SiblingOperationProtocol();
 
-            systemUnderTest.RegisterProtocol(typeof(SharedOperationProtocol1), () => protocol1);
-            systemUnderTest.RegisterProtocol(typeof(SiblingOperationProtocol), () => protocol2);
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => protocol1);
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => protocol2);
 
             var operation1 = new GetProtocolOp(new SharedOperation());
             var operation2 = new GetProtocolOp(new SiblingOperation1());

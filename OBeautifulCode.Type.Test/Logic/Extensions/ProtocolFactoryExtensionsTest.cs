@@ -47,7 +47,7 @@ namespace OBeautifulCode.Type.Test
 
             var protocolFactory = new ProtocolFactory();
 
-            protocolFactory.RegisterProtocol(typeof(SiblingOperationProtocol), () => new SiblingOperationProtocol());
+            protocolFactory.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => new SiblingOperationProtocol());
 
             // Act, Assert
             protocolFactory.GetProtocolAndExecuteViaReflection(operation1);
@@ -90,7 +90,7 @@ namespace OBeautifulCode.Type.Test
 
             var protocolFactory = new ProtocolFactory();
 
-            protocolFactory.RegisterProtocol(typeof(SiblingOperationProtocol), () => new SiblingOperationProtocol());
+            protocolFactory.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => new SiblingOperationProtocol());
 
             // Act, Assert
             await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(operation1);
@@ -135,7 +135,7 @@ namespace OBeautifulCode.Type.Test
 
             var protocolFactory = new ProtocolFactory();
 
-            protocolFactory.RegisterProtocol(typeof(SiblingOperationProtocol), () => new SiblingOperationProtocol());
+            protocolFactory.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => new SiblingOperationProtocol());
 
             // Act
             var actual1 = protocolFactory.GetProtocolAndExecuteViaReflection<int>(operation1);
@@ -180,7 +180,7 @@ namespace OBeautifulCode.Type.Test
 
             var protocolFactory = new ProtocolFactory();
 
-            protocolFactory.RegisterProtocol(typeof(SiblingOperationProtocol), () => new SiblingOperationProtocol());
+            protocolFactory.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => new SiblingOperationProtocol());
 
             // Act
             var actual1 = await protocolFactory.GetProtocolAndExecuteViaReflectionAsync<int>(operation1);
