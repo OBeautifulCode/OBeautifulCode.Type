@@ -379,6 +379,30 @@ namespace OBeautifulCode.Type.Test
             actual3.AsTest().Must().BeEqualTo(4);
         }
 
+        [Fact]
+        public static void ToProtocolFactory___Should_throw_ArgumentNullException___When_parameter_protocol_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => ProtocolExtensions.ToProtocolFactory(null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("protocol");
+        }
+
+        [Fact]
+        public static void ToProtocolFactory___Should_create_working_factory___When_called()
+        {
+            // Arrange
+            IProtocol protocol = new SiblingOperationProtocol();
+
+            // Act
+            var actual = protocol.ToProtocolFactory();
+
+            // Assert
+            actual.Execute(new GetProtocolOp(new SiblingOperation4())).AsTest().Must().BeSameReferenceAs(protocol);
+        }
+
         private class DummyVoidOperation : IVoidOperation
         {
         }

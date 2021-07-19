@@ -299,5 +299,27 @@ namespace OBeautifulCode.Type
 
             return result;
         }
+
+        /// <summary>
+        /// Creates a <see cref="IProtocolFactory"/> for the supported operations on a specified protocol.
+        /// </summary>
+        /// <param name="protocol">The protocol.</param>
+        /// <returns>
+        /// A <see cref="IProtocolFactory" /> for the supported operations on the specified protocol.
+        /// </returns>
+        public static IProtocolFactory ToProtocolFactory(
+            this IProtocol protocol)
+        {
+            if (protocol == null)
+            {
+                throw new ArgumentNullException(nameof(protocol));
+            }
+
+            var result = new ProtocolFactory();
+
+            result.RegisterProtocolForSupportedOperations(protocol.GetType(), () => protocol);
+
+            return result;
+        }
     }
 }
