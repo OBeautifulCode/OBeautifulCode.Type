@@ -43,7 +43,7 @@ namespace OBeautifulCode.Type.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<GetProtocolOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.Type.GetProtocolOp: Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.Type.GetProtocolOp: Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}, MissingProtocolStrategy = {systemUnderTest.MissingProtocolStrategy.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -57,8 +57,11 @@ namespace OBeautifulCode.Type.Test
                     Name = "constructor should throw ArgumentNullException when parameter 'operation' is null scenario",
                     ConstructionFunc = () =>
                     {
+                        var referenceObject = A.Dummy<GetProtocolOp>();
+
                         var result = new GetProtocolOp(
-                                             null);
+                                             null,
+                                             referenceObject.MissingProtocolStrategy);
 
                         return result;
                     },
@@ -78,13 +81,34 @@ namespace OBeautifulCode.Type.Test
                         var result = new SystemUnderTestExpectedPropertyValue<GetProtocolOp>
                         {
                             SystemUnderTest = new GetProtocolOp(
-                                                      referenceObject.Operation),
+                                                      referenceObject.Operation,
+                                                      referenceObject.MissingProtocolStrategy),
                             ExpectedPropertyValue = referenceObject.Operation,
                         };
 
                         return result;
                     },
                     PropertyName = "Operation",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<GetProtocolOp>
+                {
+                    Name = "MissingProtocolStrategy should return same 'missingProtocolStrategy' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<GetProtocolOp>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<GetProtocolOp>
+                        {
+                            SystemUnderTest = new GetProtocolOp(
+                                                      referenceObject.Operation,
+                                                      referenceObject.MissingProtocolStrategy),
+                            ExpectedPropertyValue = referenceObject.MissingProtocolStrategy,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "MissingProtocolStrategy",
                 });
 
         private static readonly DeepCloneWithTestScenarios<GetProtocolOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<GetProtocolOp>()
@@ -107,6 +131,26 @@ namespace OBeautifulCode.Type.Test
 
                         return result;
                     },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<GetProtocolOp>
+                {
+                    Name = "DeepCloneWithMissingProtocolStrategy should deep clone object and replace MissingProtocolStrategy with the provided missingProtocolStrategy",
+                    WithPropertyName = "MissingProtocolStrategy",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<GetProtocolOp>();
+
+                        var referenceObject = A.Dummy<GetProtocolOp>().ThatIs(_ => !systemUnderTest.MissingProtocolStrategy.IsEqualTo(_.MissingProtocolStrategy));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<GetProtocolOp>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.MissingProtocolStrategy,
+                        };
+
+                        return result;
+                    },
                 });
 
         private static readonly GetProtocolOp ReferenceObjectForEquatableTestScenarios = A.Dummy<GetProtocolOp>();
@@ -120,12 +164,17 @@ namespace OBeautifulCode.Type.Test
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new GetProtocolOp[]
                     {
                         new GetProtocolOp(
-                                ReferenceObjectForEquatableTestScenarios.Operation),
+                                ReferenceObjectForEquatableTestScenarios.Operation,
+                                ReferenceObjectForEquatableTestScenarios.MissingProtocolStrategy),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new GetProtocolOp[]
                     {
                         new GetProtocolOp(
-                                A.Dummy<GetProtocolOp>().Whose(_ => !_.Operation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Operation)).Operation),
+                                A.Dummy<GetProtocolOp>().Whose(_ => !_.Operation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Operation)).Operation,
+                                ReferenceObjectForEquatableTestScenarios.MissingProtocolStrategy),
+                        new GetProtocolOp(
+                                ReferenceObjectForEquatableTestScenarios.Operation,
+                                A.Dummy<GetProtocolOp>().Whose(_ => !_.MissingProtocolStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MissingProtocolStrategy)).MissingProtocolStrategy),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -384,7 +433,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Operation" };
+                var propertyNames = new string[] { "Operation", "MissingProtocolStrategy" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

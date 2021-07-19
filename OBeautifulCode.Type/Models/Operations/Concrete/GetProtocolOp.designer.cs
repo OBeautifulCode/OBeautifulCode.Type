@@ -68,7 +68,8 @@ namespace OBeautifulCode.Type
                 return false;
             }
 
-            var result = this.Operation.IsEqualTo(other.Operation);
+            var result = this.Operation.IsEqualTo(other.Operation)
+                      && this.MissingProtocolStrategy.IsEqualTo(other.MissingProtocolStrategy);
 
             return result;
         }
@@ -79,6 +80,7 @@ namespace OBeautifulCode.Type
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.Operation)
+            .Hash(this.MissingProtocolStrategy)
             .Value;
 
         /// <inheritdoc />
@@ -109,7 +111,39 @@ namespace OBeautifulCode.Type
         public GetProtocolOp DeepCloneWithOperation(IOperation operation)
         {
             var result = new GetProtocolOp(
-                                 operation);
+                                 operation,
+                                 this.MissingProtocolStrategy.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="MissingProtocolStrategy" />.
+        /// </summary>
+        /// <param name="missingProtocolStrategy">The new <see cref="MissingProtocolStrategy" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="GetProtocolOp" /> using the specified <paramref name="missingProtocolStrategy" /> for <see cref="MissingProtocolStrategy" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public GetProtocolOp DeepCloneWithMissingProtocolStrategy(MissingProtocolStrategy missingProtocolStrategy)
+        {
+            var result = new GetProtocolOp(
+                                 this.Operation?.DeepClone(),
+                                 missingProtocolStrategy);
 
             return result;
         }
@@ -119,7 +153,8 @@ namespace OBeautifulCode.Type
         protected override OperationBase DeepCloneInternal()
         {
             var result = new GetProtocolOp(
-                                 this.Operation?.DeepClone());
+                                 this.Operation?.DeepClone(),
+                                 this.MissingProtocolStrategy.DeepClone());
 
             return result;
         }
@@ -128,7 +163,7 @@ namespace OBeautifulCode.Type
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.Type.GetProtocolOp: Operation = {this.Operation?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.Type.GetProtocolOp: Operation = {this.Operation?.ToString() ?? "<null>"}, MissingProtocolStrategy = {this.MissingProtocolStrategy.ToString() ?? "<null>"}.");
 
             return result;
         }
