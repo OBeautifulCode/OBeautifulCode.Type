@@ -231,6 +231,14 @@
     <Compile Include="Logic\Extensions\EncodingExtensionsTest.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOpTest.cs" />
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOpTest.designer.cs">
+      <DependentUpon>ThrowOpExecutionAbortedExceptionOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp{TResult}Test.cs" />
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp{TResult}Test.designer.cs">
+      <DependentUpon>ThrowOpExecutionAbortedExceptionOp{TResult}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="TypeDummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeDummyFactory.designer.cs">

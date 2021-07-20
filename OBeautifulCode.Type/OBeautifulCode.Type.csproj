@@ -77,12 +77,18 @@
     <Compile Include="Enums\VersionMatchStrategy.cs" />
     <Compile Include="Exceptions\OpExecutionAbortedException.cs" />
     <Compile Include="Exceptions\OpExecutionAbortedExceptionBase.cs" />
+    <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionAbortedExceptionOp.cs" />
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensions.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaReturningProtocol{TOperation,TResult}.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaVoidProtocol.cs" />
     <Compile Include="Logic\Protocols\Concrete\ChainOfResponsibilityProtocolFactory.cs" />
     <Compile Include="Logic\Protocols\Concrete\ProtocolFactory.cs" />
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp.cs" />
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp.designer.cs">
+      <DependentUpon>ThrowOpExecutionAbortedExceptionOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp{TResult}.cs" />
     <Compile Include="Models\Operations\Concrete\GetProtocolOp.cs" />
     <Compile Include="Models\Operations\Concrete\GetProtocolOp.designer.cs">
       <DependentUpon>GetProtocolOp.cs</DependentUpon>
@@ -146,6 +152,9 @@
     <Compile Include="Models\Operations\Concrete\NullVoidOp.cs" />
     <Compile Include="Models\Operations\Concrete\NullVoidOp.designer.cs">
       <DependentUpon>NullVoidOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp{TResult}.designer.cs">
+      <DependentUpon>ThrowOpExecutionAbortedExceptionOp{TResult}.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Operations\OperationBase.cs" />
     <Compile Include="Models\Operations\OperationBase.designer.cs">

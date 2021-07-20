@@ -22,15 +22,15 @@ namespace OBeautifulCode.Type
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class NullEvent<TId> : IModel<NullEvent<TId>>
+    public partial class ThrowOpExecutionAbortedExceptionOp<TResult> : IModel<ThrowOpExecutionAbortedExceptionOp<TResult>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="NullEvent{TId}"/> are equal.
+        /// Determines whether two objects of type <see cref="ThrowOpExecutionAbortedExceptionOp{TResult}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(NullEvent<TId> left, NullEvent<TId> right)
+        public static bool operator ==(ThrowOpExecutionAbortedExceptionOp<TResult> left, ThrowOpExecutionAbortedExceptionOp<TResult> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace OBeautifulCode.Type
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="NullEvent{TId}"/> are not equal.
+        /// Determines whether two objects of type <see cref="ThrowOpExecutionAbortedExceptionOp{TResult}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(NullEvent<TId> left, NullEvent<TId> right) => !(left == right);
+        public static bool operator !=(ThrowOpExecutionAbortedExceptionOp<TResult> left, ThrowOpExecutionAbortedExceptionOp<TResult> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(NullEvent<TId> other)
+        public bool Equals(ThrowOpExecutionAbortedExceptionOp<TResult> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -68,25 +68,27 @@ namespace OBeautifulCode.Type
                 return false;
             }
 
-            var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc)
-                      && this.Id.IsEqualTo(other.Id);
+            var result = this.Details.IsEqualTo(other.Details, StringComparer.Ordinal);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as NullEvent<TId>);
+        public override bool Equals(object obj) => this == (obj as ThrowOpExecutionAbortedExceptionOp<TResult>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.TimestampUtc)
-            .Hash(this.Id)
+            .Hash(this.Details)
             .Value;
 
         /// <inheritdoc />
-        public new NullEvent<TId> DeepClone() => (NullEvent<TId>)this.DeepCloneInternal();
+        public new ThrowOpExecutionAbortedExceptionOp<TResult> DeepClone() => (ThrowOpExecutionAbortedExceptionOp<TResult>)this.DeepCloneInternal();
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Details" />.
+        /// </summary>
+        /// <param name="details">The new <see cref="Details" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ThrowOpExecutionAbortedExceptionOp{TResult}" /> using the specified <paramref name="details" /> for <see cref="Details" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -104,49 +106,20 @@ namespace OBeautifulCode.Type
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override EventBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
+        public ThrowOpExecutionAbortedExceptionOp<TResult> DeepCloneWithDetails(string details)
         {
-            var result = new NullEvent<TId>(
-                                 this.Id == null ? default : this.Id.DeepClone(),
-                                 timestampUtc);
-
-            return result;
-        }
-
-        /// <inheritdoc />
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override EventBase<TId> DeepCloneWithId(TId id)
-        {
-            var result = new NullEvent<TId>(
-                                 id,
-                                 this.TimestampUtc.DeepClone());
+            var result = new ThrowOpExecutionAbortedExceptionOp<TResult>(
+                                 details);
 
             return result;
         }
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override EventBase DeepCloneInternal()
+        protected override OperationBase DeepCloneInternal()
         {
-            var result = new NullEvent<TId>(
-                                 this.Id == null ? default : this.Id.DeepClone(),
-                                 this.TimestampUtc.DeepClone());
+            var result = new ThrowOpExecutionAbortedExceptionOp<TResult>(
+                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -155,7 +128,7 @@ namespace OBeautifulCode.Type
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.Type.{this.GetType().ToStringReadable()}: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.Type.{this.GetType().ToStringReadable()}: Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

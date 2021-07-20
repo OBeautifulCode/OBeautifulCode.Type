@@ -35,6 +35,14 @@ namespace OBeautifulCode.Type.Test
         public DefaultTypeDummyFactory()
         {
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ThrowOpExecutionAbortedExceptionOp(
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ThrowOpExecutionAbortedExceptionOp<Version>(
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetProtocolOp(
                                  A.Dummy<IOperation>(),
                                  A.Dummy<MissingProtocolStrategy>()));
@@ -119,6 +127,8 @@ namespace OBeautifulCode.Type.Test
                 {
                     var availableTypes = new[]
                     {
+                        typeof(ThrowOpExecutionAbortedExceptionOp),
+                        typeof(ThrowOpExecutionAbortedExceptionOp<Version>),
                         typeof(GetProtocolOp),
                         typeof(NullReturningOp<Version>),
                         typeof(TestVoidOp),
@@ -139,6 +149,7 @@ namespace OBeautifulCode.Type.Test
                 {
                     var availableTypes = new[]
                     {
+                        typeof(ThrowOpExecutionAbortedExceptionOp<Version>),
                         typeof(NullReturningOp<Version>)
                     };
 
@@ -156,6 +167,7 @@ namespace OBeautifulCode.Type.Test
                 {
                     var availableTypes = new[]
                     {
+                        typeof(ThrowOpExecutionAbortedExceptionOp),
                         typeof(TestVoidOp),
                         typeof(NullVoidOp)
                     };
