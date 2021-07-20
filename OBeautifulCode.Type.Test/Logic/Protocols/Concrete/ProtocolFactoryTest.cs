@@ -63,6 +63,21 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
+        public static void RegisterProtocolForSupportedOperations___Should_throw_ArgumentOutOfRangeException___When_parameter_protocolAlreadyRegisteredForOperationStrategy_is_Unknown()
+        {
+            // Arrange
+            var systemUnderTest = new ProtocolFactory();
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.RegisterProtocolForSupportedOperations(A.Dummy<IProtocol>().GetType(), () => A.Dummy<IProtocol>(), ProtocolAlreadyRegisteredForOperationStrategy.Unknown));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentOutOfRangeException>();
+            actual.Message.AsTest().Must().ContainString("protocolAlreadyRegisteredForOperationStrategy");
+            actual.Message.AsTest().Must().ContainString("Unknown");
+        }
+
+        [Fact]
         public static void RegisterProtocolForSupportedOperations___Should_throw_ArgumentException___When_protocol_does_not_execute_any_operations()
         {
             // Arrange
@@ -77,7 +92,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void RegisterProtocolForSupportedOperations___Should_throw_ArgumentException___When_protocol_executes_an_operation_that_already_been_registered()
+        public static void RegisterProtocolForSupportedOperations___Should_throw_ArgumentException___When_protocolAlreadyRegisteredForOperationStrategy_is_Throw_and_protocol_executes_an_operation_that_already_been_registered()
         {
             // Arrange
             var systemUnderTest = new ProtocolFactory();
@@ -85,7 +100,7 @@ namespace OBeautifulCode.Type.Test
             systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => new SharedOperationProtocol1());
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol2), () => new SharedOperationProtocol2()));
+            var actual = Record.Exception(() => systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol2), () => new SharedOperationProtocol2(), ProtocolAlreadyRegisteredForOperationStrategy.Throw));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentException>();
@@ -166,6 +181,66 @@ namespace OBeautifulCode.Type.Test
 
             systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => protocol1);
             systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => protocol2);
+
+            var operation1 = new GetProtocolOp(new SharedOperation());
+            var operation2 = new GetProtocolOp(new SiblingOperation1());
+            var operation3 = new GetProtocolOp(new SiblingOperation2());
+
+            // Act
+            var actual1 = systemUnderTest.Execute(operation1);
+            var actual2 = systemUnderTest.Execute(operation2);
+            var actual3 = systemUnderTest.Execute(operation3);
+
+            // Assert
+            actual1.AsTest().Must().BeSameReferenceAs(protocol1);
+            actual2.AsTest().Must().BeSameReferenceAs(protocol2);
+            actual3.AsTest().Must().BeSameReferenceAs(protocol2);
+        }
+
+        [Fact]
+        public static void Execute___Should_return_originally_registered_protocol___When_second_protocol_supporting_same_operations_is_registered_with_ProtocolAlreadyRegisteredForOperationStrategy_Skip()
+        {
+            // Arrange
+            var systemUnderTest = new ProtocolFactory();
+
+            IProtocol protocol1 = new SharedOperationProtocol1();
+            IProtocol protocol2 = new SiblingOperationProtocol();
+
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => protocol1);
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => protocol2);
+
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => new SharedOperationProtocol1(), ProtocolAlreadyRegisteredForOperationStrategy.Skip);
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => new SiblingOperationProtocol(), ProtocolAlreadyRegisteredForOperationStrategy.Skip);
+
+            var operation1 = new GetProtocolOp(new SharedOperation());
+            var operation2 = new GetProtocolOp(new SiblingOperation1());
+            var operation3 = new GetProtocolOp(new SiblingOperation2());
+
+            // Act
+            var actual1 = systemUnderTest.Execute(operation1);
+            var actual2 = systemUnderTest.Execute(operation2);
+            var actual3 = systemUnderTest.Execute(operation3);
+
+            // Assert
+            actual1.AsTest().Must().BeSameReferenceAs(protocol1);
+            actual2.AsTest().Must().BeSameReferenceAs(protocol2);
+            actual3.AsTest().Must().BeSameReferenceAs(protocol2);
+        }
+
+        [Fact]
+        public static void Execute___Should_return_last_registered_protocol___When_second_protocol_supporting_same_operation_is_registered_with_ProtocolAlreadyRegisteredForOperationStrategy_Replace()
+        {
+            // Arrange
+            var systemUnderTest = new ProtocolFactory();
+
+            IProtocol protocol1 = new SharedOperationProtocol1();
+            IProtocol protocol2 = new SiblingOperationProtocol();
+
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => new SharedOperationProtocol1());
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => new SiblingOperationProtocol());
+
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => protocol1, ProtocolAlreadyRegisteredForOperationStrategy.Replace);
+            systemUnderTest.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => protocol2, ProtocolAlreadyRegisteredForOperationStrategy.Replace);
 
             var operation1 = new GetProtocolOp(new SharedOperation());
             var operation2 = new GetProtocolOp(new SiblingOperation1());

@@ -51,9 +51,11 @@ namespace OBeautifulCode.Type
         /// </summary>
         /// <param name="protocolType">The protocol's type.  Use concrete types.  These protocols can execute multiple operations and those will be honored in the factory.</param>
         /// <param name="getProtocolFunc">A func that gets an instance of the protocol.</param>
+        /// <param name="protocolAlreadyRegisteredForOperationStrategy">OPTIONAL value that determines what do when the protocol supports an operation has already been registered via some other protocol.  DEFAULT is to throw an exception.</param>
         public void RegisterProtocolForSupportedOperations(
             Type protocolType,
-            Func<IProtocol> getProtocolFunc)
+            Func<IProtocol> getProtocolFunc,
+            ProtocolAlreadyRegisteredForOperationStrategy protocolAlreadyRegisteredForOperationStrategy = ProtocolAlreadyRegisteredForOperationStrategy.Throw)
         {
             if (protocolType == null)
             {
@@ -70,6 +72,11 @@ namespace OBeautifulCode.Type
                 throw new ArgumentNullException(nameof(getProtocolFunc));
             }
 
+            if (protocolAlreadyRegisteredForOperationStrategy == ProtocolAlreadyRegisteredForOperationStrategy.Unknown)
+            {
+                throw new ArgumentOutOfRangeException(nameof(getProtocolFunc), Invariant($"{nameof(protocolAlreadyRegisteredForOperationStrategy)} is {nameof(ProtocolAlreadyRegisteredForOperationStrategy.Unknown)}."));
+            }
+
             var supportedOperationTypes = GetSupportedOperationTypes(protocolType);
 
             foreach (var supportedOperationType in supportedOperationTypes)
@@ -78,10 +85,26 @@ namespace OBeautifulCode.Type
                 {
                     if (this.operationTypeToGetProtocolFuncMap.ContainsKey(supportedOperationType))
                     {
-                        throw new ArgumentException(Invariant($"Protocol '{protocolType.ToStringReadable()}' executes an operation that has already been registered: '{supportedOperationType.ToStringReadable()}'."));
+                        if (protocolAlreadyRegisteredForOperationStrategy == ProtocolAlreadyRegisteredForOperationStrategy.Throw)
+                        {
+                            throw new ArgumentException(Invariant($"Protocol '{protocolType.ToStringReadable()}' executes an operation that has already been registered: '{supportedOperationType.ToStringReadable()}'."));
+                        }
+                        else if (protocolAlreadyRegisteredForOperationStrategy == ProtocolAlreadyRegisteredForOperationStrategy.Skip)
+                        {
+                        }
+                        else if (protocolAlreadyRegisteredForOperationStrategy == ProtocolAlreadyRegisteredForOperationStrategy.Replace)
+                        {
+                            this.operationTypeToGetProtocolFuncMap[supportedOperationType] = getProtocolFunc;
+                        }
+                        else
+                        {
+                            throw new NotSupportedException(Invariant($"This {nameof(ProtocolAlreadyRegisteredForOperationStrategy)} is not supported: {protocolAlreadyRegisteredForOperationStrategy}."));
+                        }
                     }
-
-                    this.operationTypeToGetProtocolFuncMap.TryAdd(supportedOperationType, getProtocolFunc);
+                    else
+                    {
+                        this.operationTypeToGetProtocolFuncMap.TryAdd(supportedOperationType, getProtocolFunc);
+                    }
                 }
             }
         }
