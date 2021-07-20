@@ -75,6 +75,8 @@
     <Compile Include="Enums\ProtocolAlreadyRegisteredForOperationStrategy.cs" />
     <Compile Include="Enums\MissingProtocolStrategy.cs" />
     <Compile Include="Enums\VersionMatchStrategy.cs" />
+    <Compile Include="Exceptions\OpExecutionAbortedException.cs" />
+    <Compile Include="Exceptions\OpExecutionAbortedExceptionBase.cs" />
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensions.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaReturningProtocol{TOperation,TResult}.cs" />
