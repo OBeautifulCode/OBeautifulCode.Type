@@ -19,7 +19,7 @@ namespace OBeautifulCode.Type
     /// <summary>
     /// Stock implementation of <see cref="IProtocolFactory"/>.
     /// </summary>
-    public class ProtocolFactory : IProtocolFactory
+    public class ProtocolFactory : IProtocolFactory, IShallowCloneable<ProtocolFactory>
     {
         private readonly ConcurrentDictionary<Type, Func<IProtocol>> operationTypeToGetProtocolFuncMap = new ConcurrentDictionary<Type, Func<IProtocol>>();
 
@@ -154,6 +154,22 @@ namespace OBeautifulCode.Type
             var syncResult = this.Execute(operation);
 
             var result = await Task.FromResult(syncResult);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public object Clone() => this.ShallowClone();
+
+        /// <inheritdoc />
+        public ProtocolFactory ShallowClone()
+        {
+            var result = new ProtocolFactory();
+
+            foreach (var keyValuePair in this.operationTypeToGetProtocolFuncMap)
+            {
+                result.operationTypeToGetProtocolFuncMap.TryAdd(keyValuePair.Key, keyValuePair.Value);
+            }
 
             return result;
         }

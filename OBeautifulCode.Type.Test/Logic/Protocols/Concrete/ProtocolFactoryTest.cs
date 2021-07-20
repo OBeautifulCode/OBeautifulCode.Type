@@ -258,6 +258,48 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
+        public static void ShallowClone___Should_return_a_shallow_clone___When_called()
+        {
+            // Arrange
+            var systemUnderTest1 = new ProtocolFactory();
+            var systemUnderTest2 = new ProtocolFactory();
+
+            IProtocol protocol1 = new SharedOperationProtocol1();
+            IProtocol protocol2 = new SiblingOperationProtocol();
+
+            systemUnderTest1.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => protocol1);
+            systemUnderTest2.RegisterProtocolForSupportedOperations(typeof(SharedOperationProtocol1), () => protocol1);
+
+            // Act
+            var actual1 = systemUnderTest1.ShallowClone();
+            var actual2 = systemUnderTest2.ShallowClone();
+
+            actual1.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => protocol2);
+            systemUnderTest2.RegisterProtocolForSupportedOperations(typeof(SiblingOperationProtocol), () => protocol2);
+
+            // Assert
+            var operation1 = new GetProtocolOp(new SharedOperation());
+            var protocolFromOriginal1 = systemUnderTest1.Execute(operation1);
+            var protocolFromOriginal2 = systemUnderTest2.Execute(operation1);
+            var protocolFromClone1 = actual1.Execute(operation1);
+            var protocolFromClone2 = actual2.Execute(operation1);
+            protocolFromOriginal1.AsTest().Must().BeSameReferenceAs(protocol1);
+            protocolFromOriginal2.AsTest().Must().BeSameReferenceAs(protocol1);
+            protocolFromClone1.AsTest().Must().BeSameReferenceAs(protocol1);
+            protocolFromClone2.AsTest().Must().BeSameReferenceAs(protocol1);
+
+            var operation2 = new GetProtocolOp(new SiblingOperation1(), MissingProtocolStrategy.ReturnNull);
+            protocolFromOriginal1 = systemUnderTest1.Execute(operation2);
+            protocolFromOriginal2 = systemUnderTest2.Execute(operation2);
+            protocolFromClone1 = actual1.Execute(operation2);
+            protocolFromClone2 = actual2.Execute(operation2);
+            protocolFromOriginal1.AsTest().Must().BeNull();
+            protocolFromOriginal2.AsTest().Must().BeSameReferenceAs(protocol2);
+            protocolFromClone1.AsTest().Must().BeSameReferenceAs(protocol2);
+            protocolFromClone2.AsTest().Must().BeNull();
+        }
+
+        [Fact]
         public static void Constructor___Should_register_protocols_in_protocolTypeToGetProtocolFuncMap___When_called()
         {
             // Arrange
