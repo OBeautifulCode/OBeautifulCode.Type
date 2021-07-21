@@ -18,7 +18,7 @@ namespace OBeautifulCode.Type
         Unknown,
 
         /// <summary>
-        /// Throw an exception.
+        /// Throw a <see cref="OpExecutionFailedException"/>.
         /// </summary>
         Throw,
 

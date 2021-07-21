@@ -56,7 +56,7 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
-        public static void Execute___Should_throw_InvalidOperationException___When_there_is_no_protocol_registered_for_the_operation_and_missingProtocolStrategy_is_Throw()
+        public static void Execute___Should_throw_OpExecutionFailedException___When_there_is_no_protocol_registered_for_the_operation_and_missingProtocolStrategy_is_Throw()
         {
             // Arrange
             var systemUnderTest = new ChainOfResponsibilityProtocolFactory();
@@ -67,7 +67,7 @@ namespace OBeautifulCode.Type.Test
             var actual = Record.Exception(() => systemUnderTest.Execute(operation));
 
             // Assert
-            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.AsTest().Must().BeOfType<OpExecutionFailedException>();
             actual.Message.AsTest().Must().ContainString(Invariant($"There is no protocol registered for the specified operation: '{nameof(ChainOfResponsibilityProtocolFactoryTest)}.{nameof(SharedOperation)}'"));
         }
 

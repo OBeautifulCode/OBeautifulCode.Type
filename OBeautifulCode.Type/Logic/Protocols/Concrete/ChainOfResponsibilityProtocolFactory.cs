@@ -86,7 +86,7 @@ namespace OBeautifulCode.Type
             }
             else if (operation.MissingProtocolStrategy == MissingProtocolStrategy.Throw)
             {
-                throw new InvalidOperationException(Invariant($"There is no protocol registered for the specified operation: '{operation.Operation.GetType().ToStringReadable()}'."));
+                throw new OpExecutionFailedException(Invariant($"There is no protocol registered for the specified operation: '{operation.Operation.GetType().ToStringReadable()}'."), operation);
             }
             else if (operation.MissingProtocolStrategy == MissingProtocolStrategy.ReturnNull)
             {
