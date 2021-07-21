@@ -30,7 +30,7 @@ namespace OBeautifulCode.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="OpExecutionFailedException"/> class.
         /// </summary>
-        /// <param name="message">Message for exception.</param>
+        /// <param name="message">The message that describes the error.</param>
         /// <param name="operation">OPTIONAL operation whose execution failed.  DEFAULT is to omit that operation.</param>
         public OpExecutionFailedException(
             string message,
@@ -42,8 +42,8 @@ namespace OBeautifulCode.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="OpExecutionFailedException"/> class.
         /// </summary>
-        /// <param name="message">Message for exception.</param>
-        /// <param name="innerException">Inner exception.</param>
+        /// <param name="message">The message that describes the error.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception.</param>
         /// <param name="operation">OPTIONAL operation whose execution failed.  DEFAULT is to omit that operation.</param>
         public OpExecutionFailedException(
             string message,

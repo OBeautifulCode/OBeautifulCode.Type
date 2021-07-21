@@ -35,7 +35,7 @@ namespace OBeautifulCode.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="OpExecutionAbortedExceptionBase"/> class.
         /// </summary>
-        /// <param name="message">Message for exception.</param>
+        /// <param name="message">The message that describes the error.</param>
         /// <param name="executingOperation">The operation that was executing and is now aborted.</param>
         /// <param name="abortingOperation">The operation that aborted the execution of <paramref name="executingOperation"/>.</param>
         protected OpExecutionAbortedExceptionBase(
@@ -51,8 +51,8 @@ namespace OBeautifulCode.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="OpExecutionAbortedExceptionBase"/> class.
         /// </summary>
-        /// <param name="message">Message for exception.</param>
-        /// <param name="innerException">Inner exception.</param>
+        /// <param name="message">The message that describes the error.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception.</param>
         /// <param name="executingOperation">The operation that was executing and is now aborted.</param>
         /// <param name="abortingOperation">The operation that aborted the execution of <paramref name="executingOperation"/>.</param>
         protected OpExecutionAbortedExceptionBase(
