@@ -75,7 +75,9 @@
     <Compile Include="Enums\ProtocolAlreadyRegisteredForOperationStrategy.cs" />
     <Compile Include="Enums\MissingProtocolStrategy.cs" />
     <Compile Include="Enums\VersionMatchStrategy.cs" />
+    <Compile Include="Exceptions\OpExecutionFailedException.cs" />
     <Compile Include="Exceptions\OpExecutionAbortedException.cs" />
+    <Compile Include="Exceptions\OpExecutionFailedExceptionBase.cs" />
     <Compile Include="Exceptions\OpExecutionAbortedExceptionBase.cs" />
     <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionAbortedExceptionOp.cs" />
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensions.cs" />
