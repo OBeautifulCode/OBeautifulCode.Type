@@ -20,10 +20,12 @@ namespace OBeautifulCode.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="OpExecutionAbortedException"/> class.
         /// </summary>
-        /// <param name="operation">The operation that aborted the execution.</param>
+        /// <param name="executingOperation">OPTIONAL operation that was executing and is now aborted.  DEFAULT is to omit that operation.</param>
+        /// <param name="abortingOperation">OPTIONAL operation that aborted the execution of <paramref name="executingOperation"/>.  DEFAULT is to omit that operation.</param>
         public OpExecutionAbortedException(
-            IOperation operation)
-            : base(operation)
+            IOperation executingOperation = null,
+            IOperation abortingOperation = null)
+            : base(executingOperation, abortingOperation)
         {
         }
 
@@ -31,11 +33,13 @@ namespace OBeautifulCode.Type
         /// Initializes a new instance of the <see cref="OpExecutionAbortedException"/> class.
         /// </summary>
         /// <param name="message">Message for exception.</param>
-        /// <param name="operation">The operation that aborted the execution.</param>
+        /// <param name="executingOperation">OPTIONAL operation that was executing and is now aborted.  DEFAULT is to omit that operation.</param>
+        /// <param name="abortingOperation">OPTIONAL operation that aborted the execution of <paramref name="executingOperation"/>.  DEFAULT is to omit that operation.</param>
         public OpExecutionAbortedException(
             string message,
-            IOperation operation)
-            : base(message, operation)
+            IOperation executingOperation = null,
+            IOperation abortingOperation = null)
+            : base(message, executingOperation, abortingOperation)
         {
         }
 
@@ -44,12 +48,14 @@ namespace OBeautifulCode.Type
         /// </summary>
         /// <param name="message">Message for exception.</param>
         /// <param name="innerException">Inner exception.</param>
-        /// <param name="operation">The operation that aborted the execution.</param>
+        /// <param name="executingOperation">OPTIONAL operation that was executing and is now aborted.  DEFAULT is to omit that operation.</param>
+        /// <param name="abortingOperation">OPTIONAL operation that aborted the execution of <paramref name="executingOperation"/>.  DEFAULT is to omit that operation.</param>
         public OpExecutionAbortedException(
             string message,
             Exception innerException,
-            IOperation operation)
-            : base(message, innerException, operation)
+            IOperation executingOperation = null,
+            IOperation abortingOperation = null)
+            : base(message, innerException, executingOperation, abortingOperation)
         {
         }
     }
