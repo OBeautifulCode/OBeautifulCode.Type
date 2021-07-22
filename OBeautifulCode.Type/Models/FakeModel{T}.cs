@@ -6,6 +6,7 @@
 
 namespace OBeautifulCode.Type
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
 
     using OBeautifulCode.CodeAnalysis.Recipes;
@@ -18,6 +19,7 @@ namespace OBeautifulCode.Type
     /// cannot easily be made into a model and there is no intention of using any of the model "features".
     /// </remarks>
     /// <typeparam name="T">The type to model-ize.</typeparam>
+    [Serializable]
     public class FakeModel<T> : IModel<FakeModel<T>>
     {
         /// <summary>
