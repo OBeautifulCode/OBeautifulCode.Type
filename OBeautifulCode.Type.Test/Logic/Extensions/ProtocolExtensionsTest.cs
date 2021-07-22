@@ -79,6 +79,22 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
+        public static void ExecuteViaReflection_void___Should_throw_same_exception_throw_by_protocol___When_protocol_throws()
+        {
+            // Arrange
+            var operation = new ThrowingVoidOp();
+
+            var protocol = new ThrowingProtocol();
+
+            // Act
+            var actual = Record.Exception(() => protocol.ExecuteViaReflection(operation));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("execute-void-sync");
+        }
+
+        [Fact]
         public static void ExecuteViaReflection_void___Should_execute_the_operation___When_called()
         {
             // Arrange
@@ -165,6 +181,22 @@ namespace OBeautifulCode.Type.Test
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentException>();
             actual.Message.AsTest().Must().ContainString(Invariant($"The specified '{nameof(ProtocolExtensionsTest)}.{nameof(FamilyReturningProtocol)}' protocol has more than one returning Execute method with a single parameter that the specified '{nameof(ProtocolExtensionsTest)}.{nameof(ChildReturningOperation)}' operation is assignable to AND a return type that is assignable to the specified 'int' return type."));
+        }
+
+        [Fact]
+        public static void ExecuteViaReflection_TResult___Should_throw_same_exception_throw_by_protocol___When_protocol_throws()
+        {
+            // Arrange
+            var operation = new ThrowingReturningOp();
+
+            var protocol = new ThrowingProtocol();
+
+            // Act
+            var actual = Record.Exception(() => protocol.ExecuteViaReflection<bool>(operation));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("execute-returning-sync");
         }
 
         [Fact]
@@ -259,6 +291,22 @@ namespace OBeautifulCode.Type.Test
         }
 
         [Fact]
+        public static async Task ExecuteViaReflectionAsync_void___Should_throw_same_exception_throw_by_protocol___When_protocol_throws()
+        {
+            // Arrange
+            var operation = new ThrowingVoidOp();
+
+            var protocol = new ThrowingProtocol();
+
+            // Act
+            var actual = await Record.ExceptionAsync(() => protocol.ExecuteViaReflectionAsync(operation));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("execute-void-async");
+        }
+
+        [Fact]
         public static async Task ExecuteViaReflectionAsync_void___Should_execute_the_operation___When_called()
         {
             // Arrange
@@ -345,6 +393,22 @@ namespace OBeautifulCode.Type.Test
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentException>();
             actual.Message.AsTest().Must().ContainString(Invariant($"The specified '{nameof(ProtocolExtensionsTest)}.{nameof(FamilyReturningProtocol)}' protocol has more than one returning ExecuteAsync method with a single parameter that the specified '{nameof(ProtocolExtensionsTest)}.{nameof(ChildReturningOperation)}' operation is assignable to AND a return type that is assignable to the specified 'int' return type."));
+        }
+
+        [Fact]
+        public static async Task ExecuteViaReflectionAsync_TResult___Should_throw_same_exception_throw_by_protocol___When_protocol_throws()
+        {
+            // Arrange
+            var operation = new ThrowingReturningOp();
+
+            var protocol = new ThrowingProtocol();
+
+            // Act
+            var actual = await Record.ExceptionAsync(() => protocol.ExecuteViaReflectionAsync<bool>(operation));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("execute-returning-async");
         }
 
         [Fact]
@@ -449,6 +513,39 @@ namespace OBeautifulCode.Type.Test
 
         private class ProtocolWithNoOperations : IProtocol
         {
+        }
+
+        private class ThrowingVoidOp : IVoidOperation
+        {
+        }
+
+        private class ThrowingReturningOp : IReturningOperation<bool>
+        {
+        }
+
+        private class ThrowingProtocol :
+            ISyncAndAsyncVoidProtocol<ThrowingVoidOp>,
+            ISyncAndAsyncReturningProtocol<ThrowingReturningOp, bool>
+        {
+            public void Execute(ThrowingVoidOp operation)
+            {
+                throw new InvalidOperationException("execute-void-sync");
+            }
+
+            public Task ExecuteAsync(ThrowingVoidOp operation)
+            {
+                throw new InvalidOperationException("execute-void-async");
+            }
+
+            public bool Execute(ThrowingReturningOp operation)
+            {
+                throw new InvalidOperationException("execute-returning-sync");
+            }
+
+            public Task<bool> ExecuteAsync(ThrowingReturningOp operation)
+            {
+                throw new InvalidOperationException("execute-returning-async");
+            }
         }
 
         private class SiblingOperationProtocol :

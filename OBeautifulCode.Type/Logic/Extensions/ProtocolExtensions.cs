@@ -12,6 +12,7 @@ namespace OBeautifulCode.Type
     using System.Reflection;
     using System.Threading.Tasks;
 
+    using OBeautifulCode.Exception.Recipes;
     using OBeautifulCode.Type.Recipes;
 
     using static System.FormattableString;
@@ -89,8 +90,15 @@ namespace OBeautifulCode.Type
                 CachedExecuteSyncVoidTypesToMethodInfoMap.TryAdd(cacheKey, methodInfo);
             }
 
-            // ReSharper disable once CoVariantArrayConversion
-            methodInfo.Invoke(protocol, new[] { operation });
+            try
+            {
+                // ReSharper disable once CoVariantArrayConversion
+                methodInfo.Invoke(protocol, new[] { operation });
+            }
+            catch (TargetInvocationException ex)
+            {
+                ex.RethrowInnerExceptionOrElseRethrow();
+            }
         }
 
         /// <summary>
@@ -155,10 +163,19 @@ namespace OBeautifulCode.Type
                 CachedExecuteSyncReturningTypesToMethodInfoMap.TryAdd(cacheKey, methodInfo);
             }
 
-            // ReSharper disable once CoVariantArrayConversion
-            var invokeResult = methodInfo.Invoke(protocol, new[] { operation });
+            TResult result = default;
 
-            var result = (TResult)invokeResult;
+            try
+            {
+                // ReSharper disable once CoVariantArrayConversion
+                var invokeResult  = methodInfo.Invoke(protocol, new[] { operation });
+
+                result = (TResult)invokeResult;
+            }
+            catch (TargetInvocationException ex)
+            {
+                ex.RethrowInnerExceptionOrElseRethrow();
+            }
 
             return result;
         }
@@ -177,7 +194,7 @@ namespace OBeautifulCode.Type
         /// <returns>
         /// A task.
         /// </returns>
-        public static Task ExecuteViaReflectionAsync(
+        public static async Task ExecuteViaReflectionAsync(
             this IProtocol protocol,
             IOperation operation)
         {
@@ -222,12 +239,17 @@ namespace OBeautifulCode.Type
                 CachedExecuteAsyncVoidTypesToMethodInfoMap.TryAdd(cacheKey, methodInfo);
             }
 
-            // ReSharper disable once CoVariantArrayConversion
-            var invokeResult = methodInfo.Invoke(protocol, new[] { operation });
+            try
+            {
+                // ReSharper disable once CoVariantArrayConversion
+                var invokeResult = methodInfo.Invoke(protocol, new[] { operation });
 
-            var result = (Task)invokeResult;
-
-            return result;
+                await (Task)invokeResult;
+            }
+            catch (TargetInvocationException ex)
+            {
+                ex.RethrowInnerExceptionOrElseRethrow();
+            }
         }
 
         /// <summary>
@@ -245,7 +267,7 @@ namespace OBeautifulCode.Type
         /// <returns>
         /// The result of executing the specified operation using the specified protocol.
         /// </returns>
-        public static Task<TResult> ExecuteViaReflectionAsync<TResult>(
+        public static async Task<TResult> ExecuteViaReflectionAsync<TResult>(
             this IProtocol protocol,
             IOperation operation)
         {
@@ -293,9 +315,19 @@ namespace OBeautifulCode.Type
             }
 
             // ReSharper disable once CoVariantArrayConversion
-            var invokeResult = methodInfo.Invoke(protocol, new[] { operation });
+            TResult result = default;
 
-            var result = (Task<TResult>)invokeResult;
+            try
+            {
+                // ReSharper disable once CoVariantArrayConversion
+                var invokeResult = methodInfo.Invoke(protocol, new[] { operation });
+
+                result = await (Task<TResult>)invokeResult;
+            }
+            catch (TargetInvocationException ex)
+            {
+                ex.RethrowInnerExceptionOrElseRethrow();
+            }
 
             return result;
         }
