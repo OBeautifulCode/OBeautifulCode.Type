@@ -212,6 +212,14 @@
     <Compile Include="Models\Operations\Concrete\NullVoidOpTest.designer.cs">
       <DependentUpon>NullVoidOpTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOpTest.cs" />
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOpTest.designer.cs">
+      <DependentUpon>ThrowOpExecutionDeemedNotApplicableExceptionOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOp{TResult}Test.cs" />
+    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOp{TResult}Test.designer.cs">
+      <DependentUpon>ThrowOpExecutionDeemedNotApplicableExceptionOp{TResult}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Operations\OperationBaseTest.cs" />
     <Compile Include="Models\Operations\OperationBaseTest.designer.cs">
       <DependentUpon>OperationBaseTest.cs</DependentUpon>
