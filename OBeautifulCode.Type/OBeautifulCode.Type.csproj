@@ -79,7 +79,7 @@
     <Compile Include=".recipes\OBeautifulCode.Execution\TaskWaitingStrategy.cs" />
     <Compile Include="Enums\ProtocolAlreadyRegisteredForOperationStrategy.cs" />
     <Compile Include="Enums\MissingProtocolStrategy.cs" />
-    <Compile Include="Enums\When.cs" />
+    <Compile Include="Enums\TimeComparison.cs" />
     <Compile Include="Enums\VersionMatchStrategy.cs" />
     <Compile Include="Exceptions\OpExecutionDeemedNotApplicableException.cs" />
     <Compile Include="Exceptions\OpExecutionDeemedNotApplicableExceptionBase.cs" />

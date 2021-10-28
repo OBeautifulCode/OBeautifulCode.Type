@@ -1,18 +1,15 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="When.cs" company="OBeautifulCode">
+// <copyright file="TimeComparison.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace OBeautifulCode.Type
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
-    /// Specifies when something should or has happened.
+    /// Specifies when, in time, something should or has happened relative to some subject time.
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "When", Justification = "This is the best name for this identifier.")]
-    public enum When
+    public enum TimeComparison
     {
         /// <summary>
         /// Unknown (default).
@@ -20,17 +17,27 @@ namespace OBeautifulCode.Type
         Unknown,
 
         /// <summary>
-        /// The thing should happen before some other thing.
+        /// The thing should or has happen before some subject time.
         /// </summary>
         Before,
 
         /// <summary>
-        /// The thing should happen at the same moment as some other thing.
+        /// The thing should or has happen at or before some subject time.
+        /// </summary>
+        AtOrBefore,
+
+        /// <summary>
+        /// The thing should or has happen at some subject time.
         /// </summary>
         At,
 
         /// <summary>
-        /// The thing should happen after some other thing.
+        /// The thing should or has happen at or after some subject time.
+        /// </summary>
+        AtOrAfter,
+
+        /// <summary>
+        /// The thing should or has happen after some subject time.
         /// </summary>
         After,
     }
