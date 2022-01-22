@@ -10,6 +10,8 @@ namespace OBeautifulCode.Type.Test
     using System.Linq;
     using FakeItEasy;
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Collection.Recipes;
+    using OBeautifulCode.Equality.Recipes;
     using Xunit;
 
     public static class DateTimeExtensionsTest
@@ -73,7 +75,10 @@ namespace OBeautifulCode.Type.Test
             var actual = formatKindAndExpected.Select(_ => value.ToString(_.FormatKind, CultureKind.EnglishUnitedStates)).ToList();
 
             // Assert
-            actual.AsTest().Must().BeEqualTo(expected);
+            if (!actual.IsEqualTo(expected))
+            {
+                throw new InvalidOperationException("Actual: " + actual.ToDelimitedString("|") + Environment.NewLine + "Expected: " + expected.ToDelimitedString("|"));
+            }
         }
     }
 }
