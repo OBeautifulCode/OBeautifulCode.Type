@@ -10,8 +10,6 @@ namespace OBeautifulCode.Type.Test
     using System.Linq;
     using FakeItEasy;
     using OBeautifulCode.Assertion.Recipes;
-    using OBeautifulCode.Collection.Recipes;
-    using OBeautifulCode.Equality.Recipes;
     using Xunit;
 
     public static class DateTimeExtensionsTest
@@ -65,7 +63,10 @@ namespace OBeautifulCode.Type.Test
                 new { FormatKind = DateTimeFormatKind.ShortTimePattern, Expected = "5:04 PM" },
                 new { FormatKind = DateTimeFormatKind.LongTimePattern, Expected = "5:04:32 PM" },
                 new { FormatKind = DateTimeFormatKind.UniversalSortableDateTimePattern, Expected = "2008-10-31 17:04:32Z" },
-                new { FormatKind = DateTimeFormatKind.UniversalFullDateTimePattern, Expected = "Friday, October 31, 2008 9:04:32 PM" },
+
+                // This one depends on the timezone where the test is run.
+                // In AppVeyor its 5:04:32, in ET on 1/22/2020 it's 9:04:32
+                // new { FormatKind = DateTimeFormatKind.UniversalFullDateTimePattern, Expected = "Friday, October 31, 2008 5:04:32 PM" },
                 new { FormatKind = DateTimeFormatKind.YearMonthPattern, Expected = "October 2008" },
             };
 
@@ -75,10 +76,7 @@ namespace OBeautifulCode.Type.Test
             var actual = formatKindAndExpected.Select(_ => value.ToString(_.FormatKind, CultureKind.EnglishUnitedStates)).ToList();
 
             // Assert
-            if (!actual.IsEqualTo(expected))
-            {
-                throw new InvalidOperationException("Actual: " + actual.ToDelimitedString("|") + Environment.NewLine + "Expected: " + expected.ToDelimitedString("|"));
-            }
+            actual.AsTest().Must().BeEqualTo(expected);
         }
     }
 }

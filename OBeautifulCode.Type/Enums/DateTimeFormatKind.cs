@@ -6,8 +6,10 @@
 
 namespace OBeautifulCode.Type
 {
+    using System;
+
     /// <summary>
-    /// Specifies the kind of formatting to apply to a <see cref="DateTimeFormatKind"/>.
+    /// Specifies the kind of formatting to apply to a <see cref="DateTime"/>.
     /// </summary>
     public enum DateTimeFormatKind
     {
