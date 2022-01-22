@@ -36,7 +36,7 @@ namespace OBeautifulCode.Type
         {
             if (timeZone == StandardTimeZone.Unknown)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(timeZone)} is {nameof(StandardTimeZone)}.{nameof(StandardTimeZone.Unknown)}"));
+                throw new ArgumentOutOfRangeException(nameof(timeZone), Invariant($"{nameof(timeZone)} is {nameof(StandardTimeZone)}.{nameof(StandardTimeZone.Unknown)}"));
             }
 
             if (CachedStandardTimeZoneToTimeZoneInfoMap.ContainsKey(timeZone))

@@ -618,7 +618,7 @@ namespace OBeautifulCode.Type
         {
             if (cultureKind == CultureKind.Unknown)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(cultureKind)} is {nameof(CultureKind)}.{nameof(CultureKind.Unknown)}"));
+                throw new ArgumentOutOfRangeException(nameof(cultureKind), Invariant($"{nameof(cultureKind)} is {nameof(CultureKind)}.{nameof(CultureKind.Unknown)}"));
             }
 
             if (!CultureKindToCultureNameMap.ContainsKey(cultureKind))
@@ -643,7 +643,7 @@ namespace OBeautifulCode.Type
         {
             if (cultureKind == CultureKind.Unknown)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(cultureKind)} is {nameof(CultureKind)}.{nameof(CultureKind.Unknown)}"));
+                throw new ArgumentOutOfRangeException(nameof(cultureKind), Invariant($"{nameof(cultureKind)} is {nameof(CultureKind)}.{nameof(CultureKind.Unknown)}"));
             }
 
             if (CachedCultureKindToCultureInfoMap.ContainsKey(cultureKind))

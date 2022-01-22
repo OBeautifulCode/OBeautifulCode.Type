@@ -47,7 +47,7 @@ namespace OBeautifulCode.Type
         {
             if (formatKind == DateTimeFormatKind.Unknown)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(formatKind)} is {nameof(DateTimeFormatKind)}.{nameof(DateTimeFormatKind.Unknown)}"));
+                throw new ArgumentOutOfRangeException(nameof(formatKind), Invariant($"{nameof(formatKind)} is {nameof(DateTimeFormatKind)}.{nameof(DateTimeFormatKind.Unknown)}"));
             }
 
             if (!DateTimeFormatKindToFormatStringMap.ContainsKey(formatKind))

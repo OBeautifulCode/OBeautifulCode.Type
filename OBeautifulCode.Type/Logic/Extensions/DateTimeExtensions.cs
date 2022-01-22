@@ -31,12 +31,12 @@ namespace OBeautifulCode.Type
         {
             if (formatKind == DateTimeFormatKind.Unknown)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(formatKind)} is {nameof(DateTimeFormatKind)}.{nameof(DateTimeFormatKind.Unknown)}"));
+                throw new ArgumentOutOfRangeException(nameof(formatKind), Invariant($"{nameof(formatKind)} is {nameof(DateTimeFormatKind)}.{nameof(DateTimeFormatKind.Unknown)}"));
             }
 
             if (cultureKind == CultureKind.Unknown)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(cultureKind)} is {nameof(CultureKind)}.{nameof(CultureKind.Unknown)}"));
+                throw new ArgumentOutOfRangeException(nameof(cultureKind), Invariant($"{nameof(cultureKind)} is {nameof(CultureKind)}.{nameof(CultureKind.Unknown)}"));
             }
 
             var formatString = formatKind.ToFormatString();

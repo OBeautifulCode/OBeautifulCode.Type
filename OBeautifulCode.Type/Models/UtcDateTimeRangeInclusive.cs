@@ -39,7 +39,7 @@ namespace OBeautifulCode.Type
 
             if (startDateTimeInUtc > endDateTimeInUtc)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(startDateTimeInUtc)} is > {nameof(endDateTimeInUtc)}"));
+                throw new ArgumentOutOfRangeException(nameof(startDateTimeInUtc), Invariant($"{nameof(startDateTimeInUtc)} is > {nameof(endDateTimeInUtc)}"));
             }
 
             this.StartDateTimeInUtc = startDateTimeInUtc;
