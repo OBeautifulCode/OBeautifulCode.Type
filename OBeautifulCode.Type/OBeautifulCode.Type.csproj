@@ -77,8 +77,10 @@
     <Compile Include=".recipes\OBeautifulCode.Exception\ExceptionExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Execution\TaskExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Execution\TaskWaitingStrategy.cs" />
+    <Compile Include="Enums\CultureKind.cs" />
     <Compile Include="Enums\ProtocolAlreadyRegisteredForOperationStrategy.cs" />
     <Compile Include="Enums\MissingProtocolStrategy.cs" />
+    <Compile Include="Enums\DateTimeFormatKind.cs" />
     <Compile Include="Enums\StandardTimeZone.cs" />
     <Compile Include="Enums\TimeComparison.cs" />
     <Compile Include="Enums\VersionMatchStrategy.cs" />
@@ -90,6 +92,9 @@
     <Compile Include="Exceptions\OpExecutionAbortedExceptionBase.cs" />
     <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionDeemedNotApplicableExceptionOp.cs" />
     <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionAbortedExceptionOp.cs" />
+    <Compile Include="Logic\Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Logic\Extensions\DateTimeFormatKindExtensions.cs" />
+    <Compile Include="Logic\Extensions\CultureKindExtensions.cs" />
     <Compile Include="Logic\Extensions\StandardTimeZoneExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensions.cs" />

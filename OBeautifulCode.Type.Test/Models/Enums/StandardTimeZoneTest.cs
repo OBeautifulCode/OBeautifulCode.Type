@@ -14,8 +14,8 @@ namespace OBeautifulCode.Type.Test
 
     public static class StandardTimeZoneTest
     {
-        [Fact(Skip = "Used to true-up TimeZone.cs")]
-        public static void Generate_TimeZone_Values()
+        [Fact(Skip = "Used to true-up StandardTimeZone.cs and StandardTimeZoneExtensions.cs")]
+        public static void Generate_StandardTimeZone_Related_Code()
         {
             var outputFilesRootDirectory = "d:\\";
 

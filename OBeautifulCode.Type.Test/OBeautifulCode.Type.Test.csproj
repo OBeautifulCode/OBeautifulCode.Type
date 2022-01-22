@@ -167,12 +167,16 @@
     <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Method.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Property.cs" />
     <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
+    <Compile Include="Logic\Extensions\CultureKindExtensionsTest.cs" />
+    <Compile Include="Logic\Extensions\DateTimeExtensionsTest.cs" />
+    <Compile Include="Logic\Extensions\DateTimeFormatKindExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TimeZoneExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\NamedValueExtensionsTest.cs" />
     <Compile Include="Logic\Protocols\Concrete\ChainOfResponsibilityProtocolFactoryTest.cs" />
     <Compile Include="Logic\Protocols\Concrete\ProtocolFactoryTest.cs" />
+    <Compile Include="Models\Enums\CultureKindTest.cs" />
     <Compile Include="Models\Enums\StandardTimeZoneTest.cs" />
     <Compile Include="Models\Events\EventBaseTest.cs" />
     <Compile Include="Models\Events\EventBaseTest.designer.cs">
