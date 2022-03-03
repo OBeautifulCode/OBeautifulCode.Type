@@ -2248,6 +2248,50 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
+        public static void IsCompilerGeneratedType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TypeExtensions.IsCompilerGeneratedType(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("type");
+        }
+
+        [Fact]
+        public static void IsCompilerGeneratedType___Should_return_false___When_type_is_not_compiler_generated()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedTypes)
+                .Concat(TestTypes.OpenTypes)
+                .Except(TestTypes.ClosedAnonymousTypes)
+                .Except(TestTypes.ClosedAnonymousTypes.Select(_ => _.GetGenericTypeDefinition()))
+                .ToList();
+
+            // Act
+            var actuals = types.Select(_ => _.IsCompilerGeneratedType());
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public static void IsCompilerGeneratedType___Should_return_true___When_parameter_type_is_compiler_generated()
+        {
+            // Arrange
+            var types = new Type[0]
+                .Concat(TestTypes.ClosedAnonymousTypes)
+                .Concat(TestTypes.ClosedAnonymousTypes.Select(_ => _.GetGenericTypeDefinition()));
+
+            // Act
+            var actuals = types.Select(_ => _.IsCompilerGeneratedType());
+
+            // Assert
+            actuals.Should().AllBeEquivalentTo(true);
+        }
+
+        [Fact]
         public static void IsNullableType___Should_throw_ArgumentNullException___When_parameter_type_is_null()
         {
             // Arrange, Act
