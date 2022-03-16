@@ -8,15 +8,72 @@ namespace OBeautifulCode.Type.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using FakeItEasy;
 
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using Xunit;
 
     public static class NamedValueExtensionsTest
     {
+        [Fact]
+        public static void DeepCloneWithAdditionalValue___Should_throw_ArgumentNullException___When_parameter_source_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => ((IReadOnlyList<NamedValue<int>>)null).DeepCloneWithAdditionalValue(A.Dummy<NamedValue<int>>()));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("source");
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = ObcSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWords)]
+        public static void DeepCloneWithAdditionalValue___Should_throw_ArgumentNullException___When_parameter_valueToAdd_is_null()
+        {
+            // Arrange
+            var source = new List<NamedValue<int>>
+            {
+                A.Dummy<NamedValue<int>>(),
+                A.Dummy<NamedValue<int>>(),
+            };
+
+            // Act
+            var actual = Record.Exception(() => source.DeepCloneWithAdditionalValue(null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("valueToAdd");
+        }
+
+        [Fact]
+        public static void DeepCloneWithAdditionalValue___Should_deep_clone_collection_and_add_valueToAdd___When_called()
+        {
+            // Arrange
+            var source = new List<NamedValue<Version>>
+            {
+                A.Dummy<NamedValue<Version>>(),
+                A.Dummy<NamedValue<Version>>(),
+            };
+
+            var valueToAdd = A.Dummy<NamedValue<Version>>();
+
+            var expected = source
+                .Concat(new[] { valueToAdd })
+                .ToList();
+
+            // Act
+            var actual = source.DeepCloneWithAdditionalValue(valueToAdd).ToList();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+            actual[0].AsTest().Must().NotBeSameReferenceAs(expected[0]);
+            actual[1].AsTest().Must().NotBeSameReferenceAs(expected[1]);
+        }
+
         [Fact]
         public static void GetNames_IReadOnlyList___Should_throw_ArgumentNullException___When_parameter_source_is_null()
         {

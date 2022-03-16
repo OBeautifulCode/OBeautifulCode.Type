@@ -9,7 +9,7 @@ namespace OBeautifulCode.Type
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using OBeautifulCode.Cloning.Recipes;
     using static System.FormattableString;
 
     /// <summary>
@@ -17,6 +17,38 @@ namespace OBeautifulCode.Type
     /// </summary>
     public static class NamedValueExtensions
     {
+        /// <summary>
+        /// Deeps the clones an ordered collection of <see cref="NamedValue{TValue}"/>
+        /// and adds a specified <see cref="NamedValue{TValue}"/> to the resulting collection.
+        /// </summary>
+        /// <typeparam name="TValue">The type of values.</typeparam>
+        /// <param name="source">The source collection.</param>
+        /// <param name="valueToAdd">The value to add to the resulting collection.</param>
+        /// <returns>
+        /// A deep clone of the specified source collection with the specified value added.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
+        public static IReadOnlyList<NamedValue<TValue>> DeepCloneWithAdditionalValue<TValue>(
+            this IReadOnlyList<NamedValue<TValue>> source,
+            NamedValue<TValue> valueToAdd)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (valueToAdd == null)
+            {
+                throw new ArgumentNullException(nameof(valueToAdd));
+            }
+
+            var result = source.DeepClone().ToList();
+
+            result.Add(valueToAdd);
+
+            return result;
+        }
+
         /// <summary>
         /// Gets the names of an ordered collection of <see cref="NamedValue{TValue}"/>.
         /// </summary>
