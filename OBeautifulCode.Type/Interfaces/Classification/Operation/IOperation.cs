@@ -32,7 +32,7 @@ namespace OBeautifulCode.Type
     /// the signature of the method that can execute the operation.
     /// </remarks>
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
-    public interface IOperation
+    public interface IOperation : IObject
     {
     }
 }

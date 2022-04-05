@@ -14,7 +14,7 @@ namespace OBeautifulCode.Type
     /// A record of something that has occurred.
     /// </summary>
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
-    public interface IEvent : IHaveTimestampUtc
+    public interface IEvent : IObject, IHaveTimestampUtc
     {
     }
 }
