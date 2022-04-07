@@ -27,15 +27,41 @@ namespace OBeautifulCode.Type
         /// <returns>
         /// A deep clone of the specified source collection with the specified value added.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="valueToAdd"/> is null.</exception>
         public static IReadOnlyList<NamedValue<TValue>> DeepCloneWithAdditionalValue<TValue>(
             this IReadOnlyList<NamedValue<TValue>> source,
             NamedValue<TValue> valueToAdd)
         {
-            if (source == null)
+            source = source ?? new List<NamedValue<TValue>>();
+
+            if (valueToAdd == null)
             {
-                throw new ArgumentNullException(nameof(source));
+                throw new ArgumentNullException(nameof(valueToAdd));
             }
+
+            var result = source.DeepClone().ToList();
+
+            result.Add(valueToAdd);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deeps the clones an ordered collection of <see cref="NamedValue{TValue}"/>
+        /// and adds a specified <see cref="NamedValue{TValue}"/> to the resulting collection.
+        /// </summary>
+        /// <typeparam name="TValue">The type of values.</typeparam>
+        /// <param name="source">The source collection.</param>
+        /// <param name="valueToAdd">The value to add to the resulting collection.</param>
+        /// <returns>
+        /// A deep clone of the specified source collection with the specified value added.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="valueToAdd"/> is null.</exception>
+        public static IReadOnlyCollection<NamedValue<TValue>> DeepCloneWithAdditionalValue<TValue>(
+            this IReadOnlyCollection<NamedValue<TValue>> source,
+            NamedValue<TValue> valueToAdd)
+        {
+            source = source ?? new List<NamedValue<TValue>>();
 
             if (valueToAdd == null)
             {
