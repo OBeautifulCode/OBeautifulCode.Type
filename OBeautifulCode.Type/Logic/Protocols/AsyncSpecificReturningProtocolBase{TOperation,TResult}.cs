@@ -6,6 +6,7 @@
 
 namespace OBeautifulCode.Type
 {
+    using System;
     using System.Threading.Tasks;
 
     using OBeautifulCode.Execution.Recipes;
@@ -22,9 +23,9 @@ namespace OBeautifulCode.Type
         public TResult Execute(
             TOperation operation)
         {
-            var task = this.ExecuteAsync(operation);
+            Func<Task<TResult>> executeAsyncFunc = () => this.ExecuteAsync(operation);
 
-            var result = task.RunUntilCompletion();
+            var result = executeAsyncFunc.ExecuteSynchronously();
 
             return result;
         }

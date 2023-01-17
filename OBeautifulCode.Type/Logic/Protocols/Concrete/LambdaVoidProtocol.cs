@@ -85,7 +85,9 @@ namespace OBeautifulCode.Type
             }
             else
             {
-                this.asyncAsynchronousLambda(operation).RunUntilCompletion();
+                Func<Task> asyncAsynchronousLambdaFunc = () => this.asyncAsynchronousLambda(operation);
+
+                asyncAsynchronousLambdaFunc.ExecuteSynchronously();
             }
         }
 

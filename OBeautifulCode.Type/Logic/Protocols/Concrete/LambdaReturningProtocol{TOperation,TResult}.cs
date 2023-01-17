@@ -82,7 +82,7 @@ namespace OBeautifulCode.Type
         {
             var result = this.synchronousLambda != null
                 ? this.synchronousLambda(operation)
-                : this.asyncAsynchronousLambda(operation).RunUntilCompletion();
+                : ((Func<Task<TResult>>)(() => this.asyncAsynchronousLambda(operation))).ExecuteSynchronously();
 
             return result;
         }
