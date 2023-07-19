@@ -78,6 +78,7 @@
     <Compile Include=".recipes\OBeautifulCode.Execution\AsyncContext.cs" />
     <Compile Include=".recipes\OBeautifulCode.Execution\TaskExtensions.cs" />
     <Compile Include="Enums\CultureKind.cs" />
+    <Compile Include="Enums\CurrencyCode.cs" />
     <Compile Include="Enums\ProtocolAlreadyRegisteredForOperationStrategy.cs" />
     <Compile Include="Enums\MissingProtocolStrategy.cs" />
     <Compile Include="Enums\DateTimeFormatKind.cs" />
