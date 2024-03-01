@@ -24,157 +24,158 @@ namespace OBeautifulCode.Type.Test
     using global::OBeautifulCode.Equality.Recipes;
     using global::OBeautifulCode.Math.Recipes;
     using global::OBeautifulCode.Reflection.Recipes;
+    using global::OBeautifulCode.Type;
 
     using global::Xunit;
 
     using static global::System.FormattableString;
 
-    public static partial class NullEventTIdTest
+    public static partial class RangeTTest
     {
-        private static readonly StringRepresentationTestScenarios<NullEvent<Version>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<NullEvent<Version>>()
+        private static readonly StringRepresentationTestScenarios<Range<Version>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<Range<Version>>();
+
+        private static readonly ConstructorArgumentValidationTestScenarios<Range<Version>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<Range<Version>>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<NullEvent<Version>>
+                new ConstructorArgumentValidationTestScenario<Range<Version>>
                 {
-                    Name = "Default Code Generated Scenario",
-                    SystemUnderTestExpectedStringRepresentationFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<NullEvent<Version>>();
-
-                        var result = new SystemUnderTestExpectedStringRepresentation<NullEvent<Version>>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.Type.NullEvent<Version>: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {systemUnderTest.Id?.ToString() ?? "<null>"}."),
-                        };
-
-                        return result;
-                    },
-                });
-
-        private static readonly ConstructorArgumentValidationTestScenarios<NullEvent<Version>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<NullEvent<Version>>()
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<NullEvent<Version>>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'start' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<NullEvent<Version>>();
+                        var referenceObject = A.Dummy<Range<Version>>();
 
-                        var result = new NullEvent<Version>(
+                        var result = new Range<Version>(
                                              null,
-                                             referenceObject.TimestampUtc);
+                                             referenceObject.End);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "id", },
-                });
-
-        private static readonly ConstructorPropertyAssignmentTestScenarios<NullEvent<Version>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<NullEvent<Version>>()
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<NullEvent<Version>>
-                {
-                    Name = "Id should return same 'id' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<NullEvent<Version>>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<NullEvent<Version>>
-                        {
-                            SystemUnderTest = new NullEvent<Version>(
-                                                      referenceObject.Id,
-                                                      referenceObject.TimestampUtc),
-                            ExpectedPropertyValue = referenceObject.Id,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Id",
+                    ExpectedExceptionMessageContains = new[] { "start", },
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<NullEvent<Version>>
+                new ConstructorArgumentValidationTestScenario<Range<Version>>
                 {
-                    Name = "TimestampUtc should return same 'timestampUtc' parameter passed to constructor when getting",
+                    Name = "constructor should throw ArgumentNullException when parameter 'end' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Range<Version>>();
+
+                        var result = new Range<Version>(
+                                             referenceObject.Start,
+                                             null);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "end", },
+                });
+
+        private static readonly ConstructorPropertyAssignmentTestScenarios<Range<Version>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<Range<Version>>()
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<Range<Version>>
+                {
+                    Name = "Start should return same 'start' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<NullEvent<Version>>();
+                        var referenceObject = A.Dummy<Range<Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<NullEvent<Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<Range<Version>>
                         {
-                            SystemUnderTest = new NullEvent<Version>(
-                                                      referenceObject.Id,
-                                                      referenceObject.TimestampUtc),
-                            ExpectedPropertyValue = referenceObject.TimestampUtc,
+                            SystemUnderTest = new Range<Version>(
+                                                      referenceObject.Start,
+                                                      referenceObject.End),
+                            ExpectedPropertyValue = referenceObject.Start,
                         };
 
                         return result;
                     },
-                    PropertyName = "TimestampUtc",
+                    PropertyName = "Start",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<Range<Version>>
+                {
+                    Name = "End should return same 'end' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Range<Version>>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<Range<Version>>
+                        {
+                            SystemUnderTest = new Range<Version>(
+                                                      referenceObject.Start,
+                                                      referenceObject.End),
+                            ExpectedPropertyValue = referenceObject.End,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "End",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<NullEvent<Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<NullEvent<Version>>()
+        private static readonly DeepCloneWithTestScenarios<Range<Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<Range<Version>>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<NullEvent<Version>>
+                new DeepCloneWithTestScenario<Range<Version>>
                 {
-                    Name = "DeepCloneWithTimestampUtc should deep clone object and replace TimestampUtc with the provided timestampUtc",
-                    WithPropertyName = "TimestampUtc",
+                    Name = "DeepCloneWithStart should deep clone object and replace Start with the provided start",
+                    WithPropertyName = "Start",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<NullEvent<Version>>();
+                        var systemUnderTest = A.Dummy<Range<Version>>();
 
-                        var referenceObject = A.Dummy<NullEvent<Version>>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
+                        var referenceObject = A.Dummy<Range<Version>>().ThatIs(_ => !systemUnderTest.Start.IsEqualTo(_.Start));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<NullEvent<Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<Range<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.TimestampUtc,
+                            DeepCloneWithValue = referenceObject.Start,
                         };
 
                         return result;
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<NullEvent<Version>>
+                new DeepCloneWithTestScenario<Range<Version>>
                 {
-                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
-                    WithPropertyName = "Id",
+                    Name = "DeepCloneWithEnd should deep clone object and replace End with the provided end",
+                    WithPropertyName = "End",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<NullEvent<Version>>();
+                        var systemUnderTest = A.Dummy<Range<Version>>();
 
-                        var referenceObject = A.Dummy<NullEvent<Version>>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+                        var referenceObject = A.Dummy<Range<Version>>().ThatIs(_ => !systemUnderTest.End.IsEqualTo(_.End));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<NullEvent<Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<Range<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Id,
+                            DeepCloneWithValue = referenceObject.End,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly NullEvent<Version> ReferenceObjectForEquatableTestScenarios = A.Dummy<NullEvent<Version>>();
+        private static readonly Range<Version> ReferenceObjectForEquatableTestScenarios = A.Dummy<Range<Version>>();
 
-        private static readonly EquatableTestScenarios<NullEvent<Version>> EquatableTestScenarios = new EquatableTestScenarios<NullEvent<Version>>()
+        private static readonly EquatableTestScenarios<Range<Version>> EquatableTestScenarios = new EquatableTestScenarios<Range<Version>>()
             .AddScenario(() =>
-                new EquatableTestScenario<NullEvent<Version>>
+                new EquatableTestScenario<Range<Version>>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new NullEvent<Version>[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new Range<Version>[]
                     {
-                        new NullEvent<Version>(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc),
+                        new Range<Version>(
+                                ReferenceObjectForEquatableTestScenarios.Start,
+                                ReferenceObjectForEquatableTestScenarios.End),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new NullEvent<Version>[]
+                    ObjectsThatAreNotEqualToReferenceObject = new Range<Version>[]
                     {
-                        new NullEvent<Version>(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                A.Dummy<NullEvent<Version>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc),
-                        new NullEvent<Version>(
-                                A.Dummy<NullEvent<Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc),
+                        new Range<Version>(
+                                A.Dummy<Range<Version>>().Whose(_ => !_.Start.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Start)).Start,
+                                ReferenceObjectForEquatableTestScenarios.End),
+                        new Range<Version>(
+                                ReferenceObjectForEquatableTestScenarios.Start,
+                                A.Dummy<Range<Version>>().Whose(_ => !_.End.IsEqualTo(ReferenceObjectForEquatableTestScenarios.End)).End),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -183,9 +184,6 @@ namespace OBeautifulCode.Type.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ExecuteOpRequestedEvent<Version, GetProtocolOp>>(),
-                        A.Dummy<ExecuteOpRequestedEvent<GetProtocolOp>>(),
-                        A.Dummy<NullEvent>(),
                     },
                 });
 
@@ -207,10 +205,36 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void NullEvent___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void Range_of_Version___Should_declare_ToString_method___When_reflecting()
             {
                 // Arrange
-                var type = typeof(NullEvent<Version>);
+                var expected = typeof(Range<Version>);
+
+                // Act
+                var actual = expected.GetMethodsFiltered(MemberRelationships.DeclaredInType, MemberOwners.Instance, MemberAccessModifiers.Public).Single(_ => (_.Name == nameof(ToString)) && (!_.GetParameters().Any()));
+
+                // Assert
+                actual.DeclaringType.AsTest().Must().BeEqualTo(expected);
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Range_of_Version___Should_be_attributed_with_Serializable____When_reflecting()
+            {
+                // Arrange
+                var type = typeof(Range<Version>);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -283,7 +307,7 @@ namespace OBeautifulCode.Type.Test
                     // Assert
                     actual.AsTest().Must().BeOfType(scenario.ExpectedExceptionType, because: scenario.Id);
 
-                    foreach(var expected in scenario.ExpectedExceptionMessageContains ?? new List<string>())
+                    foreach (var expected in scenario.ExpectedExceptionMessageContains ?? new List<string>())
                     {
                         actual.Message.AsTest().Must().ContainString(expected, because: scenario.Id);
                     }
@@ -314,6 +338,10 @@ namespace OBeautifulCode.Type.Test
             {
                 var scenarios = ConstructorPropertyAssignmentTestScenarios.ValidateAndPrepareForTesting();
 
+                var asTestMethodInfo = typeof(WorkflowExtensions).GetMethodFiltered(nameof(WorkflowExtensions.AsTest));
+
+                var beEqualToMethodInfo = typeof(Verifications).GetMethodFiltered(nameof(Verifications.BeEqualTo));
+
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
@@ -333,7 +361,25 @@ namespace OBeautifulCode.Type.Test
                     // So a boxed value type is handled properly (using ValueEquality instead of ReferenceEquality).
                     if (scenario.CompareActualToExpectedUsing == CompareActualToExpectedUsing.ValueEquality)
                     {
-                        actual.AsTest().Must().BeEqualTo(scenario.ExpectedPropertyValue, because: scenario.Id);
+                        // The below reflection code is used in lieu of the following single line of code
+                        // so that equality is determined based on the property type instead of using
+                        // OBeautifulCode.Equality.Recipes.ObjectEqualityComparer, which will return false
+                        // when the objects being compared have different runtime types.  For example, if
+                        // the property type is IReadOnlyCollection<string> and we are comparing an empty array
+                        // an empty List, the assertion below would fail inappropriately.
+                        // actual.AsTest().Must().BeEqualTo(scenario.ExpectedPropertyValue, because: scenario.Id);
+
+                        var propertyType = scenario.Property.PropertyType;
+
+                        var asTestMethodInfoToInvoke = asTestMethodInfo.MakeGenericMethod(propertyType);
+
+                        var assertionTracker = asTestMethodInfoToInvoke.Invoke(null, new[] { actual, Type.Missing });
+
+                        assertionTracker.Must();
+
+                        var mustBeEqualToMethodInfoToInvoke = beEqualToMethodInfo.MakeGenericMethod(propertyType);
+
+                        mustBeEqualToMethodInfoToInvoke.Invoke(null, new[] { assertionTracker, scenario.ExpectedPropertyValue, scenario.Id, Type.Missing, Type.Missing });
                     }
                     else if (scenario.CompareActualToExpectedUsing == CompareActualToExpectedUsing.ReferenceEquality)
                     {
@@ -368,10 +414,10 @@ namespace OBeautifulCode.Type.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<NullEvent<Version>>();
+                var systemUnderTest = A.Dummy<Range<Version>>();
 
                 // Act
-                var actual = (NullEvent<Version>)systemUnderTest.Clone();
+                var actual = (Range<Version>)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -395,7 +441,7 @@ namespace OBeautifulCode.Type.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<NullEvent<Version>>();
+                var systemUnderTest = A.Dummy<Range<Version>>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -404,16 +450,28 @@ namespace OBeautifulCode.Type.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.Id == null)
+                if (systemUnderTest.Start == null)
                 {
-                    actual.Id.AsTest().Must().BeNull();
+                    actual.Start.AsTest().Must().BeNull();
                 }
-                else if (!actual.Id.GetType().IsValueType)
+                else if (!actual.Start.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.Id.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Id);
+                    actual.Start.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Start);
+                }
+
+                if (systemUnderTest.End == null)
+                {
+                    actual.End.AsTest().Must().BeNull();
+                }
+                else if (!actual.End.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.End.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.End);
                 }
             }
 
@@ -433,7 +491,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "TimestampUtc", "Id" };
+                var propertyNames = new string[] { "Start", "End" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -446,12 +504,12 @@ namespace OBeautifulCode.Type.Test
                     }
 
                     // Act
-                    var actual = (NullEvent<Version>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (Range<Version>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
-                    foreach(var propertyName in propertyNames)
+                    foreach (var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(NullEvent<Version>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(Range<Version>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -513,8 +571,8 @@ namespace OBeautifulCode.Type.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                NullEvent<Version> systemUnderTest1 = null;
-                NullEvent<Version> systemUnderTest2 = null;
+                Range<Version> systemUnderTest1 = null;
+                Range<Version> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -544,7 +602,7 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    NullEvent<Version> systemUnderTest = null;
+                    Range<Version> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -577,9 +635,9 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    #pragma warning disable CS1718 // Comparison made to same variable
+#pragma warning disable CS1718 // Comparison made to same variable
                     var actual = scenario.ReferenceObject == scenario.ReferenceObject;
-                    #pragma warning restore CS1718 // Comparison made to same variable
+#pragma warning restore CS1718 // Comparison made to same variable
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -693,8 +751,8 @@ namespace OBeautifulCode.Type.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                NullEvent<Version> systemUnderTest1 = null;
-                NullEvent<Version> systemUnderTest2 = null;
+                Range<Version> systemUnderTest1 = null;
+                Range<Version> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -724,7 +782,7 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    NullEvent<Version> systemUnderTest = null;
+                    Range<Version> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -757,9 +815,9 @@ namespace OBeautifulCode.Type.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    #pragma warning disable CS1718 // Comparison made to same variable
+#pragma warning disable CS1718 // Comparison made to same variable
                     var actual = scenario.ReferenceObject != scenario.ReferenceObject;
-                    #pragma warning restore CS1718 // Comparison made to same variable
+#pragma warning restore CS1718 // Comparison made to same variable
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -870,300 +928,14 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_Range_of_Version___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    EventBase systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((EventBase)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((EventBase)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase_Version___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    EventBase<Version> systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((EventBase<Version>)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase_Version___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((EventBase<Version>)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase_Version___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase<Version>)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase_Version___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase<Version>)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase_Version___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase<Version>)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_NullEvent___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    NullEvent<Version> systemUnderTest = null;
+                    Range<Version> systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1187,7 +959,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_NullEvent___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_Range_of_Version___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1215,7 +987,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_NullEvent___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_Range_of_Version___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1243,7 +1015,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_NullEvent___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_Range_of_Version___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1271,7 +1043,7 @@ namespace OBeautifulCode.Type.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_NullEvent___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_Range_of_Version___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

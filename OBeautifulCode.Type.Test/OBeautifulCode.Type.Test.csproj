@@ -243,6 +243,10 @@
     <Compile Include="Models\Operations\VoidOperationBaseTest.designer.cs">
       <DependentUpon>VoidOperationBaseTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Range{T}Test.cs" />
+    <Compile Include="Models\Range{T}Test.designer.cs">
+      <DependentUpon>Range{T}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\UtcDateTimeRangeInclusiveTest.cs" />
     <Compile Include="Models\UtcDateTimeRangeInclusiveTest.designer.cs">
       <DependentUpon>UtcDateTimeRangeInclusiveTest.cs</DependentUpon>

@@ -17,20 +17,21 @@ namespace OBeautifulCode.Type
 
     using global::OBeautifulCode.Cloning.Recipes;
     using global::OBeautifulCode.Equality.Recipes;
+    using global::OBeautifulCode.Type;
     using global::OBeautifulCode.Type.Recipes;
 
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class TestVoidOp : IModel<TestVoidOp>
+    public partial class Range<T> : IModel<Range<T>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="TestVoidOp"/> are equal.
+        /// Determines whether two objects of type <see cref="Range{T}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(TestVoidOp left, TestVoidOp right)
+        public static bool operator ==(Range<T> left, Range<T> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +49,15 @@ namespace OBeautifulCode.Type
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="TestVoidOp"/> are not equal.
+        /// Determines whether two objects of type <see cref="Range{T}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(TestVoidOp left, TestVoidOp right) => !(left == right);
+        public static bool operator !=(Range<T> left, Range<T> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(TestVoidOp other)
+        public bool Equals(Range<T> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -68,27 +69,39 @@ namespace OBeautifulCode.Type
                 return false;
             }
 
-            var result = this.Details.IsEqualTo(other.Details, StringComparer.Ordinal);
+            var result = this.Start.IsEqualTo(other.Start)
+                      && this.End.IsEqualTo(other.End);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as TestVoidOp);
+        public override bool Equals(object obj) => this == (obj as Range<T>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Details)
+            .Hash(this.Start)
+            .Hash(this.End)
             .Value;
 
         /// <inheritdoc />
-        public new TestVoidOp DeepClone() => (TestVoidOp)this.DeepCloneInternal();
+        public object Clone() => this.DeepClone();
+
+        /// <inheritdoc />
+        public Range<T> DeepClone()
+        {
+            var result = new Range<T>(
+                                 this.Start == null ? default : this.Start.DeepClone(),
+                                 this.End == null ? default : this.End.DeepClone());
+
+            return result;
+        }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Details" />.
+        /// Deep clones this object with a new <see cref="Start" />.
         /// </summary>
-        /// <param name="details">The new <see cref="Details" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="TestVoidOp" /> using the specified <paramref name="details" /> for <see cref="Details" /> and a deep clone of every other property.</returns>
+        /// <param name="start">The new <see cref="Start" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="Range{T}" /> using the specified <paramref name="start" /> for <see cref="Start" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -106,29 +119,42 @@ namespace OBeautifulCode.Type
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public TestVoidOp DeepCloneWithDetails(string details)
+        public Range<T> DeepCloneWithStart(T start)
         {
-            var result = new TestVoidOp(
-                                 details);
+            var result = new Range<T>(
+                                 start,
+                                 this.End == null ? default : this.End.DeepClone());
 
             return result;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Deep clones this object with a new <see cref="End" />.
+        /// </summary>
+        /// <param name="end">The new <see cref="End" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="Range{T}" /> using the specified <paramref name="end" /> for <see cref="End" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override OperationBase DeepCloneInternal()
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public Range<T> DeepCloneWithEnd(T end)
         {
-            var result = new TestVoidOp(
-                                 this.Details?.DeepClone());
-
-            return result;
-        }
-
-        /// <inheritdoc />
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        public override string ToString()
-        {
-            var result = Invariant($"OBeautifulCode.Type.TestVoidOp: Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = new Range<T>(
+                                 this.Start == null ? default : this.Start.DeepClone(),
+                                 end);
 
             return result;
         }

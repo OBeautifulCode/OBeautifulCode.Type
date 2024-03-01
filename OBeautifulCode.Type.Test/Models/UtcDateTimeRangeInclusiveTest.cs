@@ -150,7 +150,7 @@ namespace OBeautifulCode.Type.Test
                 .AddScenario(() =>
                     new DeepCloneWithTestScenario<UtcDateTimeRangeInclusive>
                     {
-                        Name = "DeepCloneWithStartDateTimeInUtc should deep clone object and replace ParentBoolProperty with the provided parentBoolProperty",
+                        Name = "DeepCloneWithStartDateTimeInUtc should deep clone object and replace StartDateTimeInUtc with the provided startDateTimeInUtc",
                         WithPropertyName = "StartDateTimeInUtc",
                         SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
@@ -170,7 +170,7 @@ namespace OBeautifulCode.Type.Test
                 .AddScenario(() =>
                     new DeepCloneWithTestScenario<UtcDateTimeRangeInclusive>
                     {
-                        Name = "DeepCloneWithEndDateTimeInUtc should deep clone object and replace ParentBoolProperty with the provided parentBoolProperty",
+                        Name = "DeepCloneWithEndDateTimeInUtc should deep clone object and replace EndDateTimeInUtc with the provided endDateTimeInUtc",
                         WithPropertyName = "EndDateTimeInUtc",
                         SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
