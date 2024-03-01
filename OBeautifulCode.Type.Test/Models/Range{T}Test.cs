@@ -39,11 +39,11 @@ namespace OBeautifulCode.Type.Test
                         Name = "constructor should throw ArgumentOutOfRangeException when 'start' > 'end'",
                         ConstructionFunc = () =>
                         {
-                            var startDateTimeInUtc = DateTime.UtcNow;
+                            var start = A.Dummy<Version>();
 
-                            var endDateTimeInUtc = startDateTimeInUtc.AddMilliseconds(-1);
+                            var end = A.Dummy<Version>().ThatIs(_ => _ < start);
 
-                            return new Range<Version>(new Version(3, 4), new Version(1, 2));
+                            return new Range<Version>(start, end);
                         },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
                         ExpectedExceptionMessageContains = new[] { "start is > end" },
