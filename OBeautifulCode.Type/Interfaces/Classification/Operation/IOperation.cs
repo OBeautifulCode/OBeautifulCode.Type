@@ -23,13 +23,14 @@ namespace OBeautifulCode.Type
     /// implement the same interface multiple times for different conceptual operations).  This simplifies the
     /// definition, consumption, and serialization of operations.
     ///
-    /// The two implementors below differentiate operations that return versus those that don't.  When you inherit
-    /// from one of these base classes, the nature of the operation from a return perspective should be evident and
+    /// <see cref="IVoidOperation"/> and <see cref="IReturningOperation{TResult}"/>
+    /// differentiate operations that return versus those that don't.  When you implement one of these interfaces,
+    /// the nature of the operation from a return perspective should be evident and
     /// declarative because it prevents the consumer from defining a void operation where a returning operation is
-    /// actually required.  The TResult in <see cref="ReturningOperationBase{TResult}"/> is not used by the class itself
-    /// and is thus not enforced when the operation is being authored.  However, the
+    /// actually required.  The TResult in <see cref="IReturningOperation{TResult}"/> is not used within the interface itself
+    /// (e.g. used in any property or method defined within the interface).  However, the
     /// <see cref="IProtocol{TOperation}"/> associated with the operation requires this generic parameter to define
-    /// the signature of the method that can execute the operation.
+    /// the signature of the method that can Execute() the operation.
     /// </remarks>
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
     public interface IOperation : IObject
