@@ -11,6 +11,7 @@ namespace OBeautifulCode.Type
     /// <summary>
     /// Gets the protocol to use for a specified <see cref="IOperation"/> object.
     /// </summary>
+    // ReSharper disable once RedundantExtendsListEntry
     public partial class GetProtocolOp : ReturningOperationBase<IProtocol>, IModelViaCodeGen
     {
         /// <summary>
@@ -22,6 +23,7 @@ namespace OBeautifulCode.Type
             IOperation operation,
             MissingProtocolStrategy missingProtocolStrategy = MissingProtocolStrategy.Throw)
         {
+            // ReSharper disable once JoinNullCheckWithUsage - prefer to check variable first
             if (operation == null)
             {
                 throw new ArgumentNullException(nameof(operation));
