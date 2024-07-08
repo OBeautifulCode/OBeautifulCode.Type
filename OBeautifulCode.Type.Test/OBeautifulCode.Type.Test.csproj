@@ -261,6 +261,10 @@
     <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp{TResult}Test.designer.cs">
       <DependentUpon>ThrowOpExecutionAbortedExceptionOp{TResult}Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\VersionedId{TId}Test.cs" />
+    <Compile Include="Models\VersionedId{TId}Test.designer.cs">
+      <DependentUpon>VersionedId{TId}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\ProjectInfo.cs" />
     <Compile Include="TypeDummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
