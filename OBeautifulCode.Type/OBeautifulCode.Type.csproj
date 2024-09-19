@@ -84,6 +84,7 @@
     <Compile Include="Enums\DateTimeFormatKind.cs" />
     <Compile Include="Enums\StandardTimeZone.cs" />
     <Compile Include="Enums\TimeComparison.cs" />
+    <Compile Include="Enums\TypeSelectionStrategy.cs" />
     <Compile Include="Enums\VersionMatchStrategy.cs" />
     <Compile Include="Exceptions\OpExecutionDeemedNotApplicableException.cs" />
     <Compile Include="Exceptions\OpExecutionDeemedNotApplicableExceptionBase.cs" />
