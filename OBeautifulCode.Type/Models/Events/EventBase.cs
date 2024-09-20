@@ -24,7 +24,7 @@ namespace OBeautifulCode.Type
         {
             if (timestampUtc.Kind != DateTimeKind.Utc)
             {
-                throw new ArgumentException(Invariant($"{nameof(timestampUtc)}.{nameof(DateTime.Kind)} is not {nameof(DateTimeKind)}.{nameof(DateTimeKind.Utc)}."));
+                throw new ArgumentException(Invariant($"{nameof(timestampUtc)} is of a {nameof(DateTime.Kind)} that is not {nameof(DateTimeKind)}.{nameof(DateTimeKind.Utc)}.  {nameof(DateTime.Kind)} is {nameof(DateTimeKind)}.{timestampUtc.Kind}."));
             }
 
             this.TimestampUtc = timestampUtc;
