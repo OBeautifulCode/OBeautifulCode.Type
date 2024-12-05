@@ -153,6 +153,8 @@ namespace OBeautifulCode.Type.Test
                         A.Dummy<GetProtocolOp>(),
                         A.Dummy<NullReturningOp<Version>>(),
                         A.Dummy<NullVoidOp>(),
+                        A.Dummy<TestReturningOp<Version>>(),
+                        A.Dummy<TestVoidOp>()
                     },
                 });
 

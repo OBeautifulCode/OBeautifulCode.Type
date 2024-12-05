@@ -105,6 +105,10 @@
     <Compile Include="Logic\Protocols\Concrete\LambdaVoidProtocol.cs" />
     <Compile Include="Logic\Protocols\Concrete\ChainOfResponsibilityProtocolFactory.cs" />
     <Compile Include="Logic\Protocols\Concrete\ProtocolFactory.cs" />
+    <Compile Include="Models\Operations\Concrete\TestReturningOp{TResult}.cs" />
+    <Compile Include="Models\Operations\Concrete\TestReturningOp{TResult}.designer.cs">
+      <DependentUpon>TestReturningOp{TResult}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOp.cs" />
     <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOp.designer.cs">
       <DependentUpon>ThrowOpExecutionDeemedNotApplicableExceptionOp.cs</DependentUpon>

@@ -186,8 +186,9 @@ namespace OBeautifulCode.Type.Test
                         A.Dummy<ThrowOpExecutionAbortedExceptionOp>(),
                         A.Dummy<ThrowOpExecutionAbortedExceptionOp<Version>>(),
                         A.Dummy<NullReturningOp<Version>>(),
-                        A.Dummy<TestVoidOp>(),
+                        A.Dummy<TestReturningOp<Version>>(),
                         A.Dummy<NullVoidOp>(),
+                        A.Dummy<TestVoidOp>(),
                     },
                 });
 
