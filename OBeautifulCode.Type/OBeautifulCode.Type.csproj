@@ -101,10 +101,15 @@
     <Compile Include="Logic\Extensions\StandardTimeZoneExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensions.cs" />
+    <Compile Include="Logic\Protocols\Concrete\GetConstValueProtocol{TValue}.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaReturningProtocol{TOperation,TResult}.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaVoidProtocol.cs" />
     <Compile Include="Logic\Protocols\Concrete\ChainOfResponsibilityProtocolFactory.cs" />
     <Compile Include="Logic\Protocols\Concrete\ProtocolFactory.cs" />
+    <Compile Include="Models\Operations\Concrete\GetConstValueOp{TValue}.cs" />
+    <Compile Include="Models\Operations\Concrete\GetConstValueOp{TValue}.designer.cs">
+      <DependentUpon>GetConstValueOp{TValue}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Operations\Concrete\TestReturningOp{TResult}.cs" />
     <Compile Include="Models\Operations\Concrete\TestReturningOp{TResult}.designer.cs">
       <DependentUpon>TestReturningOp{TResult}.cs</DependentUpon>

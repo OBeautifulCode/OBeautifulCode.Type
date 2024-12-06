@@ -175,6 +175,7 @@
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\NamedValueExtensionsTest.cs" />
+    <Compile Include="Logic\Protocols\Concrete\GetConstValueProtocolTest.cs" />
     <Compile Include="Logic\Protocols\Concrete\ChainOfResponsibilityProtocolFactoryTest.cs" />
     <Compile Include="Logic\Protocols\Concrete\ProtocolFactoryTest.cs" />
     <Compile Include="Models\Enums\CultureKindTest.cs" />
@@ -206,6 +207,10 @@
     <Compile Include="Models\NamedValue{TValue}Test.cs" />
     <Compile Include="Models\NamedValue{TValue}Test.designer.cs">
       <DependentUpon>NamedValue{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Operations\Concrete\GetConstValueOp{TValue}Test.cs" />
+    <Compile Include="Models\Operations\Concrete\GetConstValueOp{TValue}Test.designer.cs">
+      <DependentUpon>GetConstValueOp{TValue}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Operations\Concrete\TestReturningOp{TResult}Test.cs" />
     <Compile Include="Models\Operations\Concrete\TestReturningOp{TResult}Test.designer.cs">
