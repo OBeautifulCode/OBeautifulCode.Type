@@ -12,7 +12,7 @@ namespace OBeautifulCode.Type
     /// Wraps a value.
     /// </summary>
     /// <typeparam name="TValue">The type of value.</typeparam>
-    public partial class SimpleValue<TValue> : IHaveValue<TValue>, IModelViaCodeGen
+    public partial class SimpleValue<TValue> : IValue<TValue>, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleValue{TValue}"/> class.

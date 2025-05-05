@@ -92,6 +92,9 @@
     <Compile Include="Exceptions\OpExecutionAbortedException.cs" />
     <Compile Include="Exceptions\OpExecutionFailedExceptionBase.cs" />
     <Compile Include="Exceptions\OpExecutionAbortedExceptionBase.cs" />
+    <Compile Include="Interfaces\Classification\IValue.cs" />
+    <Compile Include="Interfaces\Classification\INamedValue.cs" />
+    <Compile Include="Interfaces\Classification\IValue{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionFailedExceptionOp.cs" />
     <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionDeemedNotApplicableExceptionOp.cs" />
     <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionAbortedExceptionOp.cs" />
