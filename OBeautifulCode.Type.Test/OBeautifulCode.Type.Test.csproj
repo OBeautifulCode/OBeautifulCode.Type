@@ -204,6 +204,10 @@
     <Compile Include="Models\Events\Concrete\NullEvent{TId}Test.designer.cs">
       <DependentUpon>NullEvent{TId}Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\SimpleValue{TValue}Test.cs" />
+    <Compile Include="Models\SimpleValue{TValue}Test.designer.cs">
+      <DependentUpon>SimpleValue{TValue}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\NamedValue{TValue}Test.cs" />
     <Compile Include="Models\NamedValue{TValue}Test.designer.cs">
       <DependentUpon>NamedValue{TValue}Test.cs</DependentUpon>

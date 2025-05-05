@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NamedValue{TValue}Test.cs" company="OBeautifulCode">
+// <copyright file="SimpleValue{TValue}Test.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -23,48 +23,15 @@ namespace OBeautifulCode.Type.Test
     using static System.FormattableString;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class NamedValueTValueTest
+    public static partial class SimpleValueTValueTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static NamedValueTValueTest()
+        static SimpleValueTValueTest()
         {
             ConstructorArgumentValidationTestScenarios
                 .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<NamedValue<Version>>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'name' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<NamedValue<Version>>();
-
-                            var result = new NamedValue<Version>(
-                                                 null,
-                                                 referenceObject.Value);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "name", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<NamedValue<Version>>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'name' is white space scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<NamedValue<Version>>();
-
-                            var result = new NamedValue<Version>(
-                                                 Invariant($"  {Environment.NewLine}  "),
-                                                 referenceObject.Value);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "name", "white space", },
-                    });
+                .AddScenario(ConstructorArgumentValidationTestScenario<SimpleValue<Version>>.ConstructorCannotThrowScenario);
         }
 
         [Fact]
@@ -73,7 +40,7 @@ namespace OBeautifulCode.Type.Test
             // Arrange
             var expected = A.Dummy<Version>();
 
-            var systemUnderTest = new NamedValue<Version>(A.Dummy<string>(), expected);
+            var systemUnderTest = new SimpleValue<Version>(expected);
 
             // Act
             var actual = systemUnderTest.GetValue();
@@ -87,7 +54,7 @@ namespace OBeautifulCode.Type.Test
         public static void GetValueType___Should_return_type_of_Value___When_called()
         {
             // Arrange
-            var systemUnderTest = new NamedValue<Version>(A.Dummy<string>(), A.Dummy<Version>());
+            var systemUnderTest = new SimpleValue<Version>(A.Dummy<Version>());
 
             // Act
             var actual = systemUnderTest.GetValueType();

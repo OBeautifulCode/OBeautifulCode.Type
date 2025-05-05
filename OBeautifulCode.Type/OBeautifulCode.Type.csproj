@@ -96,6 +96,9 @@
     <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionDeemedNotApplicableExceptionOp.cs" />
     <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionAbortedExceptionOp.cs" />
     <Compile Include="Interfaces\Property\IHaveName.cs" />
+    <Compile Include="Interfaces\Classification\INamedValue{TValue}.cs" />
+    <Compile Include="Interfaces\Property\IHaveValue{TValue}.cs" />
+    <Compile Include="Interfaces\Property\IHaveValue.cs" />
     <Compile Include="Logic\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Logic\Extensions\DateTimeFormatKindExtensions.cs" />
     <Compile Include="Logic\Extensions\CultureKindExtensions.cs" />
@@ -107,6 +110,10 @@
     <Compile Include="Logic\Protocols\Concrete\LambdaVoidProtocol.cs" />
     <Compile Include="Logic\Protocols\Concrete\ChainOfResponsibilityProtocolFactory.cs" />
     <Compile Include="Logic\Protocols\Concrete\ProtocolFactory.cs" />
+    <Compile Include="Models\SimpleValue{TValue}.cs" />
+    <Compile Include="Models\SimpleValue{TValue}.designer.cs">
+      <DependentUpon>SimpleValue{TValue}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Operations\Concrete\GetConstValueOp{TValue}.cs" />
     <Compile Include="Models\Operations\Concrete\GetConstValueOp{TValue}.designer.cs">
       <DependentUpon>GetConstValueOp{TValue}.cs</DependentUpon>

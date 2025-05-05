@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NamedValue{TValue}.cs" company="OBeautifulCode">
+// <copyright file="SimpleValue{TValue}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,39 +7,22 @@
 namespace OBeautifulCode.Type
 {
     using System;
-    using static System.FormattableString;
 
     /// <summary>
-    /// A value with an associated name.
+    /// Wraps a value.
     /// </summary>
     /// <typeparam name="TValue">The type of value.</typeparam>
-    public partial class NamedValue<TValue> : INamedValue<TValue>, IModelViaCodeGen
+    public partial class SimpleValue<TValue> : IHaveValue<TValue>, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NamedValue{TValue}"/> class.
+        /// Initializes a new instance of the <see cref="SimpleValue{TValue}"/> class.
         /// </summary>
-        /// <param name="name">The name of the value.</param>
         /// <param name="value">The value.</param>
-        public NamedValue(
-            string name,
+        public SimpleValue(
             TValue value)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException(Invariant($"{nameof(name)} is white space."));
-            }
-
-            this.Name = name;
             this.Value = value;
         }
-
-        /// <inheritdoc />
-        public string Name { get; private set; }
 
         /// <inheritdoc />
         public TValue Value { get; private set; }
