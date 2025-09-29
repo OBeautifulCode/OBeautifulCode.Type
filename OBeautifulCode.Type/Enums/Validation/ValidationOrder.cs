@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IDeclareToStringMethod.cs" company="OBeautifulCode">
+// <copyright file="ValidationOrder.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,15 +7,18 @@
 namespace OBeautifulCode.Type
 {
     /// <summary>
-    /// Declares the <see cref="IStringRepresentable.ToString"/> method.
+    /// Specifies the order in which self-validation and property validation occurs.
     /// </summary>
-    public interface IDeclareToStringMethod
+    public enum ValidationOrder
     {
         /// <summary>
-        /// Construct a friendly string representation of this object.
+        /// Perform self-validation then validate properties.
         /// </summary>
-        /// <returns>A <see cref="string" /> that represents this instance.</returns>
-        // ReSharper disable once UnusedMember.Global
-        string ToString();
+        SelfThenProperties,
+
+        /// <summary>
+        /// Validate properties first, then perform self-validation.
+        /// </summary>
+        PropertiesThenSelf,
     }
 }

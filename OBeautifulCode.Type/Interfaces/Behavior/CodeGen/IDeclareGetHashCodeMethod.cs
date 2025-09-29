@@ -9,7 +9,6 @@ namespace OBeautifulCode.Type
     /// <summary>
     /// Declares the <see cref="IHashable.GetHashCode"/> method.
     /// </summary>
-    // ReSharper disable once TypeParameterCanBeVariant
     public interface IDeclareGetHashCodeMethod
     {
         /// <summary>

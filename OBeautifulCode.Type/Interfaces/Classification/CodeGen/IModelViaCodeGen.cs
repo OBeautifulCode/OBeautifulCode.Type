@@ -17,7 +17,7 @@ namespace OBeautifulCode.Type
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
 
     // ReSharper disable once UnusedMember.Global
-    public interface IModelViaCodeGen : IDeepCloneableViaCodeGen, IEquatableViaCodeGen, IHashableViaCodeGen, IStringRepresentableViaCodeGen
+    public interface IModelViaCodeGen : IDeepCloneableViaCodeGen, IEquatableViaCodeGen, IHashableViaCodeGen, IStringRepresentableViaCodeGen, IValidatableViaCodeGen
     {
     }
 }
