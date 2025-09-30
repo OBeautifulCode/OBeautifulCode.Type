@@ -6,6 +6,7 @@
 
 namespace OBeautifulCode.Type
 {
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
     using OBeautifulCode.CodeAnalysis.Recipes;
@@ -87,5 +88,11 @@ namespace OBeautifulCode.Type
         /// <inheritdoc cref="IStringRepresentable" />
         [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = ObcSuppressBecause.CA_ALL_NatureOfTypeNecessitatesIgnoringAllWarnings)]
         public override string ToString() => throw new System.NotImplementedException();
+
+        /// <inheritdoc />
+        public IReadOnlyList<SelfValidationFailure> GetSelfValidationFailures() => throw new System.NotImplementedException();
+
+        /// <inheritdoc />
+        public IReadOnlyList<ValidationFailure> GetValidationFailures(ValidationOptions options = null, PropertyPathTracker propertyPathTracker = null) => throw new System.NotImplementedException();
     }
 }

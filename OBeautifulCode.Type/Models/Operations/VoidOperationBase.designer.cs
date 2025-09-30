@@ -81,5 +81,19 @@ namespace OBeautifulCode.Type
         {
             throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }
+
+        /// <inheritdoc />
+        public override IReadOnlyList<ValidationFailure> GetValidationFailures(ValidationOptions options = null, PropertyPathTracker propertyPathTracker = null)
+        {
+            throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
+        }
+
+        /// <inheritdoc />
+        public override IReadOnlyList<SelfValidationFailure> GetSelfValidationFailures()
+        {
+            var result = base.GetSelfValidationFailures();
+
+            return result;
+        }
     }
 }

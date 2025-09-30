@@ -128,5 +128,21 @@ namespace OBeautifulCode.Type
 
             return result;
         }
+
+        /// <inheritdoc />
+        public override IReadOnlyList<ValidationFailure> GetValidationFailures(ValidationOptions options = null, PropertyPathTracker propertyPathTracker = null)
+        {
+            var result = new ValidationFailure[0];
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override IReadOnlyList<SelfValidationFailure> GetSelfValidationFailures()
+        {
+            var result = base.GetSelfValidationFailures();
+
+            return result;
+        }
     }
 }
