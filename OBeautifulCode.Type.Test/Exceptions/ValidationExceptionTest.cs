@@ -77,7 +77,7 @@ namespace OBeautifulCode.Type.Test
             var actual = subjectsUnderTest.InnerException;
 
             // Assert
-            actual.AsTest().Must().BeSameReferenceAs(expected);
+            actual.AsTest().Must().BeSameReferenceAs((Exception)expected);
         }
 
         [Fact]
