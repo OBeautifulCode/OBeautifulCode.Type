@@ -17,7 +17,7 @@ namespace OBeautifulCode.Type
     /// <remarks>
     /// See <see cref="IValidatable"/> for more details about self-validation.
     /// </remarks>
-    public partial class SelfValidationFailure : IModelViaCodeGen, IDeclareToStringMethod
+    public class SelfValidationFailure
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SelfValidationFailure"/> class.
@@ -103,7 +103,7 @@ namespace OBeautifulCode.Type
         /// </remarks>
         public string Message { get; private set; }
 
-        /// <inheritdoc cref="IDeclareToStringMethod" />
+        /// <inheritdoc />
         public override string ToString()
         {
             var result = Invariant($"{string.Join("|", this.PropertyNames)} : {this.Message}");

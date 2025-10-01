@@ -293,10 +293,7 @@
     <Compile Include="Models\Validation\ValidationFailureTest.designer.cs">
       <DependentUpon>ValidationFailureTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Validation\SelfValidationFailureTest.cs" />
-    <Compile Include="Models\Validation\SelfValidationFailureTest.designer.cs">
-      <DependentUpon>SelfValidationFailureTest.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Logic\Classes\SelfValidationFailureTest.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
     <Compile Include="TypeDummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

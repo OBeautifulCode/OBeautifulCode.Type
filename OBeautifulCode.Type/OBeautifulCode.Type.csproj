@@ -272,10 +272,7 @@
     <Compile Include="Models\Validation\ValidationOptions.designer.cs">
       <DependentUpon>ValidationOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Validation\SelfValidationFailure.cs" />
-    <Compile Include="Models\Validation\SelfValidationFailure.designer.cs">
-      <DependentUpon>SelfValidationFailure.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Logic\Classes\SelfValidationFailure.cs" />
     <Compile Include="Models\Validation\ValidationFailure.cs" />
     <Compile Include="Models\Validation\ValidationFailure.designer.cs">
       <DependentUpon>ValidationFailure.cs</DependentUpon>
