@@ -2002,7 +2002,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsClosedSystemEnumerableType___Should_return_true___When_parameter_type_is_a_closed_ordered_System_Collection_type()
+        public static void IsClosedSystemEnumerableType___Should_return_true___When_parameter_type_is_a_closed_Enumerable_type()
         {
             // Arrange
             var types = new[]
@@ -2051,7 +2051,7 @@ namespace OBeautifulCode.Type.Recipes.Test
         }
 
         [Fact]
-        public static void IsClosedSystemEnumerableType___Should_return_true___When_parameter_type_is_a_closed_KeyValuePair()
+        public static void IsClosedSystemKeyValuePairType___Should_return_true___When_parameter_type_is_a_closed_KeyValuePair()
         {
             // Arrange
             var types = new[]
