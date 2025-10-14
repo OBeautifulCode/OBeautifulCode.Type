@@ -161,7 +161,9 @@ namespace OBeautifulCode.Type
         }
 
         /// <inheritdoc />
-        public override IReadOnlyList<ValidationFailure> GetValidationFailures(ValidationOptions options = null, PropertyPathTracker propertyPathTracker = null)
+        public override IReadOnlyList<ValidationFailure> GetValidationFailures(
+            ValidationOptions options = null,
+            PropertyPathTracker propertyPathTracker = null)
         {
             options = options ?? new ValidationOptions();
             propertyPathTracker = propertyPathTracker ?? new PropertyPathTracker();
@@ -196,22 +198,20 @@ namespace OBeautifulCode.Type
 
             void ValidateProperties()
             {
-                if (this.Id != null)
+                IReadOnlyList<ValidationFailure> localValidationFailures;
+
+                localValidationFailures = ValidatableExtensions.GetValidationFailures(this.TimestampUtc, options, propertyPathTracker, nameof(this.TimestampUtc));
+                result.AddRange(localValidationFailures);
+                if (stopOnFirstObjectWithFailures && result.Any())
                 {
-                    if ((object)this.Id is IValidatable validatable)
-                    {
-                        using (propertyPathTracker.Push(nameof(this.Id)))
-                        {
-                            var thisPropertyFailures = validatable.GetValidationFailures(options, propertyPathTracker);
+                    return;
+                }
 
-                            result.AddRange(thisPropertyFailures);
-                        }
-
-                        if (stopOnFirstObjectWithFailures && result.Any())
-                        {
-                            return;
-                        }
-                    }
+                localValidationFailures = ValidatableExtensions.GetValidationFailures(this.Id, options, propertyPathTracker, nameof(this.Id));
+                result.AddRange(localValidationFailures);
+                if (stopOnFirstObjectWithFailures && result.Any())
+                {
+                    return;
                 }
             }
 

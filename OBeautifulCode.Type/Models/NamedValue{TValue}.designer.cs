@@ -168,7 +168,9 @@ namespace OBeautifulCode.Type
         }
 
         /// <inheritdoc />
-        public IReadOnlyList<ValidationFailure> GetValidationFailures(ValidationOptions options = null, PropertyPathTracker propertyPathTracker = null)
+        public IReadOnlyList<ValidationFailure> GetValidationFailures(
+            ValidationOptions options = null,
+            PropertyPathTracker propertyPathTracker = null)
         {
             options = options ?? new ValidationOptions();
             propertyPathTracker = propertyPathTracker ?? new PropertyPathTracker();
@@ -185,7 +187,7 @@ namespace OBeautifulCode.Type
                 default:
                     throw new NotSupportedException(Invariant($"This {nameof(ValidateUntil)} is not supported: {options.ValidateUntil}."));
             }
-            
+
             bool validateProperties;
             switch (options.ValidationScope)
             {
@@ -203,22 +205,20 @@ namespace OBeautifulCode.Type
 
             void ValidateProperties()
             {
-                if (this.Value != null)
+                IReadOnlyList<ValidationFailure> localValidationFailures;
+
+                localValidationFailures = ValidatableExtensions.GetValidationFailures(this.Name, options, propertyPathTracker, nameof(this.Name));
+                result.AddRange(localValidationFailures);
+                if (stopOnFirstObjectWithFailures && result.Any())
                 {
-                    if ((object)this.Value is IValidatable validatable)
-                    {
-                        using (propertyPathTracker.Push(nameof(this.Value)))
-                        {
-                            var thisPropertyFailures = validatable.GetValidationFailures(options, propertyPathTracker);
+                    return;
+                }
 
-                            result.AddRange(thisPropertyFailures);
-                        }
-
-                        if (stopOnFirstObjectWithFailures && result.Any())
-                        {
-                            return;
-                        }
-                    }
+                localValidationFailures = ValidatableExtensions.GetValidationFailures(this.Value, options, propertyPathTracker, nameof(this.Value));
+                result.AddRange(localValidationFailures);
+                if (stopOnFirstObjectWithFailures && result.Any())
+                {
+                    return;
                 }
             }
 
