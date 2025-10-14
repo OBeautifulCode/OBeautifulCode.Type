@@ -234,6 +234,7 @@ namespace OBeautifulCode.Type.Test
             // Arrange
             var objectsToValidate = new object[]
             {
+                A.Dummy<byte>(),
                 A.Dummy<char>(),
                 A.Dummy<bool>(),
                 A.Dummy<double>(),
@@ -249,6 +250,22 @@ namespace OBeautifulCode.Type.Test
                 A.Dummy<bool?>(),
                 A.Dummy<decimal?>(),
                 A.Dummy<Guid?>(),
+                A.Dummy<byte[]>(),
+                A.Dummy<char[]>(),
+                A.Dummy<bool[]>(),
+                A.Dummy<double[]>(),
+                A.Dummy<RelativeSortOrder[]>(),
+                A.Dummy<string[]>(),
+                A.Dummy<decimal[]>(),
+                A.Dummy<DateTime[]>(),
+                A.Dummy<DateTimeOffset[]>(),
+                A.Dummy<TimeSpan[]>(),
+                A.Dummy<Guid[]>(),
+                A.Dummy<Version[]>(),
+                A.Dummy<Uri[]>(),
+                A.Dummy<bool?[]>(),
+                A.Dummy<decimal?[]>(),
+                A.Dummy<Guid?[]>(),
             };
 
             // Act

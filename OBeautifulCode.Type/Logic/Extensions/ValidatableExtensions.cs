@@ -306,12 +306,6 @@ namespace OBeautifulCode.Type
                 return false;
             }
 
-            // Arrays could be validatable.
-            if (type.IsArray)
-            {
-                return true;
-            }
-
             // These common types cannot be validatable.
             // Note there's a huge list of types we could check (e.g. TimeZoneInfo, Assembly, DBNull)
             // but it's not likely that you would use those types in a model object.
@@ -328,17 +322,27 @@ namespace OBeautifulCode.Type
                 return false;
             }
 
+            // Arrays may or may not be validatable based on element type.
+            if (type.IsArray)
+            {
+                var result = type.GetElementType().IsTypeThatMayContainValidatableObject();
+
+                return result;
+            }
+
             // It's impossible for object.GetType() to return a Nullable type.
             // - Nullable WITH value -> boxes to underlying type
             // - Nullable WITHOUT value -> boxes to null
-            //
+            // However, in a recursive call to this method to check an array's element type,
+            // it IS possible to get a nullable type (e.g. byte?[])
             // Handle Nullable<T> by checking the underlying type
-            // if (Nullable.GetUnderlyingType(type) != null)
-            // {
-            //     var underlyingType = Nullable.GetUnderlyingType(type);
-            //     var result = IsTypeThatMayContainValidatableObject(underlyingType);
-            //     return result;
-            // }
+            var nullableUnderlyingType = Nullable.GetUnderlyingType(type);
+            if (nullableUnderlyingType != null)
+            {
+                var result = nullableUnderlyingType.IsTypeThatMayContainValidatableObject();
+
+                return result;
+            }
 
             // There are potentially other strategies that could be employed,
             // but would affect performance:
@@ -346,6 +350,7 @@ namespace OBeautifulCode.Type
             // - Any IEnumerable could be validatable.
             // - If generic, check each generic type argument.
             // - If it's a value type and we know we are only dealing with System types, can't be validatable.
+            // - Check common types like List<> and Dictionary<,>
             return true;
         }
     }
