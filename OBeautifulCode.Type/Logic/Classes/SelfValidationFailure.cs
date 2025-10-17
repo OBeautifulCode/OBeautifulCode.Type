@@ -39,7 +39,7 @@ namespace OBeautifulCode.Type
         /// </summary>
         /// <param name="propertyNames">
         /// The names of the properties that have, together, failed a single validation.
-        /// Most often this list contains a single property name.
+        /// Most often this collection contains a single property name.
         /// An example of multiple properties: { "Id", "IdToObjectMap" } when IdToObjectMap
         /// is a dictionary that is expected to contain the key Id.
         /// </param>
@@ -48,7 +48,7 @@ namespace OBeautifulCode.Type
         /// For example "MyProperty is null".
         /// </param>
         public SelfValidationFailure(
-            IReadOnlyList<string> propertyNames,
+            IReadOnlyCollection<string> propertyNames,
             string message)
         {
             if (propertyNames == null)
@@ -87,12 +87,11 @@ namespace OBeautifulCode.Type
 
         /// <summary>
         /// Gets the names of the properties that have, together, failed a single validation.
-        /// Most often this list contains a single property.
         /// </summary>
         /// <remarks>
-        /// Most often this list contains a single property name.
+        /// Most often this collection contains a single property name.
         /// </remarks>
-        public IReadOnlyList<string> PropertyNames { get; private set; }
+        public IReadOnlyCollection<string> PropertyNames { get; private set; }
 
         /// <summary>
         /// Gets validation failure message with details about the failed validation.
