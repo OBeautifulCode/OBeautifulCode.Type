@@ -65,7 +65,7 @@ namespace OBeautifulCode.Type
         /// </param>
         /// <returns>
         /// The resulting validation failures in the order they were discovered,
-        /// or an empty list if there aren't any validation failures.
+        /// or an empty list (with no null elements) if there aren't any validation failures.
         /// </returns>
         IReadOnlyList<ValidationFailure> GetValidationFailures(
             ValidationOptions options = null,
