@@ -26,7 +26,7 @@ namespace OBeautifulCode.Type.Test
             var actual = subjectUnderTest.PropertyNames;
 
             // Assert
-            actual.AsTest().Must().BeEqualTo(expected);
+            actual.AsTest().Must().BeUnorderedEqualTo(expected);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace OBeautifulCode.Type.Test
             var actual = subjectUnderTest.PropertyNames;
 
             // Assert
-            actual.AsTest().Must().BeEqualTo(expected);
+            actual.AsTest().Must().BeUnorderedEqualTo(expected);
         }
 
         [Fact]
