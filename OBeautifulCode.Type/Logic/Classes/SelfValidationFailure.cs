@@ -9,6 +9,7 @@ namespace OBeautifulCode.Type
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using OBeautifulCode.Equality.Recipes;
     using static System.FormattableString;
 
     /// <summary>
@@ -17,7 +18,7 @@ namespace OBeautifulCode.Type
     /// <remarks>
     /// See <see cref="IValidatable"/> for more details about self-validation.
     /// </remarks>
-    public class SelfValidationFailure
+    public class SelfValidationFailure : IEquatable<SelfValidationFailure>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SelfValidationFailure"/> class.
@@ -101,6 +102,65 @@ namespace OBeautifulCode.Type
         /// is a dictionary that is expected to contain the key Id.
         /// </remarks>
         public string Message { get; private set; }
+
+        /// <summary>
+        /// Determines whether two objects of type <see cref="SelfValidationFailure"/> are equal.
+        /// </summary>
+        /// <param name="left">The object to the left of the equality operator.</param>
+        /// <param name="right">The object to the right of the equality operator.</param>
+        /// <returns>true if the two items are equal; otherwise false.</returns>
+        public static bool operator ==(SelfValidationFailure left, SelfValidationFailure right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
+            var result = left.Equals(right);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines whether two objects of type <see cref="SelfValidationFailure"/> are not equal.
+        /// </summary>
+        /// <param name="left">The object to the left of the equality operator.</param>
+        /// <param name="right">The object to the right of the equality operator.</param>
+        /// <returns>true if the two items are not equal; otherwise false.</returns>
+        public static bool operator !=(SelfValidationFailure left, SelfValidationFailure right) => !(left == right);
+
+        /// <inheritdoc />
+        public bool Equals(SelfValidationFailure other)
+        {
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            var result = this.PropertyNames.IsEqualTo(other.PropertyNames)
+                      && this.Message.IsEqualTo(other.Message);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj) => this == (obj as SelfValidationFailure);
+
+        /// <inheritdoc />
+        public override int GetHashCode() => HashCodeHelper.Initialize()
+            .Hash(this.PropertyNames)
+            .Hash(this.Message)
+            .Value;
 
         /// <inheritdoc />
         public override string ToString()
