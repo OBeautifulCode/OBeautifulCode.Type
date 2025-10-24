@@ -12,8 +12,8 @@ namespace OBeautifulCode.Type
     public enum ValidateUntil
     {
         /// <summary>
-        /// Do not stop until the object graph is fully traversed, regardless of any validation
-        /// failures that are encountered.
+        /// Do not stop until the object graph defined by <see cref="ValidationScope"/> is fully
+        /// traversed, regardless of any validation failures that are encountered.
         /// </summary>
         FullyTraversed,
 
