@@ -95,7 +95,7 @@ namespace OBeautifulCode.Type
         public IReadOnlyCollection<string> PropertyNames { get; private set; }
 
         /// <summary>
-        /// Gets validation failure message with details about the failed validation.
+        /// Gets the validation failure message with details about the failed validation.
         /// </summary>
         /// <remarks>
         /// An example of multiple properties: { "Id", "IdToObjectMap" } when IdToObjectMap
