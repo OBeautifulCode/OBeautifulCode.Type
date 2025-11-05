@@ -72,8 +72,6 @@ namespace OBeautifulCode.Type.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ThrowOpExecutionAbortedExceptionOp>(),
-                        A.Dummy<ThrowOpExecutionAbortedExceptionOp<Version>>(),
                         A.Dummy<GetProtocolOp>(),
                         A.Dummy<NullReturningOp<Version>>(),
                         A.Dummy<TestVoidOp>(),

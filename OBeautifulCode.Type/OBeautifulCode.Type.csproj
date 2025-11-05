@@ -102,9 +102,6 @@
     <Compile Include="Interfaces\Classification\IValue.cs" />
     <Compile Include="Interfaces\Classification\INamedValue.cs" />
     <Compile Include="Interfaces\Classification\IValue{TValue}.cs" />
-    <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionFailedExceptionOp.cs" />
-    <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionDeemedNotApplicableExceptionOp.cs" />
-    <Compile Include="Interfaces\Classification\Operation\Specified\IThrowOpExecutionAbortedExceptionOp.cs" />
     <Compile Include="Interfaces\Property\IHaveName.cs" />
     <Compile Include="Interfaces\Classification\INamedValue{TValue}.cs" />
     <Compile Include="Interfaces\Property\IHaveValue{TValue}.cs" />
@@ -117,7 +114,6 @@
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensions.cs" />
     <Compile Include="Logic\Extensions\ValidatableExtensions.cs" />
-    <Compile Include="Logic\Protocols\Concrete\GetConstValueProtocol{TValue}.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaReturningProtocol{TOperation,TResult}.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaVoidProtocol.cs" />
     <Compile Include="Logic\Protocols\Concrete\ChainOfResponsibilityProtocolFactory.cs" />
@@ -126,35 +122,10 @@
     <Compile Include="Models\SimpleValue{TValue}.designer.cs">
       <DependentUpon>SimpleValue{TValue}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operations\Concrete\GetConstValueOp{TValue}.cs" />
-    <Compile Include="Models\Operations\Concrete\GetConstValueOp{TValue}.designer.cs">
-      <DependentUpon>GetConstValueOp{TValue}.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Operations\Concrete\TestReturningOp{TResult}.cs" />
     <Compile Include="Models\Operations\Concrete\TestReturningOp{TResult}.designer.cs">
       <DependentUpon>TestReturningOp{TResult}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionFailedExceptionOp.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionFailedExceptionOp.designer.cs">
-      <DependentUpon>ThrowOpExecutionFailedExceptionOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionFailedExceptionOp{TResult}.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionFailedExceptionOp{TResult}.designer.cs">
-      <DependentUpon>ThrowOpExecutionFailedExceptionOp{TResult}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOp.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOp.designer.cs">
-      <DependentUpon>ThrowOpExecutionDeemedNotApplicableExceptionOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp.designer.cs">
-      <DependentUpon>ThrowOpExecutionAbortedExceptionOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOp{TResult}.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOp{TResult}.designer.cs">
-      <DependentUpon>ThrowOpExecutionDeemedNotApplicableExceptionOp{TResult}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp{TResult}.cs" />
     <Compile Include="Models\Operations\Concrete\GetProtocolOp.cs" />
     <Compile Include="Models\Operations\Concrete\GetProtocolOp.designer.cs">
       <DependentUpon>GetProtocolOp.cs</DependentUpon>
@@ -218,9 +189,6 @@
     <Compile Include="Models\Operations\Concrete\NullVoidOp.cs" />
     <Compile Include="Models\Operations\Concrete\NullVoidOp.designer.cs">
       <DependentUpon>NullVoidOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp{TResult}.designer.cs">
-      <DependentUpon>ThrowOpExecutionAbortedExceptionOp{TResult}.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Operations\OperationBase.cs" />
     <Compile Include="Models\Operations\OperationBase.designer.cs">

@@ -178,7 +178,6 @@
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\NamedValueExtensionsTest.cs" />
-    <Compile Include="Logic\Protocols\Concrete\GetConstValueProtocolTest.cs" />
     <Compile Include="Logic\Protocols\Concrete\ChainOfResponsibilityProtocolFactoryTest.cs" />
     <Compile Include="Logic\Protocols\Concrete\ProtocolFactoryTest.cs" />
     <Compile Include="Models\Enums\CultureKindTest.cs" />
@@ -215,10 +214,6 @@
     <Compile Include="Models\NamedValue{TValue}Test.designer.cs">
       <DependentUpon>NamedValue{TValue}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Operations\Concrete\GetConstValueOp{TValue}Test.cs" />
-    <Compile Include="Models\Operations\Concrete\GetConstValueOp{TValue}Test.designer.cs">
-      <DependentUpon>GetConstValueOp{TValue}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Operations\Concrete\TestReturningOp{TResult}Test.cs" />
     <Compile Include="Models\Operations\Concrete\TestReturningOp{TResult}Test.designer.cs">
       <DependentUpon>TestReturningOp{TResult}Test.cs</DependentUpon>
@@ -238,22 +233,6 @@
     <Compile Include="Models\Operations\Concrete\NullVoidOpTest.cs" />
     <Compile Include="Models\Operations\Concrete\NullVoidOpTest.designer.cs">
       <DependentUpon>NullVoidOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionFailedExceptionOpTest.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionFailedExceptionOpTest.designer.cs">
-      <DependentUpon>ThrowOpExecutionFailedExceptionOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionFailedExceptionOp{TResult}Test.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionFailedExceptionOp{TResult}Test.designer.cs">
-      <DependentUpon>ThrowOpExecutionFailedExceptionOp{TResult}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOpTest.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOpTest.designer.cs">
-      <DependentUpon>ThrowOpExecutionDeemedNotApplicableExceptionOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOp{TResult}Test.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionDeemedNotApplicableExceptionOp{TResult}Test.designer.cs">
-      <DependentUpon>ThrowOpExecutionDeemedNotApplicableExceptionOp{TResult}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Operations\OperationBaseTest.cs" />
     <Compile Include="Models\Operations\OperationBaseTest.designer.cs">
@@ -277,14 +256,6 @@
     </Compile>
     <Compile Include="Logic\Extensions\EncodingExtensionsTest.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOpTest.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOpTest.designer.cs">
-      <DependentUpon>ThrowOpExecutionAbortedExceptionOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp{TResult}Test.cs" />
-    <Compile Include="Models\Operations\Concrete\ThrowOpExecutionAbortedExceptionOp{TResult}Test.designer.cs">
-      <DependentUpon>ThrowOpExecutionAbortedExceptionOp{TResult}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Validation\ValidationOptionsTest.cs" />
     <Compile Include="Models\Validation\ValidationOptionsTest.designer.cs">
       <DependentUpon>ValidationOptionsTest.cs</DependentUpon>
