@@ -126,10 +126,17 @@
     <Compile Include=".recipes\OBeautifulCode.CodeGen\Equatable\EquatableTestScenarios{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeGen\Equatable\EquatableTestScenario{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeGen\Equatable\ValidatedEquatableTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\SelfValidation\SelfValidationTestScenarioPassesWhen.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\SelfValidation\SelfValidationTestScenarios{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\SelfValidation\SelfValidationTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\SelfValidation\ValidatedSelfValidationTestScenario{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\StringRepresentationTestScenarios{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\StringRepresentationTestScenario{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\SystemUnderTestExpectedStringRepresentation{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\ValidatedStringRepresentationTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ValidModel\ValidatedValidModelTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ValidModel\ValidModelTestScenarios{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeGen\ValidModel\ValidModelTestScenario{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.Collection\EnumerableExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Enum\EnumExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ByteArrayEqualityComparer.cs" />
