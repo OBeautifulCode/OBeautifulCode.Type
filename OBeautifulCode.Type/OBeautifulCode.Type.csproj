@@ -113,6 +113,7 @@
     <Compile Include="Logic\Extensions\StandardTimeZoneExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensions.cs" />
     <Compile Include="Logic\Extensions\ProtocolExtensions.cs" />
+    <Compile Include="Logic\Extensions\ObjectExtensions.cs" />
     <Compile Include="Logic\Extensions\ValidatableExtensions.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaReturningProtocol{TOperation,TResult}.cs" />
     <Compile Include="Logic\Protocols\Concrete\LambdaVoidProtocol.cs" />

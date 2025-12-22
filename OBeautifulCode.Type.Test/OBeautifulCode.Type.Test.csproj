@@ -180,6 +180,7 @@
     <Compile Include="Logic\Extensions\CultureKindExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\DateTimeExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\DateTimeFormatKindExtensionsTest.cs" />
+    <Compile Include="Logic\Extensions\ObjectExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\ValidatableExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TimeZoneExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\ProtocolFactoryExtensionsTest.cs" />
